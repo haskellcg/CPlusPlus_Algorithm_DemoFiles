@@ -6,7 +6,7 @@
 
 #include "common_types.h"
 
-string print(const vector<uint32_t> &vecInt)
+string to_string(const vector<uint32_t> &vecInt)
 {
     ostringstream oss;
     oss << "[";
@@ -20,10 +20,10 @@ string print(const vector<uint32_t> &vecInt)
     return oss.str();
 }
 
-void random(vector<uint32_t> &vecInt, size_t nIntNum, uint32_t nMode)
+void get_random_vector(vector<uint32_t> &vecInt, size_t nSize)
 {
     srand(time(NULL));
-    for (size_t i = 0; i < nIntNum; ++i){
-        vecInt.push_back(rand() % nMode);
+    for (size_t i = 0; i < nSize; ++i){
+        vecInt.push_back(rand() % 90 + 10);
     }
 }

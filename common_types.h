@@ -17,21 +17,20 @@
 using namespace std;
 
 /**
- * @brief print vector content like this "[x, x, x]"
+ * @brief convert vector content to string like this "[x, x, x]"
  * @param const vector<uint32_t> &vecInt, integer vector
- * @return void
+ * @return string
  * @remarks
  */
-string print(const vector<uint32_t> &vecInt);
+string to_string(const vector<uint32_t> &vecInt);
 
 /**
- * @brief generate vector with nIntNum of random uint32_t
+ * @brief generate vector with nSize of random uint32_t [10, 100)
  * @param vector<uint32_t> &vecInt, integer vector
- * @param size_t nIntNum, number of uint32_t
- * @param uint32_t nMode, mode
+ * @param size_t nSize, number of uint32_t
  * @return void
  * @remarks
  */
-void random(vector<uint32_t> &vecInt, size_t nIntNum, uint32_t nMode);
+void get_random_vector(vector<uint32_t> &vecInt, size_t nSize);
 
 #endif // __COMMON_TYPES_H__

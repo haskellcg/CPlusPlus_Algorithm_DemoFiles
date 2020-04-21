@@ -23,9 +23,10 @@ void insert_sort(vector<uint32_t> &vecInt)
 
 void insert_sort_test()
 {
+    cout << ">>> Test insert sort funtion:" << endl;
     vector<uint32_t> vecSrc;
-    random(vecSrc, 10, 50);
-    cout << print(vecSrc) << endl;
+    get_random_vector(vecSrc, 10);
+    cout << to_string(vecSrc) << endl;
     insert_sort(vecSrc);
-    cout << print(vecSrc) << endl;
+    cout << to_string(vecSrc) << endl;
 }
