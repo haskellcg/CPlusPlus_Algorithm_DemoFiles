@@ -11,8 +11,11 @@ INCLUDES=\
 
 LIBS=\
 
-CFLAGS=-Wall -O2
+all:CFLAGS=-Wall -O2
+all:$(PROJ)
 
+debug:CFLAGS=-DDEBUG -g
+debug:$(PROJ)
 
 $(PROJ):$(OBJS)
 	$(GCC) -o $(PROJ) $(OBJS) $(LIBS)
