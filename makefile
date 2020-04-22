@@ -1,8 +1,9 @@
 PROJ=algorithms
 GCC=g++
 
-OBJS=insert_sort.o\
+OBJS=bubble_sort.o\
      common_types.o\
+     insert_sort.o\
      main.o\
 
 INCLUDES=\

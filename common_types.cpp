@@ -24,6 +24,6 @@ void get_random_vector(vector<uint32_t> &vecInt, size_t nSize)
 {
     srand(time(NULL));
     for (size_t i = 0; i < nSize; ++i){
-        vecInt.push_back(rand() % 90 + 10);
+        vecInt.push_back(rand() % 900 + 100);
     }
 }

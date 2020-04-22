@@ -25,7 +25,7 @@ using namespace std;
 string to_string(const vector<uint32_t> &vecInt);
 
 /**
- * @brief generate vector with nSize of random uint32_t [10, 100)
+ * @brief generate vector with nSize of random uint32_t [100, 1000)
  * @param vector<uint32_t> &vecInt, integer vector
  * @param size_t nSize, number of uint32_t
  * @return void
