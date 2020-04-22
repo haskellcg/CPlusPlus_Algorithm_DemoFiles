@@ -5,6 +5,7 @@ OBJS=bubble_sort.o\
      common_types.o\
      insert_sort.o\
      main.o\
+     merge_sort.o\
 
 INCLUDES=\
 

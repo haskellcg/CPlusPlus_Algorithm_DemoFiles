@@ -33,4 +33,36 @@ string to_string(const vector<uint32_t> &vecInt);
  */
 void get_random_vector(vector<uint32_t> &vecInt, size_t nSize);
 
+/**
+ * @brief check vecInt is sorted or not
+ * @param const vector<uint32_t> &vecInt, vector need to be checked
+ * @return void
+ * @remarks
+ */
+bool is_sorted_as_ascending(const vector<uint32_t> &vecInt);
+
+/**
+ * @brief print msg as normal way
+ * @param const string &strMsg, the message
+ * @return void
+ * @remarks
+ */
+void print_normal_msg(const string &strMsg);
+
+/**
+ * @brief print msg as correct way
+ * @param const string &strMsg, the message
+ * @return void
+ * @remarks
+ */
+void print_correct_msg(const string &strMsg);
+
+/**
+ * @brief print msg as error way
+ * @param const string &strMsg, the message
+ * @return void
+ * @remarks
+ */
+void print_error_msg(const string &strMsg);
+
 #endif // __COMMON_TYPES_H__

@@ -27,3 +27,30 @@ void get_random_vector(vector<uint32_t> &vecInt, size_t nSize)
         vecInt.push_back(rand() % 900 + 100);
     }
 }
+
+bool is_sorted_as_ascending(const vector<uint32_t> &vecInt)
+{
+    bool bResult = true;
+    for (size_t i = 1; i < vecInt.size(); ++i){
+        if (vecInt[i - 1] > vecInt[i]){
+            bResult = false;
+            break;
+        }
+    }
+    return bResult;
+}
+
+void print_normal_msg(const string &strMsg)
+{
+    cout << strMsg;
+}
+
+void print_correct_msg(const string &strMsg)
+{
+    cout << strMsg;
+}
+
+void print_error_msg(const string &strMsg)
+{
+    cout << strMsg;
+}

@@ -27,10 +27,15 @@ void insert_sort(vector<uint32_t> &vecInt)
 
 void insert_sort_test()
 {
-    cout << ">>> Test insert sort funtion:" << endl;
+    print_normal_msg(">>> Test insert sort funtion:\n");
     vector<uint32_t> vecSrc;
     get_random_vector(vecSrc, 10);
-    cout << to_string(vecSrc) << endl;
+    print_normal_msg(to_string(vecSrc) + "\n");
     insert_sort(vecSrc);
-    cout << to_string(vecSrc) << endl;
+    print_normal_msg(to_string(vecSrc) + "\n");
+    if (is_sorted_as_ascending(vecSrc)){
+        print_correct_msg("CORRECT\n");
+    } else {
+        print_error_msg("ERROR\n");
+    }
 }

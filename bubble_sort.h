@@ -10,18 +10,18 @@
 #include "common_types.h"
 
 /**
- *@brief use bubble sort to sort vecInt
- *@param vector<uint32_t> &vecInt, source vector and result vector
- *@return void
- *@remarks
+ * @brief use bubble sort to sort vecInt
+ * @param vector<uint32_t> &vecInt, source vector and result vector
+ * @return void
+ * @remarks
  */
 void bubble_sort(vector<uint32_t> &vecInt);
 
 /**
- *@brief test bubble sort algorithm
- *@param
- *@return void
- *@remarks
+ * @brief test bubble sort algorithm
+ * @param
+ * @return void
+ * @remarks
  */
 void bubble_sort_test();
 
