@@ -20,7 +20,7 @@ void bubble_sort(vector<uint32_t> &vecInt)
                 vecInt[j + 1] = nTemp;
                 bSwapped = true;
                 // DEBUG
-                // cout << to_string(vecInt) << endl;
+                // print_highlight_msg(to_string(vecInt)+ "\n");
             }
             ++j;
         }
@@ -34,7 +34,7 @@ void bubble_sort(vector<uint32_t> &vecInt)
 
 void bubble_sort_test()
 {
-    print_normal_msg(">>> Test bubble sort funtion:\n");
+    print_highlight_msg(">>> Test bubble sort funtion:\n");
     vector<uint32_t> vecSrc;
     get_random_vector(vecSrc, 10);
     print_normal_msg(to_string(vecSrc) + "\n");

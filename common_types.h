@@ -14,6 +14,8 @@
 #include <string>
 #include <vector>
 
+#define MAX_UINT32 0xffffffff
+
 using namespace std;
 
 /**
@@ -64,5 +66,21 @@ void print_correct_msg(const string &strMsg);
  * @remarks
  */
 void print_error_msg(const string &strMsg);
+
+/**
+ * @brief print msg as warning way
+ * @param const string &strMsg, the message
+ * @return void
+ * @remarks
+ */
+void print_warning_msg(const string &strMsg);
+
+/**
+ * @brief print msg as highlight way
+ * @param const string &strMsg, the message
+ * @return void
+ * @remarks
+ */
+void print_highlight_msg(const string &strMsg);
 
 #endif // __COMMON_TYPES_H__

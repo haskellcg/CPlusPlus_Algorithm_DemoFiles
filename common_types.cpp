@@ -47,10 +47,20 @@ void print_normal_msg(const string &strMsg)
 
 void print_correct_msg(const string &strMsg)
 {
-    cout << strMsg;
+    cout << "\033[32m" << strMsg << "\033[0m";
 }
 
 void print_error_msg(const string &strMsg)
 {
-    cout << strMsg;
+    cout << "\033[31m" << strMsg << "\033[0m";
+}
+
+void print_warning_msg(const string &strMsg)
+{
+    cout << "\033[33m" << strMsg << "\033[0m";
+}
+
+void print_highlight_msg(const string &strMsg)
+{
+    cout << "\033[36m" << strMsg << "\033[0m";
 }
