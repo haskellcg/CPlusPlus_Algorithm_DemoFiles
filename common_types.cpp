@@ -6,18 +6,29 @@
 
 #include "common_types.h"
 
-string to_string(const vector<uint32_t> &vecInt)
+template <typename T>
+string to_string(const vector<T> &vecInt)
 {
-    ostringstream oss;
-    oss << "[";
+    ostringstream ossResult;
+    ossResult << "[";
     for (size_t i = 0; i < vecInt.size(); ++i){
-        oss << vecInt[i];
+        ossResult << vecInt[i];
         if (i != (vecInt.size() - 1)){
-            oss << ", ";
+            ossResult << ", ";
         }
     }
-    oss << "]";
-    return oss.str();
+    ossResult << "]";
+    return ossResult.str();
+}
+
+string to_string(const vector<uint32_t> &vecInt)
+{
+    return to_string<uint32_t>(vecInt);
+}
+
+string to_string(const vector<int32_t> &vecInt)
+{
+    return to_string<int32_t>(vecInt);
 }
 
 void get_random_vector(vector<uint32_t> &vecInt, size_t nSize)

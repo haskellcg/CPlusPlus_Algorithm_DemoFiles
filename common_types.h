@@ -15,6 +15,7 @@
 #include <vector>
 
 #define MAX_UINT32 0xffffffff
+#define MIN_INT32 0x80000000
 
 using namespace std;
 
@@ -25,6 +26,14 @@ using namespace std;
  * @remarks
  */
 string to_string(const vector<uint32_t> &vecInt);
+
+/**
+ * @brief convert vector content to string like this "[x, x, x]"
+ * @param const vector<int32_t> &vecInt, integer vector
+ * @return string
+ * @remarks
+ */
+string to_string(const vector<int32_t> &vecInt);
 
 /**
  * @brief generate vector with nSize of random uint32_t [100, 1000)
