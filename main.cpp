@@ -7,6 +7,7 @@
 #include "bubble_sort.h"
 #include "insert_sort.h"
 #include "merge_sort.h"
+#include "shell_sort.h"
 
 int main()
 {
@@ -15,6 +16,8 @@ int main()
     insert_sort_test();
 
     merge_sort_test();
+
+    shell_sort_test();
 
     return 0;
 }
