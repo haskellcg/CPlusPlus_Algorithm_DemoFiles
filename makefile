@@ -24,6 +24,6 @@ $(PROJ):$(OBJS)
 	$(GCC) -o $@ -c $< $(INCLUDES) $(CFLAGS)
     
 clean:
-	@echo "clean project target file and objects"
+	@echo "\033[31mclean project target file and objects\033[0m"
 	rm -fr $(PROJ)
 	rm -fr $(OBJS)
