@@ -5,6 +5,7 @@ OBJS=bubble_sort.o\
      common_types.o\
      insert_sort.o\
      main.o\
+     maximum_subarray.o\
      merge_sort.o\
      selection_sort.o\
      shell_sort.o\

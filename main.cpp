@@ -6,6 +6,7 @@
 
 #include "bubble_sort.h"
 #include "insert_sort.h"
+#include "maximum_subarray.h"
 #include "merge_sort.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
@@ -15,6 +16,8 @@ int main()
     bubble_sort_test();
 
     insert_sort_test();
+
+    maximum_subarray_test();
 
     merge_sort_test();
 
