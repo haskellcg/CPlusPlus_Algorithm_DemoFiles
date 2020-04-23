@@ -8,6 +8,24 @@
 
 void selection_sort(vector<uint32_t> &vecInt)
 {
+    // repeat (n - 1) times
+    for (size_t i = 1; i < vecInt.size(); ++i){
+        // find the minimum value and put it te the position j
+        size_t nMinIndex = i - 1;
+        size_t j = i;
+        while (j < vecInt.size()){
+            if (vecInt[j] < vecInt[nMinIndex]){
+                nMinIndex = j;
+            }
+            ++j;
+        }
+        // swap value if they are in 2 position
+        if (nMinIndex != (i - 1)){
+            uint32_t nTemp = vecInt[i - 1];
+            vecInt[i - 1] = vecInt[nMinIndex];
+            vecInt[nMinIndex] = nTemp;
+        }
+    }
 }
 
 void selection_sort_test()
