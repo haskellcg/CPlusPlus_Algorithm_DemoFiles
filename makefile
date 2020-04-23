@@ -6,6 +6,7 @@ OBJS=bubble_sort.o\
      insert_sort.o\
      main.o\
      merge_sort.o\
+     selection_sort.o\
      shell_sort.o\
 
 INCLUDES=\

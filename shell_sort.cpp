@@ -27,6 +27,8 @@ void shell_sort(vector<uint32_t> &vecInt)
         }
         // decrease the interval base on the formula
         nInterval = (nInterval - 1) / 3;
+        // DEBUG
+        // print_highlight_msg(to_string(vecInt) + "\n");
     }
 }
 
