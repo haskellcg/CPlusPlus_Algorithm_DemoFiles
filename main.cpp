@@ -10,6 +10,7 @@
 #include "merge_sort.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
+#include "strassen_matrix_multiply.h"
 
 int main()
 {
@@ -24,6 +25,8 @@ int main()
     selection_sort_test();
 
     shell_sort_test();
+    
+    strassen_matrix_multiply_test();
 
     return 0;
 }

@@ -9,6 +9,7 @@ OBJS=bubble_sort.o\
      merge_sort.o\
      selection_sort.o\
      shell_sort.o\
+     strassen_matrix_multiply.o\
 
 INCLUDES=\
 
