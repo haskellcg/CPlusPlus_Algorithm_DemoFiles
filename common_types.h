@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include <string>
 #include <vector>
@@ -34,6 +35,19 @@ string to_string(const vector<uint32_t> &vecInt);
  * @remarks
  */
 string to_string(const vector<int32_t> &vecInt);
+
+/**
+ * @brief covert matrixInt to string like this:
+ *      {
+ *          [x, x, x, x],
+ *          ....
+ *          [x, x, x, x]
+ *      }
+ * @param const vector<vector<int32_t>> &matrixInt, the matrix need to be convert
+ * @return string
+ * @remarks
+ */
+string to_string(const vector<vector<int32_t>> &matrixInt);
 
 /**
  * @brief generate vector with nSize of random uint32_t [100, 1000)

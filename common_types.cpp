@@ -12,7 +12,7 @@ string to_string(const vector<T> &vecInt)
     ostringstream ossResult;
     ossResult << "[";
     for (size_t i = 0; i < vecInt.size(); ++i){
-        ossResult << vecInt[i];
+        ossResult << setw(3) << vecInt[i];
         if (i != (vecInt.size() - 1)){
             ossResult << ", ";
         }
@@ -29,6 +29,18 @@ string to_string(const vector<uint32_t> &vecInt)
 string to_string(const vector<int32_t> &vecInt)
 {
     return to_string<int32_t>(vecInt);
+}
+
+string to_string(const vector<vector<int32_t>> &matrixInt)
+{
+    string strResult = "{\n";
+    for (size_t i = 0; i < matrixInt.size(); ++i){
+        strResult += "\t";
+        strResult += to_string(matrixInt[i]);
+        strResult += "\n";
+    }
+    strResult += "}";
+    return strResult;
 }
 
 void get_random_vector(vector<uint32_t> &vecInt, size_t nSize)
