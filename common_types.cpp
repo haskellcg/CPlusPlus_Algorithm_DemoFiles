@@ -43,6 +43,55 @@ string to_string(const vector<vector<int32_t>> &matrixInt)
     return strResult;
 }
 
+bool copy_part_of_matrix(const vector<vector<int32_t>> &matrixSrc,
+                         size_t nRowIndex, size_t nColumnIndex,
+                         size_t nColumns, size_t nRows,
+                         vector<vector<int32_t>> &matrixCp)
+{
+    if ((nRowIndex >= matrixSrc.size()) ||
+        ((nRowIndex + nRows - 1) >= matrixSrc.size())){
+        return false;
+    }
+    for (size_t i = 0; i < nRows; ++i){
+        vector<int32_t> vecInt;
+        for (size_t j = 0; j < nColumns; ++j){
+            if ((nColumnIndex >= matrixSrc[nRowIndex + i].size()) ||
+                ((nColumnIndex + nColumns - 1) >= matrixSrc[nRowIndex + i].size())){
+                return false;
+            }   
+            vecInt.push_back(matrixSrc[nRowIndex + i][nColumnIndex + j]);
+        }
+        matrixCp.push_back(vecInt);
+    }
+    return true;
+}
+
+void matrix_add(const vector<vector<int32_t>> &matrixA,
+                const vector<vector<int32_t>> &matrixB,
+                vector<vector<int32_t>> &matrixC)
+{
+    for (size_t i = 0; i < matrixA.size(); ++i){
+        vector<int32_t> vecInt;
+        for (size_t j = 0; j < matrixA[i].size(); ++j){
+            vecInt.push_back(matrixA[i][j] + matrixB[i][j]);
+        }
+        matrixC.push_back(vecInt);
+    }
+}
+
+void matrix_minus(const vector<vector<int32_t>> &matrixA,
+                  const vector<vector<int32_t>> &matrixB,
+                  vector<vector<int32_t>> &matrixC)
+{
+    for (size_t i = 0; i < matrixA.size(); ++i){
+        vector<int32_t> vecInt;
+        for (size_t j = 0; j < matrixA[i].size(); ++j){
+            vecInt.push_back(matrixA[i][j] - matrixB[i][j]);
+        }
+        matrixC.push_back(vecInt);
+    }
+}
+
 void get_random_vector(vector<uint32_t> &vecInt, size_t nSize)
 {
     srand(time(NULL));
