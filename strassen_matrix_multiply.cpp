@@ -36,7 +36,7 @@ void recursive_matrix_multiply(const vector<vector<int32_t>> &matrixA,
         vecInt.push_back(matrixA[0][0] * matrixB[0][0]);
         matrixC.push_back(vecInt);
     } else {
-        size_t nPartN = nN / 2;
+        size_t nPartN = nN >> 1;
         vector<vector<int32_t>> matrixA11;
         copy_part_of_matrix(matrixA, 0, 0, nPartN, nPartN, matrixA11);
         vector<vector<int32_t>> matrixA12;
@@ -104,7 +104,7 @@ void strassen_matrix_multiply(const vector<vector<int32_t>> &matrixA,
         vecInt.push_back(matrixA[0][0] * matrixB[0][0]);
         matrixC.push_back(vecInt);
     } else {
-        size_t nPartN = nN / 2;
+        size_t nPartN = nN >> 1;
         vector<vector<int32_t>> matrixA11;
         copy_part_of_matrix(matrixA, 0, 0, nPartN, nPartN, matrixA11);
         vector<vector<int32_t>> matrixA12;

@@ -45,7 +45,7 @@ void merge(vector<uint32_t> &vecInt, size_t nLeft, size_t nMid, size_t nRight)
 void merge_sort(vector<uint32_t> &vecInt, size_t nBegin, size_t nEnd)
 {
     if (nBegin < nEnd){
-        size_t nMid = (nBegin + nEnd) / 2;
+        size_t nMid = (nBegin + nEnd) >> 1;
         merge_sort(vecInt, nBegin, nMid);
         merge_sort(vecInt, nMid + 1, nEnd);
         merge(vecInt, nBegin, nMid, nEnd);

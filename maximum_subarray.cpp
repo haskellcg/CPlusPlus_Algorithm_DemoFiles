@@ -83,7 +83,7 @@ Maximum_SubArray_Result maximum_subarray_solver(const vector<int32_t> &vecInt, s
     if (nBegin == nEnd){
         return Maximum_SubArray_Result(nBegin, nEnd, vecInt[nBegin]);
     } else {
-        size_t nMid = (nBegin + nEnd) / 2;
+        size_t nMid = (nBegin + nEnd) >> 1;
         // calculate left part
         Maximum_SubArray_Result oMaximum_SubArray_LeftResult =
             maximum_subarray_solver(vecInt, nBegin, nMid);

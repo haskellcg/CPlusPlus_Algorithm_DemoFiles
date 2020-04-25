@@ -3,6 +3,7 @@ GCC=g++
 
 OBJS=bubble_sort.o\
      common_types.o\
+     heap_sort.o\
      insert_sort.o\
      main.o\
      maximum_subarray.o\
