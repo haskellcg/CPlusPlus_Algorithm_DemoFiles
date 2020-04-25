@@ -64,6 +64,20 @@ public:
     string to_string() const;
 
     /**
+     * @brief convert this to friendly string
+     * @param
+     * @return string
+     * @remarks
+     */
+    string to_friendly_string() const;
+
+    /**
+     * @brief build min heap with current data
+     */
+    void build_min_heap();
+
+private:
+    /**
      * @brief calculate parent's index of nIndex
      * @param size_t nIndex, current index
      * @return size_t, parent index
@@ -86,6 +100,22 @@ public:
      * @remarks
      */
     inline size_t get_right_child_index(size_t nIndex) const;
+
+    /**
+     * @brief calculate height of the heap with nIndex as root
+     * @param size_t nIndex, current root of the heap
+     * @return size_t, height of the nIndex
+     * @remarks
+     */
+    inline size_t get_node_height(size_t nIndex) const;
+
+    /**
+     * @brief adjust heap with nIndex as root
+     * @param size_t nRoot, root of the current heap
+     * @return void
+     * @remarks
+     */
+    void min_heapify(size_t nRoot);
 
 private:
     /*< array for store data and make heap */
