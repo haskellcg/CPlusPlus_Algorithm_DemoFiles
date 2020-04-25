@@ -62,9 +62,50 @@ Binary_Min_Heap &Binary_Min_Heap::operator=(const Binary_Min_Heap &oAnotherHeap)
     return *this;
 }
 
+string Binary_Min_Heap::to_string() const
+{
+    ostringstream ossResult;
+    ossResult << "size:" << m_nSize << endl;
+    ossResult << "capacity:" << m_nCapacity << endl;
+    ossResult << "[";
+    for (size_t i = 0; i < m_nSize; ++i){
+        ossResult << *(m_pArray + i);
+        if (i != (m_nSize - 1)){
+            ossResult << ", ";
+        }
+    }
+    ossResult << "]";
+    return ossResult.str();
+}
+
+size_t Binary_Min_Heap::get_parent_index(size_t nIndex) const
+{
+    if (0 == nIndex){
+        return nIndex;
+    } else {
+        return (((nIndex + 1) >> 1) - 1);
+    }
+}
+
+size_t Binary_Min_Heap::get_left_child_index(size_t nIndex) const
+{
+    return (((nIndex + 1) << 1) - 1);
+}
+
+size_t Binary_Min_Heap::get_right_child_index(size_t nIndex) const
+{
+    return ((nIndex + 1) << 1);
+}
+
 void heap_sort(vector<uint32_t> &vecInt)
 {
     // TODO: add code
+    Binary_Min_Heap oHeapZero;
+    print_normal_msg(oHeapZero.to_string() + "\n");
+    Binary_Min_Heap oHeap(vecInt);
+    print_normal_msg(oHeap.to_string() + "\n");
+    oHeapZero = oHeap;
+    print_normal_msg(oHeapZero.to_string() + "\n");
 }
 
 void heap_sort_test()

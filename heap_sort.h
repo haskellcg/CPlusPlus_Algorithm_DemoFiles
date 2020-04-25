@@ -55,6 +55,38 @@ public:
      */
     Binary_Min_Heap &operator=(const Binary_Min_Heap &oAnotherHeap);
 
+    /**
+     * @brief convert this to string
+     * @param
+     * @return string
+     * @remarks
+     */
+    string to_string() const;
+
+    /**
+     * @brief calculate parent's index of nIndex
+     * @param size_t nIndex, current index
+     * @return size_t, parent index
+     * @remarks
+     */
+    inline size_t get_parent_index(size_t nIndex) const;
+
+    /**
+     * @brief calculate left child's index of nIndex
+     * @param size_t nIndex, current index
+     * @return size_t, left child index
+     * @remarks
+     */
+    inline size_t get_left_child_index(size_t nIndex) const;
+
+    /**
+     * @brief calculate right child's index of nIndex
+     * @param size_t nIndex, current index
+     * @return size_t, right child index
+     * @remarks
+     */
+    inline size_t get_right_child_index(size_t nIndex) const;
+
 private:
     /*< array for store data and make heap */
     uint32_t *m_pArray;
