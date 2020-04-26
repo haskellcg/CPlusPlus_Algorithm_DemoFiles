@@ -9,6 +9,7 @@
 #include "insert_sort.h"
 #include "maximum_subarray.h"
 #include "merge_sort.h"
+#include "quick_sort.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
 #include "strassen_matrix_multiply.h"
@@ -21,12 +22,13 @@ int main(int argc, char *argv[])
         insert_sort_test();
         maximum_subarray_test();
         merge_sort_test();
+        quick_sort_test();
         selection_sort_test();
         shell_sort_test();
         strassen_matrix_multiply_test();
     } else {
         // default only test the current coding algorithm
-        heap_sort_test();
+        quick_sort_test();
     }
 
     return 0;

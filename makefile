@@ -8,6 +8,7 @@ OBJS=bubble_sort.o\
      main.o\
      maximum_subarray.o\
      merge_sort.o\
+     quick_sort.o\
      selection_sort.o\
      shell_sort.o\
      strassen_matrix_multiply.o\
