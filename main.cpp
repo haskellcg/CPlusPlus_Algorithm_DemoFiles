@@ -5,6 +5,7 @@
  *************************************************************************/
 
 #include "bubble_sort.h"
+#include "counting_sort.h"
 #include "heap_sort.h"
 #include "insert_sort.h"
 #include "maximum_subarray.h"
@@ -18,6 +19,7 @@ int main(int argc, char *argv[])
 {
     if ((argc >= 2) && ("-a" == string(argv[1]))){
         bubble_sort_test();
+        counting_sort_test();
         heap_sort_test();
         insert_sort_test();
         maximum_subarray_test();
@@ -28,7 +30,7 @@ int main(int argc, char *argv[])
         strassen_matrix_multiply_test();
     } else {
         // default only test the current coding algorithm
-        quick_sort_test();
+        counting_sort_test();
     }
 
     return 0;
