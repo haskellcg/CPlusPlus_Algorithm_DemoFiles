@@ -111,6 +111,15 @@ void get_random_vector(vector<uint32_t> &vecInt, size_t nSize);
 bool is_sorted_as_ascending(const vector<uint32_t> &vecInt);
 
 /**
+ * @brief swap data between nL and nR
+ * @param uint32_t &nL, left data
+ * @param uint32_t &nR, right data
+ * @return void
+ * @remarks
+ */
+void swap_data(uint32_t &nL, uint32_t &nR);
+
+/**
  * @brief print msg as normal way
  * @param const string &strMsg, the message
  * @return void

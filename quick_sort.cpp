@@ -18,9 +18,7 @@ int32_t partition(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd)
         if (vecInt[nScanIndex] < nPivot){
             ++nSplitIndex;
             if (nSplitIndex != nScanIndex){
-                uint32_t nTemp = vecInt[nSplitIndex];
-                vecInt[nSplitIndex] = vecInt[nScanIndex];
-                vecInt[nScanIndex] = nTemp;
+                swap_data(vecInt[nSplitIndex], vecInt[nScanIndex]);
             }
         }
     }

@@ -112,6 +112,13 @@ bool is_sorted_as_ascending(const vector<uint32_t> &vecInt)
     return bResult;
 }
 
+void swap_data(uint32_t &nL, uint32_t &nR)
+{
+    uint32_t nTemp = nR;
+    nR = nL;
+    nL = nTemp;
+}
+
 void print_normal_msg(const string &strMsg)
 {
     cout << strMsg;

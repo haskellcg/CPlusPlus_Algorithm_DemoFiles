@@ -21,9 +21,7 @@ void selection_sort(vector<uint32_t> &vecInt)
         }
         // swap value if they are in 2 position
         if (nMinIndex != (i - 1)){
-            uint32_t nTemp = vecInt[i - 1];
-            vecInt[i - 1] = vecInt[nMinIndex];
-            vecInt[nMinIndex] = nTemp;
+            swap_data(vecInt[nMinIndex], vecInt[i - 1]);
         }
     }
 }

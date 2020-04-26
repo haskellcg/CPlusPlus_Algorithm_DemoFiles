@@ -15,9 +15,7 @@ void bubble_sort(vector<uint32_t> &vecInt)
         bool bSwapped= false;
         while (j < (vecInt.size() - i)){
             if (vecInt[j] > vecInt[j + 1]){
-                uint32_t nTemp = vecInt[j];
-                vecInt[j] = vecInt[j + 1];
-                vecInt[j + 1] = nTemp;
+                swap_data(vecInt[j], vecInt[j + 1]);
                 bSwapped = true;
                 // DEBUG
                 // print_highlight_msg(to_string(vecInt)+ "\n");

@@ -178,9 +178,7 @@ bool Binary_Min_Heap::change_value(size_t nIndex, uint32_t nValue)
             size_t nParentIndex = get_parent_index(nIndex);
             while (0 != nIndex){
                 if (*(m_pArray + nIndex) < *(m_pArray + nParentIndex)){
-                    uint32_t nTemp = *(m_pArray + nParentIndex);
-                    *(m_pArray + nParentIndex) = *(m_pArray + nIndex);
-                    *(m_pArray + nIndex) = nTemp;
+                    swap_data(*(m_pArray + nIndex), *(m_pArray + nParentIndex));
                     nIndex = nParentIndex;
                     nParentIndex = get_parent_index(nIndex);
                 } else {
@@ -243,9 +241,7 @@ void Binary_Min_Heap::min_heapify(size_t nRoot)
             nMinIndex = nRightChild;
         }
         if (nRoot != nMinIndex){
-            uint32_t nTemp = *(m_pArray + nRoot);
-            *(m_pArray + nRoot) = *(m_pArray + nMinIndex);
-            *(m_pArray + nMinIndex) = nTemp;
+            swap_data(*(m_pArray + nRoot), *(m_pArray + nMinIndex));
         } else {
             break;
         }
