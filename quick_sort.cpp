@@ -6,9 +6,45 @@
 
 #include "quick_sort.h"
 
+int32_t partition(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd)
+{
+    // use last element as pivot
+    uint32_t nPivot = vecInt[nEnd];
+    // while loop is running:
+    //      [nBegin, nSplitIndex] are the elements that < nPivot
+    //      [nSplitIndex + 1, nScanIndex - 1] are the elements that >= nPivot
+    int32_t nSplitIndex = nBegin - 1;
+    for(int32_t nScanIndex = nBegin; nScanIndex < nEnd; ++nScanIndex){
+        if (vecInt[nScanIndex] < nPivot){
+            ++nSplitIndex;
+            if (nSplitIndex != nScanIndex){
+                uint32_t nTemp = vecInt[nSplitIndex];
+                vecInt[nSplitIndex] = vecInt[nScanIndex];
+                vecInt[nScanIndex] = nTemp;
+            }
+        }
+    }
+    if ((nSplitIndex + 1) != nEnd){
+        vecInt[nEnd] = vecInt[nSplitIndex + 1];
+        vecInt[nSplitIndex + 1] = nPivot;
+    }
+    return (nSplitIndex + 1);
+}
+
+void quick_sort(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd)
+{
+    if (nBegin < nEnd){
+        // (nBegin != nEnd) did't work, cause sometimes nBegin > nEnd
+        // like pivot is not always in the mid
+        int32_t nMid = partition(vecInt, nBegin, nEnd);
+        quick_sort(vecInt, nBegin, nMid - 1);
+        quick_sort(vecInt, nMid + 1, nEnd);
+    }
+}
+
 void quick_sort(vector<uint32_t> &vecInt)
 {
-    // TODO: add code
+    quick_sort(vecInt, 0, (vecInt.size() - 1));
 }
 
 void quick_sort_test()
