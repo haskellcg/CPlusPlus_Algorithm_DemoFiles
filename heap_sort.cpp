@@ -116,6 +116,84 @@ void Binary_Min_Heap::build_min_heap()
     }
 }
 
+void Binary_Min_Heap::insert(uint32_t nValue)
+{
+    // array is full
+    if (m_nCapacity == m_nSize){
+        if (0 == m_nCapacity){
+            m_nCapacity = 2;
+        } else {
+            m_nCapacity <<= 1;
+        }
+        uint32_t *pArray = new uint32_t[m_nCapacity];
+        for (size_t i = 0; i < m_nSize; ++i){
+            *(pArray + i) = *(m_pArray + i);
+        }
+        if (NULL == m_pArray){
+            delete []m_pArray;
+            m_pArray = NULL;
+        }
+        m_pArray = pArray;
+    }
+    *(m_pArray + m_nSize) = MAX_UINT32;
+    ++m_nSize;
+    change_value((m_nSize - 1), nValue);
+}
+
+uint32_t Binary_Min_Heap::get_minimum() const
+{
+    if (m_nSize > 0){
+        return *(m_pArray);
+    } else {
+        return MAX_UINT32;
+    }
+}
+
+uint32_t Binary_Min_Heap::extract_minimum()
+{
+    if (m_nSize > 0){
+        uint32_t nMin = *(m_pArray);
+        *(m_pArray) = *(m_pArray + m_nSize - 1);
+        --m_nSize;
+        min_heapify(0);
+        return nMin;
+    } else {
+        return MAX_UINT32;
+    }
+}
+
+bool Binary_Min_Heap::change_value(size_t nIndex, uint32_t nValue)
+{
+    if (nIndex < m_nSize){
+        if (nValue >= *(m_pArray + nIndex)){
+            // if nValue is bigger, it make root as nIndex is not heap
+            // and its children are still heap
+            // so we only need do heapify
+            *(m_pArray + nIndex) = nValue;
+            min_heapify(nIndex);
+        } else {
+            // if nValue is smaller, it still keep as heap,
+            // but its parent maybe become not heap
+            *(m_pArray + nIndex) = nValue;
+            size_t nParentIndex = get_parent_index(nIndex);
+            while (0 != nIndex){
+                if (*(m_pArray + nIndex) < *(m_pArray + nParentIndex)){
+                    uint32_t nTemp = *(m_pArray + nParentIndex);
+                    *(m_pArray + nParentIndex) = *(m_pArray + nIndex);
+                    *(m_pArray + nIndex) = nTemp;
+                    nIndex = nParentIndex;
+                    nParentIndex = get_parent_index(nIndex);
+                } else {
+                    break;
+                }
+            }
+        }
+        return true;
+    } else {
+        return false;
+    }
+}
+
 size_t Binary_Min_Heap::get_parent_index(size_t nIndex) const
 {
     if (0 == nIndex){
@@ -177,13 +255,25 @@ void Binary_Min_Heap::min_heapify(size_t nRoot)
 
 void heap_sort(vector<uint32_t> &vecInt)
 {
-    // TODO: add code
+    /*
+    Binary_Min_Heap oHeapZero;
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        oHeapZero.insert(vecInt[i]);
+        // DEBUG
+        // print_warning_msg(oHeapZero.to_friendly_string() + "\n");
+    }
+    print_normal_msg(oHeapZero.to_string() + "\n");
+    print_warning_msg(oHeapZero.to_friendly_string() + "\n");
+    */
     Binary_Min_Heap oHeap(vecInt);
-    print_normal_msg(oHeap.to_string() + "\n");
-    print_warning_msg(oHeap.to_friendly_string() + "\n");
     oHeap.build_min_heap();
     print_normal_msg(oHeap.to_string() + "\n");
     print_warning_msg(oHeap.to_friendly_string() + "\n");
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        vecInt[i] = oHeap.extract_minimum();
+        // DEBUG
+        // print_warning_msg(oHeap.to_friendly_string() + "\n");
+    }
 }
 
 void heap_sort_test()

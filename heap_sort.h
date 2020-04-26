@@ -73,8 +73,46 @@ public:
 
     /**
      * @brief build min heap with current data
+     * @param
+     * @return void
+     * @remarks
      */
     void build_min_heap();
+
+    /**
+     * @brief insert a new nValue to the heap
+     * @param uint32_t nValue, new value to insert
+     * @return void
+     * @remarks
+     */
+    void insert(uint32_t nValue);
+
+    /**
+     * @brief get the minimum value
+     * @param
+     * @return uint32_t, the minimum value
+     * @remarks
+     *          if heap is empty, return the MAX_UINT32
+     */
+    uint32_t get_minimum() const;
+
+    /**
+     * @brief extract the minimum and return it
+     * @param
+     * @return uint32_t, the minimum value
+     * @remarks
+     *          if heap is empty, return the MAX_UINT32
+     */
+    uint32_t extract_minimum();
+
+    /**
+     * @brief change the value of the nIndex
+     * @param size_t nIndex, position of element to change value
+     * @param uint32_t nValue, new value
+     * @return bool, true: success, false: failed
+     * @remarks
+     */
+    bool change_value(size_t nIndex, uint32_t nValue);
 
 private:
     /**
