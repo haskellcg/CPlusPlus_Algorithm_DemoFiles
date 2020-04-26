@@ -8,6 +8,10 @@
 
 int32_t partition(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd)
 {
+    // randomize to avoid too bad situation
+    srand(time(NULL));
+    int32_t nRandomIndex = nBegin + (rand() % (nEnd - nBegin + 1));
+    swap_data(vecInt[nEnd], vecInt[nRandomIndex]);
     // use last element as pivot
     uint32_t nPivot = vecInt[nEnd];
     // while loop is running:
