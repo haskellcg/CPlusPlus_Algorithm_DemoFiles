@@ -5,7 +5,7 @@
   * relate to Strassen algorithm    
   [Coppersmith-Winograd algorithm](https://en.wikipedia.org/wiki/Coppersmith%E2%80%93Winograd_algorithm)    
   [Galactic algorithm](https://en.wikipedia.org/wiki/Galactic_algorithm)
-  * sort algorithms stablity
+  * sort algorithms stability
     * stable: bubble sort, insert sort, merge sort, radix sort, counting sort
     * unstable: selection sort, shell sort, quick sort, heap sort
   * sort algorithm in place
