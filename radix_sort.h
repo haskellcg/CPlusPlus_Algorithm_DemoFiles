@@ -14,7 +14,7 @@
  * @param vector<uint32_t> &vecInt, vector need to be sorted
  * @return void
  * @remarks
- *      TODO
+ *      assume all int is 3 digits
  */
 void radix_sort(vector<uint32_t> &vecInt);
 
