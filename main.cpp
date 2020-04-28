@@ -5,6 +5,7 @@
  *************************************************************************/
 
 #include "bubble_sort.h"
+#include "bucket_sort.h"
 #include "counting_sort.h"
 #include "heap_sort.h"
 #include "insert_sort.h"
@@ -20,6 +21,7 @@ int main(int argc, char *argv[])
 {
     if ((argc >= 2) && ("-a" == string(argv[1]))){
         bubble_sort_test();
+        bucket_sort_test();
         counting_sort_test();
         heap_sort_test();
         insert_sort_test();
@@ -33,6 +35,7 @@ int main(int argc, char *argv[])
     } else {
         // default only test the current coding algorithm
         radix_sort_test();
+        bucket_sort_test();
     }
 
     return 0;
