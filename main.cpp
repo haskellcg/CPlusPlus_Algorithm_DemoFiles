@@ -11,6 +11,7 @@
 #include "maximum_subarray.h"
 #include "merge_sort.h"
 #include "quick_sort.h"
+#include "radix_sort.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
 #include "strassen_matrix_multiply.h"
@@ -25,12 +26,13 @@ int main(int argc, char *argv[])
         maximum_subarray_test();
         merge_sort_test();
         quick_sort_test();
+        radix_sort_test();
         selection_sort_test();
         shell_sort_test();
         strassen_matrix_multiply_test();
     } else {
         // default only test the current coding algorithm
-        counting_sort_test();
+        radix_sort_test();
     }
 
     return 0;
