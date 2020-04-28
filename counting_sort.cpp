@@ -8,7 +8,29 @@
 
 void counting_sort(vector<uint32_t> &vecInt)
 {
-    // TODO: add counting sort code
+    // assume all the int is in [0, 1000)
+    uint32_t arrayIntRepeatTimes[1000] = {0};
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        arrayIntRepeatTimes[vecInt[i]] += 1;
+    }
+    // calculate relative order according to repeat times
+    // [4, 1, 2, 5]
+    // [4, 5, 7, 12]
+    // after this loop:
+    //      (arrayIntRepeatTimes[vecInt]i]] - 1) is the exactly index of
+    //      last same value of vecInt[i]
+    //      and this is why we need reverse loop in the end
+    for (size_t i = 1; i < 1000; ++i){
+        arrayIntRepeatTimes[i] += arrayIntRepeatTimes[i - 1];
+    }
+    // vecCp copy the value of vecInt,
+    // so vecInt can store new value
+    vector<uint32_t> vecCp = vecInt;
+    // reverse loop to keep the same value in same order as they loop before
+    for (vector<uint32_t>::reverse_iterator ritrCp = vecCp.rbegin(); ritrCp != vecCp.rend(); ++ritrCp){
+        vecInt[(arrayIntRepeatTimes[*ritrCp]) - 1] = *ritrCp;
+        arrayIntRepeatTimes[*ritrCp] -= 1;
+    }
 }
 
 void counting_sort_test()
