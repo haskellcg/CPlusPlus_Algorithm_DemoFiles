@@ -31,6 +31,36 @@ string Maximum_SubArray_Result::to_string() const
     return ossResult.str();
 }
 
+size_t Maximum_SubArray_Result::get_begin() const
+{
+    return m_nBegin;
+}
+
+void Maximum_SubArray_Result::set_begin(size_t nBegin)
+{
+    m_nBegin = nBegin;
+}
+
+size_t Maximum_SubArray_Result::get_end() const
+{
+    return m_nEnd;
+}
+
+void Maximum_SubArray_Result::set_end(size_t nEnd)
+{
+    m_nEnd = nEnd;
+}
+
+int32_t Maximum_SubArray_Result::get_sum() const
+{
+    return m_nSum;
+}
+
+void Maximum_SubArray_Result::set_sum(int32_t nSum)
+{
+    m_nSum = nSum;
+}
+
 bool operator==(const Maximum_SubArray_Result &oL, const Maximum_SubArray_Result &oR)
 {
     if ((oL.m_nBegin == oR.m_nBegin) &&
@@ -93,11 +123,11 @@ Maximum_SubArray_Result maximum_subarray_solver(const vector<int32_t> &vecInt, s
         // calculate mid part
         Maximum_SubArray_Result oMaximum_SubArray_MidResult =
             maximum_subarray_through_mid_solver(vecInt, nBegin, nMid, nEnd);
-        if ((oMaximum_SubArray_LeftResult.m_nSum > oMaximum_SubArray_MidResult.m_nSum) &&
-            (oMaximum_SubArray_LeftResult.m_nSum > oMaximum_SubArray_RightResult.m_nSum)){
+        if ((oMaximum_SubArray_LeftResult.get_sum() > oMaximum_SubArray_MidResult.get_sum()) &&
+            (oMaximum_SubArray_LeftResult.get_sum() > oMaximum_SubArray_RightResult.get_sum())){
             return oMaximum_SubArray_LeftResult;
-        } else if ((oMaximum_SubArray_RightResult.m_nSum > oMaximum_SubArray_LeftResult.m_nSum) &&
-                   (oMaximum_SubArray_RightResult.m_nSum > oMaximum_SubArray_MidResult.m_nSum)){
+        } else if ((oMaximum_SubArray_RightResult.get_sum() > oMaximum_SubArray_LeftResult.get_sum()) &&
+                   (oMaximum_SubArray_RightResult.get_sum() > oMaximum_SubArray_MidResult.get_sum())){
             return oMaximum_SubArray_RightResult;
         } else {
             return oMaximum_SubArray_MidResult;

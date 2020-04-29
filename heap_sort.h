@@ -114,6 +114,14 @@ public:
      */
     bool change_value(size_t nIndex, uint32_t nValue);
 
+    /**
+     * @brief check heap is empty or not
+     * @param
+     * @return bool
+     * @remarks
+     */
+    bool is_empty() const;
+
 private:
     /**
      * @brief calculate parent's index of nIndex

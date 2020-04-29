@@ -192,6 +192,11 @@ bool Binary_Min_Heap::change_value(size_t nIndex, uint32_t nValue)
     }
 }
 
+bool Binary_Min_Heap::is_empty() const
+{
+    return (0 == m_nSize);
+}
+
 size_t Binary_Min_Heap::get_parent_index(size_t nIndex) const
 {
     if (0 == nIndex){
