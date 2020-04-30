@@ -14,7 +14,7 @@
  * @param vector<uint32_t> &vecInt, vector need to be sorted
  * @return void
  * @remarks
- *          TODO
+ *          assume all int is 3 digit
  */
 void bucket_sort(vector<uint32_t> &vecInt);
 
