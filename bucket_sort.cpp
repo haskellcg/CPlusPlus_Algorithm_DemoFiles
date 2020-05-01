@@ -73,6 +73,44 @@ private:
     Bucket *m_pNext;
 };
 
+Bucket::~Bucket()
+{
+    m_nData = MAX_UINT32;
+    m_pNext = NULL;
+}
+
+Bucket::Bucket()
+:   m_nData(MAX_UINT32),
+    m_pNext(NULL)
+{
+}
+
+Bucket::Bucket(uint32_t nData, Bucket *pNext)
+:   m_nData(nData),
+    m_pNext(pNext)
+{
+}
+
+uint32_t Bucket::get_data() const
+{
+    return m_nData;
+}
+
+void Bucket::set_data(uint32_t nData)
+{
+    m_nData = nData;
+}
+
+Bucket *Bucket::get_next() const
+{
+    return m_pNext;
+}
+
+void Bucket::set_next(Bucket *pNext)
+{
+    m_pNext = pNext;
+}
+
 void bucket_sort(vector<uint32_t> &vecInt)
 {
     // TODO: add code
