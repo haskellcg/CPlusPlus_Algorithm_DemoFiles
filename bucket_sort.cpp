@@ -111,9 +111,40 @@ void Bucket::set_next(Bucket *pNext)
     m_pNext = pNext;
 }
 
+void insert_sort_bucket_list(Bucket &oHead)
+{
+    Bucket oHeadNew;
+    Bucket *pCurrent = oHead.get_next();
+    while (NULL != pCurrent){
+        oHead.set_next(pCurrent->get_next());
+        pCurrent->set_next(NULL);
+
+        // insert current to new list
+        Bucket *pInsert = &oHeadNew;
+        while ((NULL != pInsert->get_next()) && 
+               (pCurrent->get_data() < pInsert->get_data())){
+            pInsert = pInsert->get_next();
+        }
+        pCurrent->set_next(pInsert->get_next());
+        pInsert->set_next(pCurrent);
+
+        // next bucket
+        pCurrent = oHead.get_next();
+    }
+    oHead.set_next(oHeadNew.get_next());
+}
+
 void bucket_sort(vector<uint32_t> &vecInt)
 {
     // TODO: add code
+    Bucket arrayBucketHeads[10];
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        size_t nIndex = vecInt[i] / 100;
+        Bucket *pBucket = new Bucket(vecInt[i], NULL);
+
+        pBucket->set_next(arrayBucketHeads[nIndex].get_next());
+        arrayBucketHeads[nIndex].set_next(pBucket);
+    }
 }
 
 void bucket_sort_test()
