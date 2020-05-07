@@ -122,7 +122,7 @@ void insert_sort_bucket_list(Bucket &oHead)
         // insert current to new list
         Bucket *pInsert = &oHeadNew;
         while ((NULL != pInsert->get_next()) && 
-               (pCurrent->get_data() < pInsert->get_data())){
+               (pCurrent->get_data() > pInsert->get_next()->get_data())){
             pInsert = pInsert->get_next();
         }
         pCurrent->set_next(pInsert->get_next());
@@ -136,7 +136,6 @@ void insert_sort_bucket_list(Bucket &oHead)
 
 void bucket_sort(vector<uint32_t> &vecInt)
 {
-    // TODO: add code
     Bucket arrayBucketHeads[10];
     for (size_t i = 0; i < vecInt.size(); ++i){
         size_t nIndex = vecInt[i] / 100;
@@ -144,6 +143,20 @@ void bucket_sort(vector<uint32_t> &vecInt)
 
         pBucket->set_next(arrayBucketHeads[nIndex].get_next());
         arrayBucketHeads[nIndex].set_next(pBucket);
+    }
+
+    // use insert sort to sort every bucket list
+    // and after sort, we can extract them
+    vecInt.clear();
+    for (size_t i = 0; i < 10; ++i){
+        insert_sort_bucket_list(arrayBucketHeads[i]);
+        while (NULL != arrayBucketHeads[i].get_next()){
+            Bucket *pCurrent = arrayBucketHeads[i].get_next();
+            arrayBucketHeads[i].set_next(pCurrent->get_next());
+            pCurrent->set_next(NULL);
+            vecInt.push_back(pCurrent->get_data());
+            delete pCurrent;
+        }
     }
 }
 
