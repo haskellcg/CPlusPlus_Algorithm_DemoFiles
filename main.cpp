@@ -11,6 +11,7 @@
 #include "insert_sort.h"
 #include "maximum_subarray.h"
 #include "merge_sort.h"
+#include "order_statistic_funtions.h"
 #include "quick_sort.h"
 #include "radix_sort.h"
 #include "selection_sort.h"
@@ -27,6 +28,7 @@ int main(int argc, char *argv[])
         insert_sort_test();
         maximum_subarray_test();
         merge_sort_test();
+        order_statistic_funtions_test();
         quick_sort_test();
         radix_sort_test();
         selection_sort_test();
@@ -34,8 +36,7 @@ int main(int argc, char *argv[])
         strassen_matrix_multiply_test();
     } else {
         // default only test the current coding algorithm
-        radix_sort_test();
-        bucket_sort_test();
+        order_statistic_funtions_test();
     }
 
     return 0;

@@ -10,6 +10,7 @@ OBJS=bubble_sort.o\
      main.o\
      maximum_subarray.o\
      merge_sort.o\
+     order_statistic_funtions.o\
      quick_sort.o\
      radix_sort.o\
      selection_sort.o\
