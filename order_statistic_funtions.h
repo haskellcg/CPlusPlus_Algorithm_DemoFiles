@@ -34,22 +34,20 @@ bool get_min_max_value_index(const vector<uint32_t> &vecInt, pair<size_t, size_t
  * @param const vector<uint32_t> &vecInt, vector int
  * @param size_t nNth, Nth order
  * @param uint32_t &nNthValue, the Nth value
- * @param uint32_t &nCompareTimes, compare times in the funtion
  * @return bool, true if find the Nth value, flase if cant find the nNth value
  * @remarks
  */
-bool select_nth_with_partition(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue, uint32_t &nCompareTimes);
+bool select_nth_with_partition(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue);
 
 /**
  * @brief get the nNth value in the vector vecInt while using 5group method
  * @param const vector<uint32_t> &vecInt, vector int
  * @param size_t nNth, Nth order
  * @param uint32_t &nNthValue, the Nth value
- * @param uint32_t &nCompareTimes, compare times in the funtion
  * @return bool, true if find the Nth value, flase if cant find the nNth value
  * @remarks
  */
-bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue, uint32_t &nCompareTimes);
+bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue);
 
 /**
  * @brief test order statistic funtions
