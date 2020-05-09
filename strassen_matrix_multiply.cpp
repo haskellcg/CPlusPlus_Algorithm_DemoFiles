@@ -198,7 +198,7 @@ void strassen_matrix_multiply_test()
     vector<vector<int32_t>> matrixA;
     for (size_t i = 0; i < 4; ++i){
         vector<int32_t> vecInt;
-        vecInt.insert(vecInt.begin(), begin(matrixSrcA[i]), end(matrixSrcA[i]));
+        vecInt.insert(vecInt.end(), begin(matrixSrcA[i]), end(matrixSrcA[i]));
         matrixA.push_back(vecInt);
     }
     print_normal_msg(to_string(matrixA) + "\n");
@@ -211,7 +211,7 @@ void strassen_matrix_multiply_test()
     vector<vector<int32_t>> matrixB;
     for (size_t i = 0; i < 4; ++i){
         vector<int32_t> vecInt;
-        vecInt.insert(vecInt.begin(), begin(matrixSrcB[i]), end(matrixSrcB[i]));
+        vecInt.insert(vecInt.end(), begin(matrixSrcB[i]), end(matrixSrcB[i]));
         matrixB.push_back(vecInt);
     }
     print_normal_msg(to_string(matrixB) + "\n");
@@ -224,7 +224,7 @@ void strassen_matrix_multiply_test()
     vector<vector<int32_t>> matrixC;
     for (size_t i = 0; i < 4; ++i){
         vector<int32_t> vecInt;
-        vecInt.insert(vecInt.begin(), begin(matrixSrcC[i]), end(matrixSrcC[i]));
+        vecInt.insert(vecInt.end(), begin(matrixSrcC[i]), end(matrixSrcC[i]));
         matrixC.push_back(vecInt);
     }
     print_highlight_msg("expect result:\n");

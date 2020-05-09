@@ -64,11 +64,22 @@ bool get_min_max_value_index(const vector<uint32_t> &vecInt, pair<size_t, size_t
     return true;
 }
 
+bool select_nth_with_partition(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue, uint32_t &nCompareTimes)
+{
+    return true;
+}
+
+bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue, uint32_t &nCompareTimes)
+{
+    return true;
+}
+
 void order_statistic_funtions_test()
 {
     print_highlight_msg(">>> Test order statistic funtions:\n");
+    uint32_t arrayInt[] = {154, 384, 559, 341, 384, 460, 981, 648, 900, 844};
     vector<uint32_t> vecSrc;
-    get_random_vector(vecSrc, 10);
+    vecSrc.insert(vecSrc.end(), begin(arrayInt), end(arrayInt));
     print_normal_msg(to_string(vecSrc) + "\n");
 
     size_t nMinIndex = MAX_UINT32;

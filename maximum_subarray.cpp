@@ -145,7 +145,7 @@ void maximum_subarray_test()
     print_highlight_msg(">>> Test maximum subarray funtion:\n");
     int32_t arraySrc[] = {-1, 1, 2, 3, 4, -5};
     vector<int32_t> vecSrc;
-    vecSrc.insert(vecSrc.begin(), begin(arraySrc), end(arraySrc));
+    vecSrc.insert(vecSrc.end(), begin(arraySrc), end(arraySrc));
     print_normal_msg(to_string(vecSrc) + "\n");
     Maximum_SubArray_Result oMaximum_SubArray_Result = maximum_subarray(vecSrc);
     print_normal_msg(oMaximum_SubArray_Result.to_string() + "\n");
