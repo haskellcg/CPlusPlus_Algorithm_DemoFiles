@@ -4,6 +4,7 @@
  * description: main function for test
  *************************************************************************/
 
+#include "basic_stack.h"
 #include "bubble_sort.h"
 #include "bucket_sort.h"
 #include "counting_sort.h"
@@ -21,6 +22,7 @@
 int main(int argc, char *argv[])
 {
     if ((argc >= 2) && ("-a" == string(argv[1]))){
+        basic_stack_test();
         bubble_sort_test();
         bucket_sort_test();
         counting_sort_test();
@@ -37,6 +39,7 @@ int main(int argc, char *argv[])
     } else {
         // default only test the current coding algorithm
         order_statistic_funtions_test();
+        basic_stack_test();
     }
 
     return 0;

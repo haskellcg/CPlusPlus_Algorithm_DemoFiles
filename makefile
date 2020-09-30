@@ -1,7 +1,8 @@
 PROJ=algorithms
 GCC=g++
 
-OBJS=bubble_sort.o\
+OBJS=basic_stack.o\
+     bubble_sort.o\
      bucket_sort.o\
      common_types.o\
      counting_sort.o\
