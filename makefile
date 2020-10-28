@@ -11,6 +11,7 @@ OBJS=basic_stack.o\
      main.o\
      maximum_subarray.o\
      merge_sort.o\
+     nowcoder_com_first_part.o\
      order_statistic_funtions.o\
      quick_sort.o\
      radix_sort.o\

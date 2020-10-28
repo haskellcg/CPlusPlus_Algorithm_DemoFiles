@@ -12,6 +12,7 @@
 #include "insert_sort.h"
 #include "maximum_subarray.h"
 #include "merge_sort.h"
+#include "nowcoder_com_first_part.h"
 #include "order_statistic_funtions.h"
 #include "quick_sort.h"
 #include "radix_sort.h"
@@ -30,6 +31,8 @@ int main(int argc, char *argv[])
         insert_sort_test();
         maximum_subarray_test();
         merge_sort_test();
+        // dont have unittest code for this part, so ignored now
+        // nowcoder_com_test();
         order_statistic_funtions_test();
         quick_sort_test();
         radix_sort_test();
@@ -39,7 +42,7 @@ int main(int argc, char *argv[])
     } else {
         // default only test the current coding algorithm
         order_statistic_funtions_test();
-        basic_stack_test();
+        nowcoder_com_test();
     }
 
     return 0;
