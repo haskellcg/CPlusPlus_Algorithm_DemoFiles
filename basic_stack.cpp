@@ -100,7 +100,7 @@ void basic_stack::reserve(size_t nCapacity)
 
 void basic_stack_test()
 {
-    print_highlight_msg(">>> Test basic stack straucture:\n");
+    print_highlight_msg(">>> Test basic stack structure:\n");
     int32_t arrayInt[10] = {76, 28, -34, -56, 89, 92, 66, 49, 15, 7};
     basic_stack oStack;
     for (size_t i = 0; i < 10; ++i){

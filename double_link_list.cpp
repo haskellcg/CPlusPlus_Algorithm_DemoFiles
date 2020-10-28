@@ -9,4 +9,5 @@
 
 void double_link_list_test()
 {
+    print_highlight_msg(">>> Test double link list structure:\n");
 }

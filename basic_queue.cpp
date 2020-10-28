@@ -9,4 +9,5 @@
 
 void basic_queue_test()
 {
+    print_highlight_msg(">>> Test basic queue structure:\n");
 }
