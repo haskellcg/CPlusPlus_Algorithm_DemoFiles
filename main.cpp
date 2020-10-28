@@ -4,10 +4,12 @@
  * description: main function for test
  *************************************************************************/
 
+#include "basic_queue.h"
 #include "basic_stack.h"
 #include "bubble_sort.h"
 #include "bucket_sort.h"
 #include "counting_sort.h"
+#include "double_link_list.h"
 #include "heap_sort.h"
 #include "insert_sort.h"
 #include "maximum_subarray.h"
@@ -23,10 +25,12 @@
 int main(int argc, char *argv[])
 {
     if ((argc >= 2) && ("-a" == string(argv[1]))){
+        basic_queue_test();
         basic_stack_test();
         bubble_sort_test();
         bucket_sort_test();
         counting_sort_test();
+        double_link_list_test();
         heap_sort_test();
         insert_sort_test();
         maximum_subarray_test();
@@ -41,8 +45,10 @@ int main(int argc, char *argv[])
         strassen_matrix_multiply_test();
     } else {
         // default only test the current coding algorithm
-        order_statistic_funtions_test();
+        basic_queue_test();
+        double_link_list_test();
         nowcoder_com_test();
+        order_statistic_funtions_test();
     }
 
     return 0;

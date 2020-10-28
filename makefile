@@ -1,11 +1,13 @@
 PROJ=algorithms
 GCC=g++
 
-OBJS=basic_stack.o\
+OBJS=basic_queue.o\
+     basic_stack.o\
      bubble_sort.o\
      bucket_sort.o\
      common_types.o\
      counting_sort.o\
+     double_link_list.o\
      heap_sort.o\
      insert_sort.o\
      main.o\
