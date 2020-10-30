@@ -13,7 +13,7 @@ Basic_Queue::Basic_Queue()
 {
 }
 
-bool Basic_Queue::enqueue(int nInt)
+bool Basic_Queue::enqueue(int32_t nInt)
 {
     if (is_full()){
         return false;
@@ -26,7 +26,7 @@ bool Basic_Queue::enqueue(int nInt)
     }
 }
 
-bool Basic_Queue::dequeue(int &nInt)
+bool Basic_Queue::dequeue(int32_t &nInt)
 {
     if (is_empty()){
         return false;
@@ -63,7 +63,7 @@ bool Basic_Queue::is_full() const
 void basic_queue_test()
 {
     print_highlight_msg(">>> Test basic queue structure:\n");
-    int arrayData[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    int32_t arrayData[10] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
     Basic_Queue oQueue;
     for (int i = 0; i < 5; ++i){
         oQueue.enqueue(arrayData[i]);

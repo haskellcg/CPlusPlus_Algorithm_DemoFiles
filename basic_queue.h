@@ -32,7 +32,7 @@ public:
      * @return bool, false if queue if full
      * @remarks
      */
-    bool enqueue(int nInt);
+    bool enqueue(int32_t nInt);
 
     /**
      * @brief remove data from the queue
@@ -40,7 +40,7 @@ public:
      * @return bool, false if queue is empty
      * @remarks
      */
-    bool dequeue(int &nInt);
+    bool dequeue(int32_t &nInt);
 
     /**
      * @brief get the size of the queue
@@ -68,7 +68,7 @@ public:
 
 private:
     /*< array for queue use */
-    int m_arrayData[QUEUE_LENGTH];
+    int32_t m_arrayData[QUEUE_LENGTH];
     /*< head of the queue */
     size_t m_nHead;
     /*< tail of the queue */
