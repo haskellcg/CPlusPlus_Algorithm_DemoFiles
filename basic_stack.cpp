@@ -6,14 +6,14 @@
 
 #include "basic_stack.h"
 
-basic_stack::basic_stack()
+Basic_Stack::Basic_Stack()
 {
     m_nCapacity = 1;
     m_nSize = 0;
     m_pData = new int32_t[m_nCapacity];
 }
 
-basic_stack::basic_stack(const basic_stack &oStack)
+Basic_Stack::Basic_Stack(const Basic_Stack &oStack)
 {
     m_nCapacity = oStack.m_nCapacity;
     m_nSize = oStack.m_nSize;
@@ -23,7 +23,7 @@ basic_stack::basic_stack(const basic_stack &oStack)
     }
 }
 
-basic_stack &basic_stack::operator=(const basic_stack &oStack)
+Basic_Stack &Basic_Stack::operator=(const Basic_Stack &oStack)
 {
     if (&oStack == this){
         return *this;
@@ -38,7 +38,7 @@ basic_stack &basic_stack::operator=(const basic_stack &oStack)
     return *this;
 }
 
-basic_stack::~basic_stack()
+Basic_Stack::~Basic_Stack()
 {
     if (NULL != m_pData){
         delete []m_pData;
@@ -47,12 +47,12 @@ basic_stack::~basic_stack()
     m_nCapacity = 0;
 }
 
-size_t basic_stack::size() const
+size_t Basic_Stack::size() const
 {
     return m_nSize;
 }
 
-string basic_stack::to_string() const
+string Basic_Stack::to_string() const
 {
     ostringstream oss;
     vector<int32_t> vecInt;
@@ -65,7 +65,7 @@ string basic_stack::to_string() const
     return oss.str();
 }
 
-void basic_stack::push(int32_t nInt)
+void Basic_Stack::push(int32_t nInt)
 {
     if (m_nSize >= m_nCapacity){
         reserve(m_nCapacity << 1);
@@ -74,7 +74,7 @@ void basic_stack::push(int32_t nInt)
     ++m_nSize;
 }
 
-bool basic_stack::pop(int32_t &nInt)
+bool Basic_Stack::pop(int32_t &nInt)
 {
     if (m_nSize > 0){
         nInt = *(m_pData + m_nSize - 1);
@@ -85,7 +85,7 @@ bool basic_stack::pop(int32_t &nInt)
     }
 }
 
-void basic_stack::reserve(size_t nCapacity)
+void Basic_Stack::reserve(size_t nCapacity)
 {
     if (nCapacity > m_nCapacity){
         int32_t *pNewData = new int32_t[nCapacity];
@@ -102,7 +102,7 @@ void basic_stack_test()
 {
     print_highlight_msg(">>> Test basic stack structure:\n");
     int32_t arrayInt[10] = {76, 28, -34, -56, 89, 92, 66, 49, 15, 7};
-    basic_stack oStack;
+    Basic_Stack oStack;
     for (size_t i = 0; i < 10; ++i){
         oStack.push(arrayInt[i]);
         // print_warning_msg(oStack.to_string() + "\n");
@@ -112,7 +112,7 @@ void basic_stack_test()
     } else {
         print_correct_msg("basic stack size correct\n");
     }
-    basic_stack oStackCopy;
+    Basic_Stack oStackCopy;
     oStackCopy = oStack;
     if (10 != oStackCopy.size()){
         print_error_msg("basic stack copy size error\n");

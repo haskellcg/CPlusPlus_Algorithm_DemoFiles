@@ -12,7 +12,7 @@
 /**
  * @brief basic stack data structure
  */
-class basic_stack
+class Basic_Stack
 {
 public:
     /**
@@ -21,23 +21,23 @@ public:
      * @return
      * @remarks
      */
-    basic_stack();
+    Basic_Stack();
 
     /**
      * @brief copy constructor
-     * @param const basic_stack &oStack, other stack
+     * @param const Basic_Stack &oStack, other stack
      * @return
      * @remarks
      */
-    basic_stack(const basic_stack &oStack);
+    Basic_Stack(const Basic_Stack &oStack);
 
     /**
      * @brief override operator =
-     * @param const basic_stack &oStack, other stack
-     * @return basic_stack &, *this
+     * @param const Basic_Stack &oStack, other stack
+     * @return Basic_Stack &, *this
      * @remarks
      */
-    basic_stack &operator=(const basic_stack &oStack);
+    Basic_Stack &operator=(const Basic_Stack &oStack);
 
     /**
      * @brief destructor
@@ -45,7 +45,7 @@ public:
      * @return
      * @remarks
      */
-    virtual ~basic_stack();
+    virtual ~Basic_Stack();
     
     /**
      * @brief get the size of the stack
