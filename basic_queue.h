@@ -9,7 +9,7 @@
 
 #include "common_types.h"
 
-#define QUEUE_LENGTH 20
+#define QUEUE_LENGTH 10
 
 /**
  * @brief basic queue data structure
@@ -18,6 +18,38 @@
 class Basic_Queue
 {
 public:
+    /**
+     * @brief default constructor
+     * @param
+     * @return
+     * @remarks
+     */
+    Basic_Queue();
+
+    /**
+     * @brief put data to the queue
+     * @param int nInt, the data
+     * @return bool, false if queue if full
+     * @remarks
+     */
+    bool enqueue(int nInt);
+
+    /**
+     * @brief remove data from the queue
+     * @param int &nInt, the data removed
+     * @return bool, false if queue is empty
+     * @remarks
+     */
+    bool dequeue(int &nInt);
+
+    /**
+     * @brief get the size of the queue
+     * @param
+     * @return size_t
+     * @remarks
+     */
+    size_t size() const;
+
     /**
      * @brief queue is empty or not
      * @param
