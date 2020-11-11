@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "common_types.h"
 #include "nowcoder_com_first_part.h"
 
 using namespace std;
@@ -73,6 +74,7 @@ void nowcoder_com_hw_hj2()
 
 void nowcoder_com_test()
 {
+    print_highlight_msg(">>> Test nowcoder.com testers <<<\n");
     // nowcoder_com_hw_hj1();
     // nowcoder_com_hw_hj2();
 }

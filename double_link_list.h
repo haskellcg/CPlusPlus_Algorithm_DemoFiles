@@ -65,6 +65,64 @@ private:
 };
 
 /**
+ * @brief double link list
+ */
+class Double_Link_List
+{
+public:
+    /**
+     * @brief default constructor
+     */
+    Double_Link_List();
+
+    /**
+     * @brief destructor
+     */
+    virtual ~Double_Link_List();
+
+    /**
+     * @brief search nKey in the list
+     * @param uint32_t nKey, key
+     * @return DLNode *, the DLNode that has the value equals to nKey,
+     *                   NULL if can't find it
+     * @remarks
+     */
+    DLNode *search(uint32_t nKey);
+
+    /**
+     * @brief insert nData to the list head
+     * @param uint32_t nData, data
+     * @return DLNode *, the DLNode inserted
+     * @remarks
+     */
+    DLNode *insert(uint32_t nData);
+
+    /**
+     * @brief delete pDLNode from list
+     * @param DLNode *pDLNode, then DLNode
+     * @return void
+     */
+    void delete_node(DLNode *pDLNode);
+
+private:
+    /**
+     * @brief private copy constructor
+     */
+    Double_Link_List(const Double_Link_List &oDLList);
+
+    /**
+     * @brief private assign override
+     */
+    Double_Link_List &operator=(const Double_Link_List &oDLList);
+
+private:
+    /*< head of the list */
+    DLNode *m_pHead;
+    /*< number of the data */
+    size_t m_nSize;
+};
+
+/**
  * @brief test double link list data structure
  * @param
  * @return void

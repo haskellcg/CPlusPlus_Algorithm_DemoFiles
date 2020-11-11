@@ -43,7 +43,7 @@ void DLNode::set_data(uint32_t nData)
 
 void DLNode::set_prev(DLNode *pPrev)
 {
-    m_pPrev = pPrev
+    m_pPrev = pPrev;
 }
 
 void DLNode::set_next(DLNode *pNext)

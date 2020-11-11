@@ -45,7 +45,6 @@ int main(int argc, char *argv[])
         strassen_matrix_multiply_test();
     } else {
         // default only test the current coding algorithm
-        basic_queue_test();
         double_link_list_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
