@@ -51,7 +51,78 @@ void DLNode::set_next(DLNode *pNext)
     m_pNext = pNext;
 }
 
+Double_Link_List::Double_Link_List()
+{
+    m_pHead = new DLNode(MAX_UINT32, NULL, NULL);
+    m_pHead->set_prev(m_pHead);
+    m_pHead->set_next(m_pHead);
+    m_nSize = 0;
+}
+
+Double_Link_List::~Double_Link_List()
+{
+    while (m_nSize > 0){
+        delete_node(m_pHead->get_next());
+    }
+    delete m_pHead;
+    m_pHead = NULL;
+}
+
+DLNode *Double_Link_List::search(uint32_t nKey)
+{
+    DLNode *pCurDLNode = m_pHead->get_next();
+    while (m_pHead != pCurDLNode){
+        if (nKey == pCurDLNode->get_data()){
+            return pCurDLNode;
+        }
+        pCurDLNode = pCurDLNode->get_next();
+    }
+    return NULL;
+}
+
+DLNode *Double_Link_List::insert(uint32_t nData)
+{
+    DLNode *pNewDLNode = new DLNode(nData, NULL, NULL);
+    m_pHead->get_next()->set_prev(pNewDLNode);
+    pNewDLNode->set_next(m_pHead->get_next());
+    m_pHead->set_next(pNewDLNode);
+    pNewDLNode->set_prev(m_pHead);
+    ++m_nSize;
+    return pNewDLNode;
+}
+
+void Double_Link_List::delete_node(DLNode *pDLNode)
+{
+    pDLNode->get_prev()->set_next(pDLNode->get_next());
+    pDLNode->get_next()->set_prev(pDLNode->get_prev());
+    pDLNode->set_next(NULL);
+    pDLNode->set_prev(NULL);
+    delete pDLNode;
+    --m_nSize;
+}
+
 void double_link_list_test()
 {
     print_highlight_msg(">>> Test double link list structure:\n");
+
+    uint32_t arrayData[5] = {1, 2, 3, 4, 5};
+
+    Double_Link_List oDLList;
+    for (int i = 0; i < 5; ++i){
+        oDLList.insert(arrayData[i]);
+    }
+
+    DLNode *pDLNode = oDLList.search(3);
+    if ((NULL != pDLNode) && (3 == pDLNode->get_data())){
+        print_correct_msg("3 is inserted\n");
+    } else {
+        print_error_msg("3 is not found\n");
+    }
+
+    oDLList.delete_node(pDLNode);
+    if (NULL == oDLList.search(3)){
+        print_correct_msg("3 is deleted\n");
+    } else {
+        print_error_msg("3 is not deleted\n");
+    }
 }

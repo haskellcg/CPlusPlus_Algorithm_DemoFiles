@@ -101,6 +101,8 @@ public:
      * @brief delete pDLNode from list
      * @param DLNode *pDLNode, then DLNode
      * @return void
+     * @remarks
+     *          make sure pDLNode is in the list
      */
     void delete_node(DLNode *pDLNode);
 
