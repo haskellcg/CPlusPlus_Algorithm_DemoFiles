@@ -8,6 +8,7 @@ OBJS=basic_queue.o\
      common_types.o\
      counting_sort.o\
      double_link_list.o\
+     hash_set.o\
      heap_sort.o\
      insert_sort.o\
      main.o\
@@ -20,6 +21,7 @@ OBJS=basic_queue.o\
      selection_sort.o\
      shell_sort.o\
      strassen_matrix_multiply.o\
+     string_hash_funtions.o\
 
 INCLUDES=\
 

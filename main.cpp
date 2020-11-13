@@ -10,6 +10,7 @@
 #include "bucket_sort.h"
 #include "counting_sort.h"
 #include "double_link_list.h"
+#include "hash_set.h"
 #include "heap_sort.h"
 #include "insert_sort.h"
 #include "maximum_subarray.h"
@@ -21,6 +22,7 @@
 #include "selection_sort.h"
 #include "shell_sort.h"
 #include "strassen_matrix_multiply.h"
+#include "string_hash_funtions.h"
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +33,7 @@ int main(int argc, char *argv[])
         bucket_sort_test();
         counting_sort_test();
         double_link_list_test();
+        hash_set_test();
         heap_sort_test();
         insert_sort_test();
         maximum_subarray_test();
@@ -43,11 +46,13 @@ int main(int argc, char *argv[])
         selection_sort_test();
         shell_sort_test();
         strassen_matrix_multiply_test();
+        string_hash_funtions_test();
     } else {
         // default only test the current coding algorithm
-        double_link_list_test();
+        hash_set_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
+        string_hash_funtions_test();
     }
 
     return 0;
