@@ -143,3 +143,14 @@ void print_highlight_msg(const string &strMsg)
 {
     cout << "\033[36m" << strMsg << "\033[0m";
 }
+
+uint32_t division_hash(uint32_t nK, uint32_t nM)
+{
+    return (nK % nM);
+}
+
+uint32_t multiplication_hash(uint32_t nK, uint32_t nLogM)
+{
+    uint32_t nKAMod1 = (uint32_t)((uint64_t)nK * 2654435769) % ((uint64_t)2 << 32);
+    return (nKAMod1 >> (32 - nLogM));
+}

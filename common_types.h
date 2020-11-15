@@ -159,4 +159,31 @@ void print_warning_msg(const string &strMsg);
  */
 void print_highlight_msg(const string &strMsg);
 
+/**
+ * @brief h(k) = k mod m
+ * @param uint32_t nK, k
+ * @param uint32_t nM, m
+ * @return uint32_t, hash value
+ * @remarks
+ *          nM 最好选择不太接近2的整数幂的素数
+ */
+uint32_t division_hash(uint32_t nK, uint32_t nM);
+
+/**
+ * @brief h(k) = floor(m * (kA mod 1))
+ * @param uint32_t nK, k
+ * @param uint32_t nLogM, 14 if according to the @remarks
+ * @return uint32_t, hash value
+ * @remarks
+ *          这里公式中涉及取整以及取小数部分,但是如果将部分参数
+ *          设置为2的整数幂,将会简化为移位操作,极大的简化代码和 
+ *          提升性能 
+ *
+ *          w -- 32, 32位
+ *          m -- 2^14, so floor(m * y) == y * 2 ^ (-32 + 14) == y * 2 ^ (-18)
+ *          A -- ((sqrt(5) - 1) / 2) * 2 ^ 31 == 2654435769 / 2 ^ 32, so 
+ *               (kA mod 1) == (2654435769 * k) mod 2 ^ 32
+ */
+uint32_t multiplication_hash(uint32_t nK, uint32_t nLogM);
+
 #endif // __COMMON_TYPES_H__

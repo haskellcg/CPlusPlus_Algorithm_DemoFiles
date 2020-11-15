@@ -81,6 +81,14 @@ public:
     virtual ~Double_Link_List();
 
     /**
+     * @brief get number of the element in the list
+     * @param
+     * @return uint32_t
+     * @remarks
+     */
+    size_t size() const;
+
+    /**
      * @brief search nKey in the list
      * @param uint32_t nKey, key
      * @return DLNode *, the DLNode that has the value equals to nKey,
@@ -104,7 +112,7 @@ public:
      * @remarks
      *          make sure pDLNode is in the list
      */
-    void delete_node(DLNode *pDLNode);
+    void remove(DLNode *pDLNode);
 
 private:
     /**

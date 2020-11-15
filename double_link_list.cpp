@@ -62,10 +62,15 @@ Double_Link_List::Double_Link_List()
 Double_Link_List::~Double_Link_List()
 {
     while (m_nSize > 0){
-        delete_node(m_pHead->get_next());
+        remove(m_pHead->get_next());
     }
     delete m_pHead;
     m_pHead = NULL;
+}
+
+size_t Double_Link_List::size() const
+{
+    return m_nSize;
 }
 
 DLNode *Double_Link_List::search(uint32_t nKey)
@@ -91,7 +96,7 @@ DLNode *Double_Link_List::insert(uint32_t nData)
     return pNewDLNode;
 }
 
-void Double_Link_List::delete_node(DLNode *pDLNode)
+void Double_Link_List::remove(DLNode *pDLNode)
 {
     pDLNode->get_prev()->set_next(pDLNode->get_next());
     pDLNode->get_next()->set_prev(pDLNode->get_prev());
@@ -119,7 +124,7 @@ void double_link_list_test()
         print_error_msg("3 is not found\n");
     }
 
-    oDLList.delete_node(pDLNode);
+    oDLList.remove(pDLNode);
     if (NULL == oDLList.search(3)){
         print_correct_msg("3 is deleted\n");
     } else {
