@@ -54,15 +54,15 @@ size_t Basic_Stack::size() const
 
 string Basic_Stack::to_string() const
 {
-    ostringstream oss;
+    ostringstream ossResult;
     vector<int32_t> vecInt;
     for (size_t i = 0; i < m_nSize; ++i){
         vecInt.push_back(*(m_pData + i));
     }
-    oss << "Data:" << ::to_string(vecInt) << "\n";
-    oss << "Size:" << m_nSize << "\n";
-    oss << "Capacity:" << m_nCapacity;
-    return oss.str();
+    ossResult << "Data:" << ::to_string(vecInt) << "\n";
+    ossResult << "Size:" << m_nSize << "\n";
+    ossResult << "Capacity:" << m_nCapacity;
+    return ossResult.str();
 }
 
 void Basic_Stack::push(int32_t nInt)

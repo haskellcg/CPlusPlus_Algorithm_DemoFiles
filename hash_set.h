@@ -7,7 +7,7 @@
 #include "common_types.h"
 #include "double_link_list.h"
 
-#define CAPACITY_OF_HASHSET 64
+#define CAPACITY_OF_HASHSET_LOG2 4
 
 /**
  * @brief hash set with chaining to deal with collision
@@ -61,6 +61,7 @@ public:
      * @brief delete nKey from hash set
      * @param uint32_t nKey, key
      * @return bool, true if deleted, false if key not in the hash set
+     * @remarks
      */
     bool remove(uint32_t nKey);
 
@@ -77,7 +78,7 @@ private:
 
 private:
     /*< use double linked list as chaining */
-    Double_Link_List *m_arrayDDL[CAPACITY_OF_HASHSET];
+    Double_Link_List *m_arrayDDL[1 << CAPACITY_OF_HASHSET_LOG2];
 };
 
 /**
