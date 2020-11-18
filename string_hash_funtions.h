@@ -4,6 +4,9 @@
  * description: some famouse string hash funtions collected from internet
  *************************************************************************/
 
+#ifndef __STRING_HASH_FUNTIONS_H__
+#define __STRING_HASH_FUNTIONS_H__
+
 #include "common_types.h"
 
 /**
@@ -114,3 +117,5 @@ uint32_t ELF_hash(const char *pString);
  * @remarks
  */
 void string_hash_funtions_test();
+
+#endif // __STRING_HASH_FUNTIONS_H__

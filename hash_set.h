@@ -4,6 +4,9 @@
  * description: use hash funtion to implement set
  *************************************************************************/
 
+#ifndef __HASH_SET_H__
+#define __HASH_SET_H__
+
 #include "common_types.h"
 #include "double_link_list.h"
 
@@ -188,3 +191,5 @@ private:
  * @remarks
  */
 void hash_set_test();
+
+#endif // __HASH_SET_H__
