@@ -6,6 +6,7 @@
 
 #include "basic_queue.h"
 #include "basic_stack.h"
+#include "binary_tree.h"
 #include "bubble_sort.h"
 #include "bucket_sort.h"
 #include "counting_sort.h"
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
     if ((argc >= 2) && ("-a" == string(argv[1]))){
         basic_queue_test();
         basic_stack_test();
+        binary_tree_test();
         bubble_sort_test();
         bucket_sort_test();
         counting_sort_test();
@@ -38,8 +40,7 @@ int main(int argc, char *argv[])
         insert_sort_test();
         maximum_subarray_test();
         merge_sort_test();
-        // dont have unittest code for this part, so ignored now
-        // nowcoder_com_test();
+        nowcoder_com_test();
         order_statistic_funtions_test();
         quick_sort_test();
         radix_sort_test();
@@ -48,8 +49,8 @@ int main(int argc, char *argv[])
         strassen_matrix_multiply_test();
         string_hash_funtions_test();
     } else {
-        // default only test the current coding algorithm
-        hash_set_test();
+        // default: only test the current coding algorithm
+        binary_tree_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
         string_hash_funtions_test();
