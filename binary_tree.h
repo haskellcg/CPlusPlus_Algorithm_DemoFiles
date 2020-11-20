@@ -125,6 +125,15 @@ public:
      */
     BTNode *search(uint32_t nKey) const;
 
+    /** 
+     * @brief insert nData as BTNode to binary tree
+     * @param uint32_t nData, data
+     * @return BTNode *, null if nData already in the tree,
+     *                   or node created
+     * @remarks
+     */
+    BTNode *insert(uint32_t nData);
+
     // TODO: add more methods
 
 private:
@@ -135,7 +144,7 @@ private:
      * @return void
      * @remarks
      */
-    void copy_node_recursive(BTNode *pNode, BTNode *pCopyNode);
+    static void copy_node_recursive(BTNode *pNode, BTNode *pCopyNode);
 
     /**
      * @brief delete a node recursive version
@@ -143,7 +152,7 @@ private:
      * @return void
      * @remarks
      */
-    void delete_node_recursive(BTNode *pNode);
+    static void delete_node_recursive(BTNode *pNode);
 
 private:
     /*< root node of the tree */

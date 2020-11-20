@@ -69,6 +69,8 @@ Binary_Tree::Binary_Tree()
 }
 
 Binary_Tree::Binary_Tree(const Binary_Tree &oOtherBinaryTree)
+:   m_pRoot(NULL),
+    m_nSize(0)
 {
     if (NULL != oOtherBinaryTree.m_pRoot){
         m_pRoot = new BTNode;
@@ -80,13 +82,86 @@ Binary_Tree::Binary_Tree(const Binary_Tree &oOtherBinaryTree)
 Binary_Tree::~Binary_Tree()
 {
     delete_node_recursive(m_pRoot);
+    m_pRoot = NULL;
+    m_nSize = 0;
 }
 
-//Binary_Tree &operator=(const Binary_Tree &oOtherBinaryTree);
+Binary_Tree &Binary_Tree::operator=(const Binary_Tree &oOtherBinaryTree)
+{
+    if (this == &oOtherBinaryTree){
+        return *this;
+    }
 
-//string to_string() const;
+    delete_node_recursive(m_pRoot);
+    m_pRoot = NULL;
+    m_nSize = 0;
 
-//BTNode *search(uint32_t nKey) const;
+    if (NULL != oOtherBinaryTree.m_pRoot){
+        m_pRoot = new BTNode;
+        copy_node_recursive(oOtherBinaryTree.m_pRoot, m_pRoot);
+    }
+    m_nSize = oOtherBinaryTree.m_nSize;
+    return *this;
+}
+
+string Binary_Tree::to_string() const
+{
+    ostringstream ossResult;
+    // TODO
+    ossResult << "size:" << m_nSize;
+    return ossResult.str();
+}
+
+BTNode *Binary_Tree::search(uint32_t nKey) const
+{
+    BTNode *pCurNode = m_pRoot;
+    while (NULL != pCurNode){
+        if (nKey == pCurNode->get_data()){
+            break;
+        } else if (nKey > pCurNode->get_data()){
+            pCurNode = pCurNode->get_right();
+        } else {
+            pCurNode = pCurNode->get_left();
+        }
+    }
+    return pCurNode;
+}
+
+BTNode *Binary_Tree::insert(uint32_t nData)
+{
+    if (NULL == m_pRoot){
+        m_pRoot = new BTNode(nData, NULL, NULL, NULL);
+        ++m_nSize;
+        return m_pRoot;
+    } else {
+        BTNode *pParent = m_pRoot;
+        BTNode *pNewBTNode = NULL;
+        while (true){
+            if (nData == pParent->get_data()){
+                break;
+            } else if (nData > pParent->get_data()){
+                if (NULL != pParent->get_right()){
+                    pParent = pParent->get_right();
+                } else {
+                    pNewBTNode = new BTNode(nData, pParent, NULL, NULL);
+                    pParent->set_right(pNewBTNode);
+                    ++m_nSize;
+                    break;
+                }
+            } else {
+                if (NULL != pParent->get_left()){
+                    pParent = pParent->get_left();
+                } else {
+                    pNewBTNode = new BTNode(nData, pParent, NULL, NULL);
+                    pParent->set_left(pNewBTNode);
+                    ++m_nSize;
+                    break;
+                }
+            }
+        }
+        return pNewBTNode;
+    }
+}
 
 void Binary_Tree::copy_node_recursive(BTNode *pNode, BTNode *pCopyNode)
 {
@@ -117,13 +192,24 @@ void Binary_Tree::delete_node_recursive(BTNode *pNode)
             pNode->set_right(NULL);
         }
         delete pNode;
-        --m_nSize;
     }
 }
 
 void binary_tree_test()
 {
     print_highlight_msg(">>> Test binary tree:\n");
+
+    uint32_t arrayInt[] = {8, 5, 10, 2, 6, 9, 11, 7};
+
+    vector<uint32_t> vecInt;
+    vecInt.insert(vecInt.begin(), begin(arrayInt), end(arrayInt));
+    print_normal_msg(to_string(vecInt) + "\n");
+
     Binary_Tree oBinaryTree;
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        oBinaryTree.insert(vecInt[i]);
+    }
+    print_normal_msg(oBinaryTree.to_string() + "\n");
+
     print_error_msg("No test case yet.\n");
 }
