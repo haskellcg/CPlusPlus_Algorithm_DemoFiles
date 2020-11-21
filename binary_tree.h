@@ -113,6 +113,23 @@ public:
      * @param
      * @return string
      * @remarks
+     *                                             8
+     *                                             |
+     *                               ------------------------ 
+     *                              |                        |
+     *                              5                       10
+     *                              |                        |
+     *                -------------------                --------- 
+     *               |                   |              |         |
+     *               2                   6              9        11
+     *               |                   |
+     *           ---------                ---- 
+     *          |         |                   |
+     *          1         3                   7
+     *                    |
+     *                     ---- 
+     *                         |
+     *                         4
      */
     string to_string() const;
 
@@ -153,6 +170,50 @@ private:
      * @remarks
      */
     static void delete_node_recursive(BTNode *pNode);
+
+    /**
+     * @brief get the node width coefficient
+     * @param BTNode *pNode,
+     * @return size_t, width coefficient
+     * @remarks
+     *                  x(2 + 1 + 2 = 5)
+     *                  |
+     *          ------------------
+     *          |                |
+     *          x(2)             x(1)
+     *          |                |
+     *      ---------            ------
+     *      |       |                 |
+     *      x(0)    x(0)              x(0)
+     */
+    static size_t node_width_coefficient(BTNode *pNode);
+
+    /**
+     * @brief get node position coefficient
+     * @param BTNode *pNode,
+     * @return size_t, position coefficient
+     * @remarks
+     *                  x(3)
+     *                  |
+     *          ------------------
+     *          |                |
+     *          x(1)             x(4)
+     *          |                |
+     *      ---------            ------
+     *      |       |                 |
+     *      x(0)    x(2)              x(5)
+     */
+    static size_t node_position_coefficient(BTNode *pNode);
+
+    /**
+     * @brief adjust string to fit display string, like:
+     *        (abcdefg, 67) => (abcde67)
+     * @param const string &strLine, string
+     * @param const string &strDisplay, string need to display
+     * @return string
+     * @remarks
+     */
+    static string adjust_string(const string &strLine, const string &strDisplay);
 
 private:
     /*< root node of the tree */

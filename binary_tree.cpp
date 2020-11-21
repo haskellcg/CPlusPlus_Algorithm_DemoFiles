@@ -107,7 +107,112 @@ Binary_Tree &Binary_Tree::operator=(const Binary_Tree &oOtherBinaryTree)
 string Binary_Tree::to_string() const
 {
     ostringstream ossResult;
-    // TODO
+    ossResult << "binary tree:\n";
+
+    const string strStartSpace = "    ";
+    const string strSpace = "     ";
+    const string strHorizental = "-----";
+    const string strVertical = "|";
+    
+    vector<BTNode *> vecpBTNode;
+    vecpBTNode.push_back(m_pRoot);
+    while (!vecpBTNode.empty()){
+        
+        // print number
+        string strNodeLine = strStartSpace;
+        size_t nUsedCoefficientInThisLine = 0;
+        for (size_t nNodeIndex = 0; nNodeIndex < vecpBTNode.size(); ++nNodeIndex){
+            BTNode *pCurNode = vecpBTNode[nNodeIndex];
+            size_t nCurNodePositionCoefficient = node_position_coefficient(pCurNode);
+            for (size_t i = 0; i < (nCurNodePositionCoefficient - nUsedCoefficientInThisLine); ++i){
+                strNodeLine += strSpace;
+            }
+            strNodeLine = adjust_string(strNodeLine, std::to_string(pCurNode->get_data()));
+            nUsedCoefficientInThisLine = nCurNodePositionCoefficient;
+        }
+        ossResult << strNodeLine << "\n";
+
+        // print | for current node
+        string strCurVerticalLine = strStartSpace;
+        nUsedCoefficientInThisLine = 0;
+        for (size_t nNodeIndex = 0; nNodeIndex < vecpBTNode.size(); ++nNodeIndex){
+            BTNode *pCurNode = vecpBTNode[nNodeIndex];
+            if ((NULL == pCurNode->get_left()) && (NULL == pCurNode->get_right())){
+                continue;
+            }
+            size_t nCurNodePositionCoefficient = node_position_coefficient(pCurNode);
+            for (size_t i = 0; i < (nCurNodePositionCoefficient - nUsedCoefficientInThisLine); ++i){
+                strCurVerticalLine += strSpace;
+            }
+            strCurVerticalLine = adjust_string(strCurVerticalLine, strVertical);
+            nUsedCoefficientInThisLine = nCurNodePositionCoefficient;
+        }
+        ossResult << strCurVerticalLine << "\n";
+
+        // print ---- for branch
+        string strCurHorizentalLine = strStartSpace;
+        nUsedCoefficientInThisLine = 0;
+        for (size_t nNodeIndex = 0; nNodeIndex < vecpBTNode.size(); ++nNodeIndex){
+            BTNode *pCurNode = vecpBTNode[nNodeIndex];
+            if ((NULL == pCurNode->get_left()) && (NULL == pCurNode->get_right())){
+                continue;
+            }
+            size_t nHorizentalStartCoefficient = 0;
+            if (NULL != pCurNode->get_left()){
+                nHorizentalStartCoefficient = node_position_coefficient(pCurNode->get_left());
+            } else {
+                nHorizentalStartCoefficient = node_position_coefficient(pCurNode);
+            }
+            size_t nHorizentalEndCoefficient = 0;
+            if (NULL != pCurNode->get_right()){
+                nHorizentalEndCoefficient = node_position_coefficient(pCurNode->get_right());
+            } else {
+                nHorizentalEndCoefficient = node_position_coefficient(pCurNode);
+            }
+            for (size_t i = 0; i < (nHorizentalStartCoefficient - nUsedCoefficientInThisLine); ++i){
+                strCurHorizentalLine += strSpace;
+            }
+            for (size_t i = 0; i < (nHorizentalEndCoefficient - nHorizentalStartCoefficient); ++i){
+                strCurHorizentalLine += strHorizental;
+            }
+            strCurHorizentalLine = adjust_string(strCurHorizentalLine, " ");
+            nUsedCoefficientInThisLine = nHorizentalEndCoefficient;
+        }
+        ossResult << strCurHorizentalLine << "\n";
+
+        // print | for children nodes
+        string strChildVerticalLine = strStartSpace;
+        nUsedCoefficientInThisLine = 0;
+        vector<BTNode *> vecpChildBTNode;
+        for (size_t nNodeIndex = 0; nNodeIndex < vecpBTNode.size(); ++nNodeIndex){
+            BTNode *pCurNode = vecpBTNode[nNodeIndex];
+            if ((NULL == pCurNode->get_left()) && (NULL == pCurNode->get_right())){
+                continue;
+            }
+            if (NULL != pCurNode->get_left()){
+                size_t nLeftPositionCoefficient = node_position_coefficient(pCurNode->get_left());
+                for (size_t i = 0; i < (nLeftPositionCoefficient - nUsedCoefficientInThisLine); ++i){
+                    strChildVerticalLine += strSpace;
+                }
+                strChildVerticalLine = adjust_string(strChildVerticalLine, strVertical);
+                nUsedCoefficientInThisLine = nLeftPositionCoefficient;
+                vecpChildBTNode.push_back(pCurNode->get_left());
+            }
+            if (NULL != pCurNode->get_right()){
+                size_t nRightPositionCoefficient = node_position_coefficient(pCurNode->get_right());
+                for (size_t i = 0; i < (nRightPositionCoefficient - nUsedCoefficientInThisLine); ++i){
+                    strChildVerticalLine += strSpace;
+                }
+                strChildVerticalLine = adjust_string(strChildVerticalLine, strVertical);
+                nUsedCoefficientInThisLine = nRightPositionCoefficient;
+                vecpChildBTNode.push_back(pCurNode->get_right());
+            }
+        }
+        ossResult << strChildVerticalLine << "\n";
+
+        vecpBTNode = vecpChildBTNode;
+    }
+
     ossResult << "size:" << m_nSize;
     return ossResult.str();
 }
@@ -195,12 +300,63 @@ void Binary_Tree::delete_node_recursive(BTNode *pNode)
     }
 }
 
+size_t Binary_Tree::node_width_coefficient(BTNode *pNode)
+{
+    size_t nNodeWidthCoefficient = 0;
+    if (NULL != pNode){
+        if (NULL != pNode->get_left()){
+            nNodeWidthCoefficient += node_width_coefficient(pNode->get_left());
+            nNodeWidthCoefficient += 1;
+        }
+        if (NULL != pNode->get_right()){
+            nNodeWidthCoefficient += node_width_coefficient(pNode->get_right());
+            nNodeWidthCoefficient += 1;
+        }
+    }
+    return nNodeWidthCoefficient;
+}
+
+size_t Binary_Tree::node_position_coefficient(BTNode *pNode)
+{
+    size_t nNodePositionCoefficient = 0;
+    if (NULL == pNode->get_parent()){
+        if (NULL != pNode->get_left()){
+            nNodePositionCoefficient += node_width_coefficient(pNode->get_left());
+            nNodePositionCoefficient += 1;
+        }
+    } else {
+        BTNode *pParent = pNode->get_parent();
+        if (pNode == pParent->get_left()){
+            nNodePositionCoefficient = node_position_coefficient(pParent) - 1;
+            if (NULL != pNode->get_right()){
+                nNodePositionCoefficient -= node_width_coefficient(pNode->get_right());
+                nNodePositionCoefficient -= 1;
+            }
+        } else {
+            nNodePositionCoefficient = node_position_coefficient(pParent) + 1;
+            if (NULL != pNode->get_left()){
+                nNodePositionCoefficient += node_width_coefficient(pNode->get_left());
+                nNodePositionCoefficient += 1;
+            }
+        }
+    }
+    return nNodePositionCoefficient;
+}
+
+string Binary_Tree::adjust_string(const string &strLine, const string &strDisplay)
+{
+    if (strDisplay.size() > strLine.size()){
+        return strDisplay;
+    } else {
+        return (strLine.substr(0, strLine.size() - strDisplay.size()) + strDisplay);
+    }
+}
+
 void binary_tree_test()
 {
     print_highlight_msg(">>> Test binary tree:\n");
 
-    uint32_t arrayInt[] = {8, 5, 10, 2, 6, 9, 11, 7};
-
+    uint32_t arrayInt[] = {8, 5, 10, 2, 6, 9, 11, 7, 3, 1, 4};
     vector<uint32_t> vecInt;
     vecInt.insert(vecInt.begin(), begin(arrayInt), end(arrayInt));
     print_normal_msg(to_string(vecInt) + "\n");
@@ -209,7 +365,7 @@ void binary_tree_test()
     for (size_t i = 0; i < vecInt.size(); ++i){
         oBinaryTree.insert(vecInt[i]);
     }
-    print_normal_msg(oBinaryTree.to_string() + "\n");
+    print_warning_msg(oBinaryTree.to_string() + "\n");
 
     print_error_msg("No test case yet.\n");
 }
