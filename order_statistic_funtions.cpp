@@ -64,12 +64,12 @@ bool get_min_max_value_index(const vector<uint32_t> &vecInt, pair<size_t, size_t
     return true;
 }
 
-bool select_nth_with_partition(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue)
+bool select_nth_with_partition(const vector<uint32_t> &/*vecInt*/, size_t /*nNth*/, uint32_t &/*nNthValue*/)
 {
     return true;
 }
 
-bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue)
+bool select_nth_with_5group(const vector<uint32_t> &/*vecInt*/, size_t /*nNth*/, uint32_t &/*nNthValue*/)
 {
     return true;
 }
