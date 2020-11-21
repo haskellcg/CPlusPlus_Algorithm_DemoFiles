@@ -411,7 +411,9 @@ void binary_tree_test()
 
     Binary_Tree oBinaryTree;
     for (size_t i = 0; i < vecInt.size(); ++i){
-        oBinaryTree.insert(vecInt[i]);
+        if(NULL == oBinaryTree.insert(vecInt[i])){
+            print_warning_msg(std::to_string(vecInt[i]) + " already exist!\n");
+        }
     }
     print_warning_msg(oBinaryTree.to_string() + "\n");
 
