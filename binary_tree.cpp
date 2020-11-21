@@ -217,6 +217,27 @@ string Binary_Tree::to_string() const
     return ossResult.str();
 }
 
+vector<uint32_t> Binary_Tree::inorder_tree_walk() const
+{
+    vector<uint32_t> vecWalkPath;
+    inorder_tree_walk_recursive(m_pRoot, vecWalkPath);
+    return vecWalkPath;
+}
+
+vector<uint32_t> Binary_Tree::preorder_tree_walk() const
+{
+    vector<uint32_t> vecWalkPath;
+    preorder_tree_walk_recursive(m_pRoot, vecWalkPath);
+    return vecWalkPath;
+}
+
+vector<uint32_t> Binary_Tree::postorder_tree_walk() const
+{
+    vector<uint32_t> vecWalkPath;
+    postorder_tree_walk_recursive(m_pRoot, vecWalkPath);
+    return vecWalkPath;
+}
+
 BTNode *Binary_Tree::search(uint32_t nKey) const
 {
     BTNode *pCurNode = m_pRoot;
@@ -352,6 +373,33 @@ string Binary_Tree::adjust_string(const string &strLine, const string &strDispla
     }
 }
 
+void Binary_Tree::inorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath)
+{
+    if (NULL != pNode){
+        inorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
+        vecWalkPath.push_back(pNode->get_data());
+        inorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
+    }
+}
+
+void Binary_Tree::preorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath)
+{
+    if (NULL != pNode){
+        vecWalkPath.push_back(pNode->get_data());
+        inorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
+        inorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
+    }
+}
+
+void Binary_Tree::postorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath)
+{
+    if (NULL != pNode){
+        inorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
+        inorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
+        vecWalkPath.push_back(pNode->get_data());
+    }
+}
+
 void binary_tree_test()
 {
     print_highlight_msg(">>> Test binary tree:\n");
@@ -366,6 +414,10 @@ void binary_tree_test()
         oBinaryTree.insert(vecInt[i]);
     }
     print_warning_msg(oBinaryTree.to_string() + "\n");
+
+    print_normal_msg("inorder   :" + to_string(oBinaryTree.inorder_tree_walk()) + "\n");
+    print_normal_msg("preorder  :" + to_string(oBinaryTree.preorder_tree_walk()) + "\n");
+    print_normal_msg("postorder :" + to_string(oBinaryTree.postorder_tree_walk()) + "\n");
 
     print_error_msg("No test case yet.\n");
 }

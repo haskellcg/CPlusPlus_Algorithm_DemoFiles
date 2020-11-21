@@ -134,6 +134,30 @@ public:
     string to_string() const;
 
     /**
+     * @brief inorder tree walk
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> inorder_tree_walk() const;
+
+    /**
+     * @brief preorder tree walk
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> preorder_tree_walk() const;
+    
+    /**
+     * @brief postorder tree walk
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> postorder_tree_walk() const;
+
+    /**
      * @brief search nKey in the tree
      * @param uint32_t nKey, key
      * @return BTNode *, null if nKey not in the tree,
@@ -214,6 +238,33 @@ private:
      * @remarks
      */
     static string adjust_string(const string &strLine, const string &strDisplay);
+
+    /**
+     * @brief inorder tree(pNode) walk
+     * @param BTNode *pNode, current tree root node
+     * @param vector<uint32_t> &vecWalkPath, walk result
+     * @return void
+     * @remarks
+     */
+    static void inorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath);
+
+    /**
+     * @brief preorder tree(pNode) walk
+     * @param BTNode *pNode, current tree root node
+     * @param vector<uint32_t> &vecWalkPath, walk result
+     * @return void
+     * @remarks
+     */
+    static void preorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath);
+
+    /**
+     * @brief postorder tree(pNode) walk
+     * @param BTNode *pNode, current tree root node
+     * @param vector<uint32_t> &vecWalkPath, walk result
+     * @return void
+     * @remarks
+     */
+    static void postorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath);
 
 private:
     /*< root node of the tree */

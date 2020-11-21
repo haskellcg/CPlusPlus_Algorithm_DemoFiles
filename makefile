@@ -110,7 +110,7 @@ prep                :
 #   clean rules
 #*************************
 clean               :
-	@echo "\033[31mClean project target file and objects:\033[0m"
+	@echo "\033[36mClean project target file and objects:\033[0m"
 	rm -f $(DEBUGPROJ)
 	rm -f $(DEBUGOBJS)
 	rm -f $(RELEASEPROJ)
