@@ -158,6 +158,31 @@ public:
     vector<uint32_t> postorder_tree_walk() const;
 
     /**
+     * @brief inorder tree walk iteratively
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> inorder_tree_walk_iterative() const;
+
+    /**
+     * @brief preorder tree walk iteratively
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> preorder_tree_walk_iterative() const;
+
+    /**
+     * @brief postorder tree walk iteratively
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> postorder_tree_walk_iterative() const;
+
+
+    /**
      * @brief maximum node in the tree
      * @param
      * @return BTNode *, maximum node pointer,

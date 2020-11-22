@@ -240,6 +240,21 @@ vector<uint32_t> Binary_Tree::postorder_tree_walk() const
     return vecWalkPath;
 }
 
+vector<uint32_t> Binary_Tree::inorder_tree_walk_iterative() const
+{
+    return vector<uint32_t>();
+}
+
+vector<uint32_t> Binary_Tree::preorder_tree_walk_iterative() const
+{
+    return vector<uint32_t>();
+}
+
+vector<uint32_t> Binary_Tree::postorder_tree_walk_iterative() const
+{
+    return vector<uint32_t>();
+}
+
 BTNode *Binary_Tree::maximum() const
 {
     return maximum(m_pRoot);
@@ -540,6 +555,24 @@ void binary_tree_test()
         print_correct_msg("postorder tree walk correct.\n");
     } else {
         print_error_msg("postorder tree walk wrong.\n");
+    }
+
+    if ("[  1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11]" == to_string(oBinaryTree.inorder_tree_walk_iterative())){
+        print_correct_msg("inorder tree walk iterative correct.\n");
+    } else {
+        print_error_msg("inorder tree walk iterative wrong.\n");
+    }
+
+    if ("[  8,   5,   2,   1,   3,   4,   6,   7,  10,   9,  11]" == to_string(oBinaryTree.preorder_tree_walk_iterative())){
+        print_correct_msg("preorder tree walk iterative correct.\n");
+    } else {
+        print_error_msg("preorder tree walk iterative wrong.\n");
+    }
+
+    if ("[  1,   4,   3,   2,   7,   6,   5,   9,  11,  10,   8]" == to_string(oBinaryTree.postorder_tree_walk_iterative())){
+        print_correct_msg("postorder tree walk iterative correct.\n");
+    } else {
+        print_error_msg("postorder tree walk iterative wrong.\n");
     }
 
     BTNode *pMaximumNode = oBinaryTree.maximum();
