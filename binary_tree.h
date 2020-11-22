@@ -211,7 +211,14 @@ public:
      */
     BTNode *insert(uint32_t nData);
 
-    // TODO: add more methods
+    /**
+     * @brief remove pNode from binary tree
+     * @param BTNode *pNode,
+     * @return void
+     * @remarks
+     *          pNode must be in the tree
+     */
+    void remove(BTNode *pNode);
 
 private:
     /**
@@ -319,6 +326,22 @@ private:
      * @remarks
      */
     static BTNode *minimum(BTNode *pNode);
+
+    /**
+     * @brief transplant Y sub-tree to X sub-tree
+     * @param BTNode *pNodeX, X sub-tree
+     * @param BTNode *pNodeY, Y sub-tree
+     * @return void
+     * @remarks
+     *           P                       p
+     *           |                       |
+     *           X           =>          Y
+     *          / \                     / \
+     *
+     *          X should not be NULL
+     *          Y could be NULL
+     */
+    void transplant(BTNode *pNodeX, BTNode *pNodeY);
 
 private:
     /*< root node of the tree */

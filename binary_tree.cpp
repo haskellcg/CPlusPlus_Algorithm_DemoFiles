@@ -115,7 +115,9 @@ string Binary_Tree::to_string() const
     const string strVertical = "|";
     
     vector<BTNode *> vecpBTNode;
-    vecpBTNode.push_back(m_pRoot);
+    if (NULL != m_pRoot){
+        vecpBTNode.push_back(m_pRoot);
+    }
     while (!vecpBTNode.empty()){
         
         // print number
@@ -329,6 +331,30 @@ BTNode *Binary_Tree::insert(uint32_t nData)
     }
 }
 
+void Binary_Tree::remove(BTNode *pNode)
+{
+    if (NULL == pNode->get_left()){
+        transplant(pNode, pNode->get_right());
+        pNode->set_right(NULL);
+    } else if (NULL == pNode->get_right()){
+        transplant(pNode, pNode->get_left());
+        pNode->set_left(NULL);
+    } else {
+        BTNode *pSuccessor = successor(pNode);
+        if (pSuccessor != pNode->get_right()){
+            transplant(pSuccessor, pSuccessor->get_right());
+            pSuccessor->set_right(pNode->get_right());
+            pNode->get_right()->set_parent(pSuccessor);
+        }
+        transplant(pNode, pSuccessor);
+        pNode->set_right(NULL);
+        pSuccessor->set_left(pNode->get_left());
+        pNode->get_left()->set_parent(pSuccessor);
+        pNode->set_left(NULL);
+    }
+    --m_nSize;
+}
+
 void Binary_Tree::copy_node_recursive(BTNode *pNode, BTNode *pCopyNode)
 {
     pCopyNode->set_data(pNode->get_data());
@@ -462,6 +488,25 @@ BTNode *Binary_Tree::minimum(BTNode *pNode)
     return pCurNode;
 }
 
+void Binary_Tree::transplant(BTNode *pNodeX, BTNode *pNodeY)
+{
+    BTNode *pParent = pNodeX->get_parent();
+    if (NULL == pParent){
+        m_pRoot = pNodeY;
+    } else {
+        if (pNodeX == pParent->get_left()){
+            pParent->set_left(pNodeY);
+        } else {
+            pParent->set_right(pNodeY);
+        }
+    }
+
+    if (NULL != pNodeY){
+        pNodeY->set_parent(pParent);
+    }
+    pNodeX->set_parent(NULL);
+}
+
 void binary_tree_test()
 {
     print_highlight_msg(">>> Test binary tree:\n");
@@ -553,4 +598,12 @@ void binary_tree_test()
             print_error_msg("predecessor funtion error.\n");
         }
     }
+
+    Binary_Tree oDeleteBinaryTree;
+    oDeleteBinaryTree = oBinaryTree;
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        oDeleteBinaryTree.remove(oDeleteBinaryTree.search(vecInt[i]));
+    }
+    print_normal_msg("deleting binary tree:\n");
+    print_warning_msg(oDeleteBinaryTree.to_string() + "\n");
 }
