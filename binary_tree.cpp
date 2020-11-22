@@ -250,12 +250,32 @@ BTNode *Binary_Tree::minimum() const
 
 BTNode *Binary_Tree::successor(BTNode *pNode) const
 {
-    return pNode;
+    if (NULL != pNode->get_right()){
+        return minimum(pNode->get_right());
+    } else {
+        BTNode *pCurNode = pNode;
+        BTNode *pParent = pCurNode->get_parent();
+        while ((NULL != pParent) && (pCurNode != pParent->get_left())){
+            pCurNode = pParent;
+            pParent = pCurNode->get_parent();
+        }
+        return pParent;
+    }
 }
 
 BTNode *Binary_Tree::predecessor(BTNode *pNode) const
 {
-    return pNode;
+    if (NULL != pNode->get_left()){
+        return maximum(pNode->get_left());
+    } else {
+        BTNode *pCurNode = pNode;
+        BTNode *pParent = pCurNode->get_parent();
+        while ((NULL != pParent) && (pCurNode != pParent->get_right())){
+            pCurNode = pParent;
+            pParent = pCurNode->get_parent();
+        }
+        return pParent;
+    }
 }
 
 BTNode *Binary_Tree::search(uint32_t nKey) const
@@ -509,5 +529,28 @@ void binary_tree_test()
         }
     } else {
         print_error_msg("can't find 6 and no successor/predecessor is tested.\n");
+    }
+
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        uint32_t nKey = vecInt[i];
+        BTNode *pCurNode = oBinaryTree.search(nKey);
+
+        BTNode *pSuccessor = oBinaryTree.successor(pCurNode);
+        if ((NULL != pSuccessor) && ((nKey + 1) == pSuccessor->get_data())){
+            // print_correct_msg(std::to_string(nKey) + " successor is :" + std::to_string(pSuccessor->get_data()) + "\n");
+        } else if (11 == nKey){
+            print_correct_msg("only " + std::to_string(nKey) + " has no successor.\n");
+        } else {
+            print_error_msg("successor function error.\n");
+        }
+
+        BTNode *pPredecessor = oBinaryTree.predecessor(pCurNode);
+        if ((NULL != pPredecessor) && ((nKey - 1) == pPredecessor->get_data())){
+            // print_correct_msg(std::to_string(nKey) + " predecessor is :" + std::to_string(pPredecessor->get_data()) + "\n");
+        } else if (1 == nKey){
+            print_correct_msg("only " + std::to_string(nKey) + " has no predecessor.\n");
+        } else {
+            print_error_msg("predecessor funtion error.\n");
+        }
     }
 }
