@@ -238,6 +238,26 @@ vector<uint32_t> Binary_Tree::postorder_tree_walk() const
     return vecWalkPath;
 }
 
+BTNode *Binary_Tree::maximum() const
+{
+    return maximum(m_pRoot);
+}
+
+BTNode *Binary_Tree::minimum() const
+{
+    return minimum(m_pRoot);
+}
+
+BTNode *Binary_Tree::successor(BTNode *pNode) const
+{
+    return pNode;
+}
+
+BTNode *Binary_Tree::predecessor(BTNode *pNode) const
+{
+    return pNode;
+}
+
 BTNode *Binary_Tree::search(uint32_t nKey) const
 {
     BTNode *pCurNode = m_pRoot;
@@ -386,18 +406,40 @@ void Binary_Tree::preorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &
 {
     if (NULL != pNode){
         vecWalkPath.push_back(pNode->get_data());
-        inorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
-        inorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
+        preorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
+        preorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
     }
 }
 
 void Binary_Tree::postorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath)
 {
     if (NULL != pNode){
-        inorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
-        inorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
+        postorder_tree_walk_recursive(pNode->get_left(), vecWalkPath);
+        postorder_tree_walk_recursive(pNode->get_right(), vecWalkPath);
         vecWalkPath.push_back(pNode->get_data());
     }
+}
+
+BTNode *Binary_Tree::maximum(BTNode *pNode)
+{
+    BTNode *pCurNode = pNode;
+    if (NULL != pCurNode){
+        while (NULL != pCurNode->get_right()){
+            pCurNode = pCurNode->get_right();
+        }
+    }
+    return pCurNode;
+}
+
+BTNode *Binary_Tree::minimum(BTNode *pNode)
+{
+    BTNode *pCurNode = pNode;
+    if (NULL != pCurNode){
+        while (NULL != pCurNode->get_left()){
+            pCurNode = pCurNode->get_left();
+        }
+    }
+    return pCurNode;
 }
 
 void binary_tree_test()
@@ -417,9 +459,55 @@ void binary_tree_test()
     }
     print_warning_msg(oBinaryTree.to_string() + "\n");
 
-    print_normal_msg("inorder   :" + to_string(oBinaryTree.inorder_tree_walk()) + "\n");
-    print_normal_msg("preorder  :" + to_string(oBinaryTree.preorder_tree_walk()) + "\n");
-    print_normal_msg("postorder :" + to_string(oBinaryTree.postorder_tree_walk()) + "\n");
+    if ("[  1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11]" == to_string(oBinaryTree.inorder_tree_walk())){
+        print_correct_msg("inorder tree walk correct.\n");
+    } else {
+        print_error_msg("inorder tree walk wrong.\n");
+    }
 
-    print_error_msg("No test case yet.\n");
+    if ("[  8,   5,   2,   1,   3,   4,   6,   7,  10,   9,  11]" == to_string(oBinaryTree.preorder_tree_walk())){
+        print_correct_msg("preorder tree walk correct.\n");
+    } else {
+        print_error_msg("preorder tree walk wrong.\n");
+    }
+
+    if ("[  1,   4,   3,   2,   7,   6,   5,   9,  11,  10,   8]" == to_string(oBinaryTree.postorder_tree_walk())){
+        print_correct_msg("postorder tree walk correct.\n");
+    } else {
+        print_error_msg("postorder tree walk wrong.\n");
+    }
+
+    BTNode *pMaximumNode = oBinaryTree.maximum();
+    if ((NULL != pMaximumNode) && (11 == pMaximumNode->get_data())){
+        print_correct_msg("maximum node correct.\n");
+    } else {
+        print_error_msg("maximum node wrong.\n");
+    }
+
+    BTNode *pMinimumNode = oBinaryTree.minimum();
+    if ((NULL != pMinimumNode) && (1 == pMinimumNode->get_data())){
+        print_correct_msg("minimum node correct.\n");
+    } else {
+        print_error_msg("minimum node wrong.\n");
+    }
+
+    BTNode *p6Node = oBinaryTree.search(6);
+    if ((NULL != p6Node) && (6 == p6Node->get_data())){
+        print_correct_msg("search 6 correct.\n");
+
+        BTNode *p6SuccessorNode = oBinaryTree.successor(p6Node);
+        if ((NULL != p6SuccessorNode) && (7 == p6SuccessorNode->get_data())){
+            print_correct_msg("find correct 6'successor.\n");
+        } else {
+            print_error_msg("can't find 6'successor.\n");
+        }
+        BTNode *p6PredecessorNode = oBinaryTree.predecessor(p6Node);
+        if ((NULL != p6PredecessorNode) && (5 == p6PredecessorNode->get_data())){
+            print_correct_msg("find correct 6'predecessor.\n");
+        } else {
+            print_error_msg("can't find 6'predecessor.\n");
+        }
+    } else {
+        print_error_msg("can't find 6 and no successor/predecessor is tested.\n");
+    }
 }

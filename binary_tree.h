@@ -158,6 +158,42 @@ public:
     vector<uint32_t> postorder_tree_walk() const;
 
     /**
+     * @brief maximum node in the tree
+     * @param
+     * @return BTNode *, maximum node pointer,
+     *                   null if tree is empty
+     * @remarks
+     */
+    BTNode *maximum() const;
+
+    /**
+     * @brief minimum node in the tree
+     * @param
+     * @return BTNode *, minimum node pointer
+     *                   null if tree is empty
+     * @remarks
+     */
+    BTNode *minimum() const;
+
+    /**
+     * @brief successor of the pNode in inorder tree walk
+     * @param BTNode *pNode, current node
+     * @return BTNode *, the successor
+     * @remarks
+     *          pNode must be in the tree, this is not checked in funtion
+     */
+    BTNode *successor(BTNode *pNode) const;
+
+    /**
+     * @brief predecessor of the pNode in inorder tree walk
+     * @param BTNode *pNode, current node
+     * @return BTNode *, the predecessor
+     * @remarks
+     *          pNode must be in the tree, this is not checked in funtion
+     */
+    BTNode *predecessor(BTNode *pNode) const;
+
+    /**
      * @brief search nKey in the tree
      * @param uint32_t nKey, key
      * @return BTNode *, null if nKey not in the tree,
@@ -265,6 +301,24 @@ private:
      * @remarks
      */
     static void postorder_tree_walk_recursive(BTNode *pNode, vector<uint32_t> &vecWalkPath);
+
+    /**
+     * @brief maximum node in the tree which pNode as root
+     * @param
+     * @return BTNode *, maximum node pointer,
+     *                   null if tree is empty
+     * @remarks
+     */
+    static BTNode *maximum(BTNode *pNode);
+
+    /**
+     * @brief maximum node in the tree which pNode as root
+     * @param
+     * @return BTNode *, maximum node pointer,
+     *                   null if tree is empty
+     * @remarks
+     */
+    static BTNode *minimum(BTNode *pNode);
 
 private:
     /*< root node of the tree */
