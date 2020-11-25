@@ -181,6 +181,29 @@ public:
      */
     vector<uint32_t> postorder_tree_walk_iterative() const;
 
+    /**
+     * @brief inorder tree walk use morris algorithm
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> inorder_tree_walk_morris() const;
+
+    /**
+     * @brief preorder tree walk use morris algorithm
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> preorder_tree_walk_morris() const;
+
+    /**
+     * @brief postorder tree walk use morris algorithm
+     * @param
+     * @return vector<uint32_t>,
+     * @remarks
+     */
+    vector<uint32_t> postorder_tree_walk_morris() const;
 
     /**
      * @brief maximum node in the tree

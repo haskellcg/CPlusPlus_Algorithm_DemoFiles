@@ -4,6 +4,8 @@
  * description: binary tree data structure
  *************************************************************************/
 
+#include <stack>
+#include <utility>
 #include "binary_tree.h"
 
 BTNode::BTNode()
@@ -242,15 +244,91 @@ vector<uint32_t> Binary_Tree::postorder_tree_walk() const
 
 vector<uint32_t> Binary_Tree::inorder_tree_walk_iterative() const
 {
-    return vector<uint32_t>();
+    vector<uint32_t> vecInorderResult;
+    if (NULL != m_pRoot){
+        stack<pair<BTNode *, bool>> stackBTNodeVisited;
+        stackBTNodeVisited.push(make_pair(m_pRoot, false));
+        while (!stackBTNodeVisited.empty()){
+            pair<BTNode *, bool> pairCurNodeVisited = stackBTNodeVisited.top();
+            stackBTNodeVisited.pop();
+
+            if (pairCurNodeVisited.second){
+                vecInorderResult.push_back(pairCurNodeVisited.first->get_data());
+            } else {
+                pairCurNodeVisited.second = true;
+                if (NULL != pairCurNodeVisited.first->get_right()){
+                    stackBTNodeVisited.push(make_pair(pairCurNodeVisited.first->get_right(), false));
+                }
+                stackBTNodeVisited.push(pairCurNodeVisited);
+                if (NULL != pairCurNodeVisited.first->get_left()){
+                    stackBTNodeVisited.push(make_pair(pairCurNodeVisited.first->get_left(), false));
+                }
+            }
+        }
+    }
+    return vecInorderResult;
 }
 
 vector<uint32_t> Binary_Tree::preorder_tree_walk_iterative() const
 {
-    return vector<uint32_t>();
+    vector<uint32_t> vecPreorderResult;
+    if (NULL != m_pRoot){
+        stack<BTNode *> stackBTNode;
+        stackBTNode.push(m_pRoot);
+        while (!stackBTNode.empty()){
+            BTNode *pCurNode = stackBTNode.top();
+            stackBTNode.pop();
+
+            vecPreorderResult.push_back(pCurNode->get_data());
+            if (NULL != pCurNode->get_right()){
+                stackBTNode.push(pCurNode->get_right());
+            }
+            if (NULL != pCurNode->get_left()){
+                stackBTNode.push(pCurNode->get_left());
+            }
+        }
+    }
+    return vecPreorderResult;
 }
 
 vector<uint32_t> Binary_Tree::postorder_tree_walk_iterative() const
+{
+    vector<uint32_t> vecPostorderResult;
+    if (NULL != m_pRoot){
+        stack<pair<BTNode *, bool>> stackBTNodeVisited;
+        stackBTNodeVisited.push(make_pair(m_pRoot, false));
+        while (!stackBTNodeVisited.empty()){
+            pair<BTNode *, bool> pairCurNodeVisited = stackBTNodeVisited.top();
+            stackBTNodeVisited.pop();
+
+            if (pairCurNodeVisited.second){
+                vecPostorderResult.push_back(pairCurNodeVisited.first->get_data());
+            } else {
+                pairCurNodeVisited.second = true;
+                stackBTNodeVisited.push(pairCurNodeVisited);
+                if (NULL != pairCurNodeVisited.first->get_right()){
+                    stackBTNodeVisited.push(make_pair(pairCurNodeVisited.first->get_right(), false));
+                }
+                if (NULL != pairCurNodeVisited.first->get_left()){
+                    stackBTNodeVisited.push(make_pair(pairCurNodeVisited.first->get_left(), false));
+                }
+            }
+        }
+    }
+    return vecPostorderResult;
+}
+
+vector<uint32_t> Binary_Tree::inorder_tree_walk_morris() const
+{
+    return vector<uint32_t>();
+}
+
+vector<uint32_t> Binary_Tree::preorder_tree_walk_morris() const
+{
+    return vector<uint32_t>();
+}
+
+vector<uint32_t> Binary_Tree::postorder_tree_walk_morris() const
 {
     return vector<uint32_t>();
 }
@@ -573,6 +651,24 @@ void binary_tree_test()
         print_correct_msg("postorder tree walk iterative correct.\n");
     } else {
         print_error_msg("postorder tree walk iterative wrong.\n");
+    }
+
+    if ("[  1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11]" == to_string(oBinaryTree.inorder_tree_walk_morris())){
+        print_correct_msg("inorder tree walk morris correct.\n");
+    } else {
+        print_error_msg("inorder tree walk morris wrong.\n");
+    }
+
+    if ("[  8,   5,   2,   1,   3,   4,   6,   7,  10,   9,  11]" == to_string(oBinaryTree.preorder_tree_walk_morris())){
+        print_correct_msg("preorder tree walk morris correct.\n");
+    } else {
+        print_error_msg("preorder tree walk morris wrong.\n");
+    }
+
+    if ("[  1,   4,   3,   2,   7,   6,   5,   9,  11,  10,   8]" == to_string(oBinaryTree.postorder_tree_walk_morris())){
+        print_correct_msg("postorder tree walk morris correct.\n");
+    } else {
+        print_error_msg("postorder tree walk morris wrong.\n");
     }
 
     BTNode *pMaximumNode = oBinaryTree.maximum();
