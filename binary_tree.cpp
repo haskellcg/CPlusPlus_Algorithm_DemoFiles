@@ -320,17 +320,93 @@ vector<uint32_t> Binary_Tree::postorder_tree_walk_iterative() const
 
 vector<uint32_t> Binary_Tree::inorder_tree_walk_morris() const
 {
-    return vector<uint32_t>();
+    vector<uint32_t> vecInorderResult;
+    BTNode *pCurNode = m_pRoot;
+    while (NULL != pCurNode){
+        if (NULL == pCurNode->get_left()){
+            vecInorderResult.push_back(pCurNode->get_data());
+            pCurNode = pCurNode->get_right();
+        } else {
+            BTNode *pPredecessor = pCurNode->get_left();
+            while ((NULL != pPredecessor->get_right()) && (pCurNode != pPredecessor->get_right())){
+                pPredecessor = pPredecessor->get_right();
+            }
+
+            if (NULL == pPredecessor->get_right()){
+                pPredecessor->set_right(pCurNode);
+                pCurNode = pCurNode->get_left();
+            } else {
+                pPredecessor->set_right(NULL);
+                vecInorderResult.push_back(pCurNode->get_data());
+                pCurNode = pCurNode->get_right();
+            }
+        }
+    }
+    return vecInorderResult;
 }
 
 vector<uint32_t> Binary_Tree::preorder_tree_walk_morris() const
 {
-    return vector<uint32_t>();
+    vector<uint32_t> vecPreorderResult;
+    BTNode *pCurNode = m_pRoot;
+    while (NULL != pCurNode){
+        if (NULL == pCurNode->get_left()){
+            vecPreorderResult.push_back(pCurNode->get_data());
+            pCurNode = pCurNode->get_right();
+        } else {
+            BTNode *pPredecessor = pCurNode->get_left();
+            while ((NULL != pPredecessor->get_right()) && (pCurNode != pPredecessor->get_right())){
+                pPredecessor = pPredecessor->get_right();
+            }
+
+            if (NULL == pPredecessor->get_right()){
+                pPredecessor->set_right(pCurNode);
+                vecPreorderResult.push_back(pCurNode->get_data());
+                pCurNode = pCurNode->get_left();
+            } else {
+                pPredecessor->set_right(NULL);
+                pCurNode = pCurNode->get_right();
+            }
+        }
+    }
+    return vecPreorderResult;
 }
 
 vector<uint32_t> Binary_Tree::postorder_tree_walk_morris() const
 {
-    return vector<uint32_t>();
+    vector<uint32_t> vecPostorderResult;
+    BTNode oTopNode;
+    oTopNode.set_left(m_pRoot);
+    BTNode *pCurNode = &oTopNode;
+    while (NULL != pCurNode){
+        if (NULL == pCurNode->get_left()){
+            pCurNode = pCurNode->get_right();
+        } else {
+            BTNode *pPredecessor = pCurNode->get_left();
+            while ((NULL != pPredecessor->get_right()) && (pCurNode != pPredecessor->get_right())){
+                pPredecessor = pPredecessor->get_right();
+            }
+
+            if (NULL == pPredecessor->get_right()){
+                pPredecessor->set_right(pCurNode);
+                pCurNode = pCurNode->get_left();
+            } else {
+                pPredecessor->set_right(NULL);
+                vector<uint32_t> vecLeftChildToPredecessor;
+                BTNode *pNode = pCurNode->get_left();
+                vecLeftChildToPredecessor.push_back(pNode->get_data());
+                while (NULL != pNode->get_right()){
+                    pNode = pNode->get_right();
+                    vecLeftChildToPredecessor.push_back(pNode->get_data());
+                }
+                vecPostorderResult.insert(vecPostorderResult.end(),
+                                          vecLeftChildToPredecessor.rbegin(),
+                                          vecLeftChildToPredecessor.rend());
+                pCurNode = pCurNode->get_right();
+            }
+        }
+    }
+    return vecPostorderResult;
 }
 
 BTNode *Binary_Tree::maximum() const

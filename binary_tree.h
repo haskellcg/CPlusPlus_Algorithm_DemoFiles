@@ -186,6 +186,7 @@ public:
      * @param
      * @return vector<uint32_t>,
      * @remarks
+     *          reference: https://blog.csdn.net/yangfeisc/article/details/45673947
      */
     vector<uint32_t> inorder_tree_walk_morris() const;
 
@@ -194,6 +195,7 @@ public:
      * @param
      * @return vector<uint32_t>,
      * @remarks
+     *          reference: https://blog.csdn.net/yangfeisc/article/details/45673947
      */
     vector<uint32_t> preorder_tree_walk_morris() const;
 
@@ -202,6 +204,7 @@ public:
      * @param
      * @return vector<uint32_t>,
      * @remarks
+     *          reference: https://blog.csdn.net/yangfeisc/article/details/45673947
      */
     vector<uint32_t> postorder_tree_walk_morris() const;
 
