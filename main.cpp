@@ -4,6 +4,7 @@
  * description: main function for test
  *************************************************************************/
 
+#include "avl_tree.h"
 #include "basic_queue.h"
 #include "basic_stack.h"
 #include "binary_tree.h"
@@ -28,6 +29,7 @@
 int main(int argc, char *argv[])
 {
     if ((argc >= 2) && ("-a" == string(argv[1]))){
+        avl_tree_test();
         basic_queue_test();
         basic_stack_test();
         binary_tree_test();
@@ -50,7 +52,7 @@ int main(int argc, char *argv[])
         string_hash_funtions_test();
     } else {
         // default: only test the current coding algorithm
-        binary_tree_test();
+        avl_tree_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
         string_hash_funtions_test();

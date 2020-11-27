@@ -11,7 +11,8 @@ CFLAGS              =   -Wall -Werror -Wextra
 #*************************
 PROJ                =   algorithms
 
-OBJS                =   basic_queue.o\
+OBJS                =   avl_tree.o\
+                        basic_queue.o\
                         basic_stack.o\
                         binary_tree.o\
                         bubble_sort.o\
