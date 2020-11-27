@@ -53,6 +53,7 @@ int main(int argc, char *argv[])
     } else {
         // default: only test the current coding algorithm
         avl_tree_test();
+        binary_tree_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
         string_hash_funtions_test();

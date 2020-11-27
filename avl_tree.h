@@ -49,9 +49,120 @@ private:
 
 /**
  * @brief avl tree
+ * @remarks
+ *          The AVL tree is named after its two Soviet inventors, 
+ *          Georgy Adelson-Velsky and Evgenii Landis, who published 
+ *          it in their 1962 paper "An algorithm for the organization
+ *          of information"
+ *
+ *          In an AVL tree, the heights of the two child subtrees of
+ *          any node differ by at most one; if at any time they differ
+ *          by more than one, rebalancing is done to restore this
+ *          property
  */
 class AVL_Tree: public Binary_Tree
 {
+public:
+    /**
+     * @brief insert nKey to the tree
+     * @param uint32_t nKey, key
+     * @return ATNode *,
+     * @remarks
+     */
+    //ATNode *insert(uint32_t nKey);
+
+private:
+    /**
+     * @brief perform rotation when left left insertion
+     * @param BTNode *pNodeZ, Z
+     * @return void
+     * @remarks
+     *              |                               |
+     *              Z                               Y
+     *             / \                             / \
+     *            Y   a                           /   \
+     *           / \              =>             /     \
+     *          X   b                           X       Z
+     *         / \                             / \     / \
+     *        c   d                           c   d   b   a
+     */
+    void rotation_on_left_left_insertion(BTNode *pNodeZ);
+
+    /**
+     * @brief perform rotation when left right insertion
+     * @param BTNode *pNodeZ, Z
+     * @return void
+     * @remarks
+     *              |               |              |
+     *              Z               Z              X 
+     *             / \             / \            / \
+     *            Y   a           X   a          /   \
+     *           / \      =>     / \     =>     /     \
+     *          b   X           Y   d          Y       Z
+     *             / \         / \            / \     / \
+     *            c   d       b   c          b   c   d   a
+     */
+    void rotation_on_left_right_insertion(BTNode *pNodeZ);
+
+    /**
+     * @brief perform rotation when right right insertion
+     * @param BTNode *pNodeZ, Z
+     * @return void
+     * @remarks
+     *          |                                 |
+     *          Z                                 Y
+     *         / \                               / \
+     *        a   Y                             /   \
+     *           / \              =>           /     \
+     *          b   X                         Z       X
+     *             / \                       / \     / \
+     *            c   d                     a   b   c   d
+     */
+    void rotation_on_right_right_insertion(BTNode *pNodeZ);
+
+    /**
+     * @brief perform rotation when right left insertion
+     * @param BTNode *pNodeZ, Z
+     * @return void
+     * @remarks
+     *            |             |                 |
+     *            Z             Z                 X 
+     *           / \           / \               / \
+     *          a   Y         a   X             /   \
+     *             / \    =>     / \     =>    /     \
+     *            X   b         c   Y         Z       Y
+     *           / \               / \       / \     / \
+     *          c   d             d   b     a   c   d   b
+     */
+    void rotation_on_right_left_insertion(BTNode *pNodeZ);
+    
+    /**
+     * @brief perform left rotation
+     * @param BTNode *pNodeZ, Z
+     * @return void
+     * @remarks
+     *              |                       |
+     *              Z                       Y
+     *             / \                     / \
+     *            a   Y         =>        Z   c
+     *               / \                 / \
+     *              b   c               a   b
+     */
+    void left_rotation(BTNode *pNodeZ);
+
+    /**
+     * @brief perform right rotation
+     * @param BTNode *pNodeZ, Z
+     * @return void
+     * @remarks
+     *                |                    |
+     *                Z                    Y
+     *               / \                  / \
+     *              Y   a       =>       b   Z
+     *             / \                      / \
+     *            b   c                    c   a
+     */
+    void right_rotation(BTNode *pNodeZ);
 };
 
 /**

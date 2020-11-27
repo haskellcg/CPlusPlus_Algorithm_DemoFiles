@@ -271,7 +271,7 @@ public:
      */
     void remove(BTNode *pNode);
 
-private:
+protected:
     /**
      * @brief copy pNode children nodes to pCopyNode
      * @param BTNode *pNode, current node
