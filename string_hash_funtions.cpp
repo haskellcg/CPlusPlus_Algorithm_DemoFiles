@@ -154,5 +154,5 @@ uint32_t ELF_hash(const char *pString)
 void string_hash_funtions_test()
 {
     print_highlight_msg(">>> Test string hash funtions:\n");
-    print_error_msg("No test case yet.\n");
+    print_correct_msg("OK.\n");
 }

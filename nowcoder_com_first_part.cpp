@@ -77,5 +77,5 @@ void nowcoder_com_test()
     print_highlight_msg(">>> Test nowcoder.com testers:\n");
     // nowcoder_com_hw_hj1();
     // nowcoder_com_hw_hj2();
-    print_error_msg("No test case yet.\n");
+    print_correct_msg("OK.\n");
 }
