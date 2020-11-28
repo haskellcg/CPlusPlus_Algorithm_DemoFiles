@@ -32,6 +32,11 @@ public:
     BTNode(uint32_t nData, BTNode *pParent, BTNode *pLeft, BTNode *pRight);
 
     /**
+     * @brief destructor
+     */
+    virtual ~BTNode();
+
+    /**
      * @brief get data
      */
     uint32_t get_data() const;
@@ -70,6 +75,14 @@ public:
      * @brief set right child node link
      */
     void set_right(BTNode *pRight);
+
+    /**
+     * @brief copy major information from pNode
+     * @param BTNode *pNode
+     * @return void
+     * @remarks
+     */
+    virtual void copy_major_info(BTNode *pNode);
 
 private:
     /*< data of the node */
@@ -279,7 +292,7 @@ protected:
      * @return void
      * @remarks
      */
-    static void copy_node_recursive(BTNode *pNode, BTNode *pCopyNode);
+    void copy_node_recursive(BTNode *pNode, BTNode *pCopyNode) const;
 
     /**
      * @brief delete a node recursive version
@@ -394,7 +407,15 @@ protected:
      */
     void transplant(BTNode *pNodeX, BTNode *pNodeY);
 
-private:
+    /**
+     * @brief create node according to different tree
+     * @param
+     * @return BTNode *, new node
+     * @remarks
+     */
+    virtual BTNode *create_node() const;
+
+protected:
     /*< root node of the tree */
     BTNode *m_pRoot;
     /*< number of node in the tree */

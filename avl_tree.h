@@ -27,6 +27,11 @@ public:
     ATNode(uint32_t nData, BTNode *pParent, BTNode *pLeft, BTNode *pRight, uint32_t nHeight);
 
     /**
+     * @brief destructor
+     */
+    virtual ~ATNode();
+
+    /**
      * @brief get height
      * @param
      * @return uint32_t
@@ -41,6 +46,14 @@ public:
      * @remarks
      */
     void set_height(uint32_t nHeight);
+
+    /**
+     * @brief copy major information from pNode
+     * @param BTNode *pNode
+     * @return void
+     * @remarks
+     */
+    virtual void copy_major_info(BTNode *pNode);
 
 private:
     /*< height of the node */
@@ -64,14 +77,30 @@ class AVL_Tree: public Binary_Tree
 {
 public:
     /**
+     * @brief default constructor
+     */
+    AVL_Tree();
+
+    /**
+     * @brief copy constructor
+     */
+    AVL_Tree(const AVL_Tree &oOtherAVLTree);
+
+    /**
+     * @brief destrcutor
+     */
+    virtual ~AVL_Tree();
+
+    /**
      * @brief insert nKey to the tree
      * @param uint32_t nKey, key
-     * @return ATNode *,
+     * @return ATNode *, the new node inserted,
+     *                   NULL if nKey is already existed
      * @remarks
      */
     //ATNode *insert(uint32_t nKey);
 
-private:
+protected:
     /**
      * @brief perform rotation when left left insertion
      * @param BTNode *pNodeZ, Z
@@ -163,6 +192,14 @@ private:
      *            b   c                    c   a
      */
     void right_rotation(BTNode *pNodeZ);
+    
+    /**
+     * @brief create node according to different tree
+     * @param
+     * @return BTNode *, new node
+     * @remarks
+     */
+    virtual BTNode *create_node() const;
 };
 
 /**

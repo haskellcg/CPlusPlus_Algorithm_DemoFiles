@@ -24,6 +24,14 @@ BTNode::BTNode(uint32_t nData, BTNode *pParent, BTNode *pLeft, BTNode *pRight)
 {
 }
 
+BTNode::~BTNode()
+{
+    m_nData = MAX_UINT32;
+    m_pParent = NULL;
+    m_pLeft = NULL;
+    m_pRight = NULL;
+}
+
 uint32_t BTNode::get_data() const
 {
     return m_nData;
@@ -64,6 +72,11 @@ void BTNode::set_right(BTNode *pRight)
     m_pRight = pRight;
 }
 
+void BTNode::copy_major_info(BTNode *pNode)
+{
+    m_nData = pNode->get_data();
+}
+
 Binary_Tree::Binary_Tree()
 :   m_pRoot(NULL),
     m_nSize(0)
@@ -75,7 +88,7 @@ Binary_Tree::Binary_Tree(const Binary_Tree &oOtherBinaryTree)
     m_nSize(0)
 {
     if (NULL != oOtherBinaryTree.m_pRoot){
-        m_pRoot = new BTNode;
+        m_pRoot = create_node();
         copy_node_recursive(oOtherBinaryTree.m_pRoot, m_pRoot);
     }
     m_nSize = oOtherBinaryTree.m_nSize;
@@ -99,7 +112,7 @@ Binary_Tree &Binary_Tree::operator=(const Binary_Tree &oOtherBinaryTree)
     m_nSize = 0;
 
     if (NULL != oOtherBinaryTree.m_pRoot){
-        m_pRoot = new BTNode;
+        m_pRoot = create_node();
         copy_node_recursive(oOtherBinaryTree.m_pRoot, m_pRoot);
     }
     m_nSize = oOtherBinaryTree.m_nSize;
@@ -375,9 +388,9 @@ vector<uint32_t> Binary_Tree::preorder_tree_walk_morris() const
 vector<uint32_t> Binary_Tree::postorder_tree_walk_morris() const
 {
     vector<uint32_t> vecPostorderResult;
-    BTNode oTopNode;
-    oTopNode.set_left(m_pRoot);
-    BTNode *pCurNode = &oTopNode;
+    BTNode *pTopNode = create_node();
+    pTopNode->set_left(m_pRoot);
+    BTNode *pCurNode = pTopNode;
     while (NULL != pCurNode){
         if (NULL == pCurNode->get_left()){
             pCurNode = pCurNode->get_right();
@@ -406,6 +419,8 @@ vector<uint32_t> Binary_Tree::postorder_tree_walk_morris() const
             }
         }
     }
+    delete pTopNode;
+    pTopNode = NULL;
     return vecPostorderResult;
 }
 
@@ -467,7 +482,8 @@ BTNode *Binary_Tree::search(uint32_t nKey) const
 BTNode *Binary_Tree::insert(uint32_t nData)
 {
     if (NULL == m_pRoot){
-        m_pRoot = new BTNode(nData, NULL, NULL, NULL);
+        m_pRoot = create_node();
+        m_pRoot->set_data(nData);
         ++m_nSize;
         return m_pRoot;
     } else {
@@ -480,7 +496,9 @@ BTNode *Binary_Tree::insert(uint32_t nData)
                 if (NULL != pParent->get_right()){
                     pParent = pParent->get_right();
                 } else {
-                    pNewBTNode = new BTNode(nData, pParent, NULL, NULL);
+                    pNewBTNode = create_node();
+                    pNewBTNode->set_data(nData);
+                    pNewBTNode->set_parent(pParent);
                     pParent->set_right(pNewBTNode);
                     ++m_nSize;
                     break;
@@ -489,7 +507,9 @@ BTNode *Binary_Tree::insert(uint32_t nData)
                 if (NULL != pParent->get_left()){
                     pParent = pParent->get_left();
                 } else {
-                    pNewBTNode = new BTNode(nData, pParent, NULL, NULL);
+                    pNewBTNode = create_node();
+                    pNewBTNode->set_data(nData);
+                    pNewBTNode->set_parent(pParent);
                     pParent->set_left(pNewBTNode);
                     ++m_nSize;
                     break;
@@ -524,17 +544,17 @@ void Binary_Tree::remove(BTNode *pNode)
     --m_nSize;
 }
 
-void Binary_Tree::copy_node_recursive(BTNode *pNode, BTNode *pCopyNode)
+void Binary_Tree::copy_node_recursive(BTNode *pNode, BTNode *pCopyNode) const
 {
-    pCopyNode->set_data(pNode->get_data());
+    pCopyNode->copy_major_info(pNode);
     if (NULL != pNode->get_left()){
-        BTNode *pCopyLeftNode = new BTNode;
+        BTNode *pCopyLeftNode = create_node();
         copy_node_recursive(pNode->get_left(), pCopyLeftNode);
         pCopyNode->set_left(pCopyLeftNode);
         pCopyLeftNode->set_parent(pCopyNode);
     }
     if (NULL != pNode->get_right()){
-        BTNode *pCopyRightNode = new BTNode;
+        BTNode *pCopyRightNode = create_node();
         copy_node_recursive(pNode->get_right(), pCopyRightNode);
         pCopyNode->set_right(pCopyRightNode);
         pCopyRightNode->set_parent(pCopyNode);
@@ -676,6 +696,11 @@ void Binary_Tree::transplant(BTNode *pNodeX, BTNode *pNodeY)
     pNodeX->set_parent(NULL);
 }
 
+BTNode *Binary_Tree::create_node() const
+{
+    return (new BTNode);
+}
+
 void binary_tree_test()
 {
     print_highlight_msg(">>> Test binary tree:\n");
@@ -807,7 +832,9 @@ void binary_tree_test()
     Binary_Tree oDeleteBinaryTree;
     oDeleteBinaryTree = oBinaryTree;
     for (size_t i = 0; i < vecInt.size(); ++i){
-        oDeleteBinaryTree.remove(oDeleteBinaryTree.search(vecInt[i]));
+        BTNode *pRemoveNode = oDeleteBinaryTree.search(vecInt[i]);
+        oDeleteBinaryTree.remove(pRemoveNode);
+        delete pRemoveNode;
     }
     print_normal_msg("deleting binary tree:\n");
     print_warning_msg(oDeleteBinaryTree.to_string() + "\n");

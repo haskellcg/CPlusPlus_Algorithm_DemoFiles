@@ -28,6 +28,42 @@ void ATNode::set_height(uint32_t nHeight)
     m_nHeight = nHeight;
 }
 
+ATNode::~ATNode()
+{
+    m_nHeight = 0;
+}
+
+void ATNode::copy_major_info(BTNode *pNode)
+{
+    m_nHeight = ((ATNode *)pNode)->get_height();
+    BTNode::copy_major_info(pNode);
+}
+
+AVL_Tree::AVL_Tree()
+{
+}
+
+AVL_Tree::AVL_Tree(const AVL_Tree &oOtherAVLTree)
+:   Binary_Tree()
+{
+    if (NULL != oOtherAVLTree.m_pRoot){
+        m_pRoot = create_node();
+        copy_node_recursive(oOtherAVLTree.m_pRoot, m_pRoot);
+    }
+    m_nSize = oOtherAVLTree.m_nSize;
+}
+
+AVL_Tree::~AVL_Tree()
+{
+}
+
+/*
+ATNode *AVL_Tree::insert(uint32_t)
+{
+    return NULL;
+}
+*/
+
 void AVL_Tree::rotation_on_left_left_insertion(BTNode *pNodeZ)
 {
     right_rotation(pNodeZ);
@@ -78,6 +114,11 @@ void AVL_Tree::right_rotation(BTNode *pNodeZ)
     }
 }
 
+BTNode *AVL_Tree::create_node() const
+{
+    return (new ATNode);
+}
+
 void avl_tree_test()
 {
     print_highlight_msg(">>> Test avl tree:\n");
@@ -90,5 +131,8 @@ void avl_tree_test()
         oAVLTree.insert(vecInt[i]);
     }
     print_warning_msg(oAVLTree.to_string() + "\n");
+
+    AVL_Tree oOtherAVLTree(oAVLTree);
+
     print_error_msg("No test case yet.\n");
 }
