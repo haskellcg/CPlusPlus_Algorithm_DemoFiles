@@ -481,42 +481,13 @@ BTNode *Binary_Tree::search(uint32_t nKey) const
 
 BTNode *Binary_Tree::insert(uint32_t nData)
 {
-    if (NULL == m_pRoot){
-        m_pRoot = create_node();
-        m_pRoot->set_data(nData);
-        ++m_nSize;
-        return m_pRoot;
+    BTNode *pResultNode = search(nData);
+    if (NULL == pResultNode){
+        BTNode *pNewBTNode = create_node();
+        pNewBTNode->set_data(nData);
+        return insert(pNewBTNode);
     } else {
-        BTNode *pParent = m_pRoot;
-        BTNode *pNewBTNode = NULL;
-        while (true){
-            if (nData == pParent->get_data()){
-                break;
-            } else if (nData > pParent->get_data()){
-                if (NULL != pParent->get_right()){
-                    pParent = pParent->get_right();
-                } else {
-                    pNewBTNode = create_node();
-                    pNewBTNode->set_data(nData);
-                    pNewBTNode->set_parent(pParent);
-                    pParent->set_right(pNewBTNode);
-                    ++m_nSize;
-                    break;
-                }
-            } else {
-                if (NULL != pParent->get_left()){
-                    pParent = pParent->get_left();
-                } else {
-                    pNewBTNode = create_node();
-                    pNewBTNode->set_data(nData);
-                    pNewBTNode->set_parent(pParent);
-                    pParent->set_left(pNewBTNode);
-                    ++m_nSize;
-                    break;
-                }
-            }
-        }
-        return pNewBTNode;
+        return NULL;
     }
 }
 
@@ -699,6 +670,40 @@ void Binary_Tree::transplant(BTNode *pNodeX, BTNode *pNodeY)
 BTNode *Binary_Tree::create_node() const
 {
     return (new BTNode);
+}
+
+BTNode *Binary_Tree::insert(BTNode *pNewBTNode)
+{
+    if (NULL == m_pRoot){
+        m_pRoot = pNewBTNode;
+        ++m_nSize;
+    } else {
+        BTNode *pParent = m_pRoot;
+        while (true){
+            if (pNewBTNode->get_data() == pParent->get_data()){
+                break;
+            } else if (pNewBTNode->get_data() > pParent->get_data()){
+                if (NULL != pParent->get_right()){
+                    pParent = pParent->get_right();
+                } else {
+                    pNewBTNode->set_parent(pParent);
+                    pParent->set_right(pNewBTNode);
+                    ++m_nSize;
+                    break;
+                }
+            } else {
+                if (NULL != pParent->get_left()){
+                    pParent = pParent->get_left();
+                } else {
+                    pNewBTNode->set_parent(pParent);
+                    pParent->set_left(pNewBTNode);
+                    ++m_nSize;
+                    break;
+                }
+            }
+        }
+    }
+    return pNewBTNode;
 }
 
 void binary_tree_test()

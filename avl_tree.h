@@ -94,11 +94,11 @@ public:
     /**
      * @brief insert nKey to the tree
      * @param uint32_t nKey, key
-     * @return ATNode *, the new node inserted,
+     * @return BTNode *, the new node inserted,
      *                   NULL if nKey is already existed
      * @remarks
      */
-    //ATNode *insert(uint32_t nKey);
+    BTNode *insert(uint32_t nKey);
 
 protected:
     /**

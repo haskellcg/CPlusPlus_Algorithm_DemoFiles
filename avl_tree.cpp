@@ -57,12 +57,18 @@ AVL_Tree::~AVL_Tree()
 {
 }
 
-/*
-ATNode *AVL_Tree::insert(uint32_t)
+BTNode *AVL_Tree::insert(uint32_t nData)
 {
-    return NULL;
+    BTNode *pResultNode = search(nData);
+    if (NULL == pResultNode){
+        BTNode *pNewBTNode = create_node();
+        pNewBTNode->set_data(nData);
+        return Binary_Tree::insert(pNewBTNode);
+    } else {
+        return NULL;
+    }
+    // TODO: add balance factor and rotation
 }
-*/
 
 void AVL_Tree::rotation_on_left_left_insertion(BTNode *pNodeZ)
 {

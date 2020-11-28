@@ -415,6 +415,15 @@ protected:
      */
     virtual BTNode *create_node() const;
 
+    /**
+     * @brief insert pNewBTNode to the tree
+     * @param BTNode *pNewBTNode, new node
+     * @return new node pointer
+     * @remarks
+     *          make sure pNewBTNode->get_data() is not in the tree
+     */
+    BTNode *insert(BTNode *pNewBTNode);
+
 protected:
     /*< root node of the tree */
     BTNode *m_pRoot;
