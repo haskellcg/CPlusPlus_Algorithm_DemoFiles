@@ -26,6 +26,17 @@ public:
      * @brief destructor
      */
     ~BSTNode();
+    
+    /**
+     * @brief to string
+     * @param
+     * @return string
+     * @remarks
+     *          in order to show node in the tree perfectly,
+     *          node should only show important information,
+     *          and should be less then 6 characters
+     */
+    string to_string() const;
 
     /**
      * @brief get key
@@ -187,7 +198,7 @@ public:
                 for (size_t i = 0; i < (nCurNodePositionCoefficient - nUsedCoefficientInThisLine); ++i){
                     strNodeLine += strSpace;
                 }
-                strNodeLine = adjust_string(strNodeLine, std::to_string(pCurNode->get_key()));
+                strNodeLine = adjust_string(strNodeLine, pCurNode->to_string());
                 nUsedCoefficientInThisLine = nCurNodePositionCoefficient;
             }
             ossResult << strNodeLine << "\n";
@@ -952,6 +963,58 @@ protected:
             }
         }
         return pNewNode;
+    }
+
+    /**
+     * @brief perform left rotation
+     * @param Node *pZNode, Z
+     * @return void
+     * @remarks
+     *              |                       |
+     *              Z                       Y
+     *             / \                     / \
+     *            a   Y         =>        Z   c
+     *               / \                 / \
+     *              b   c               a   b
+     */
+    void left_rotation(Node *pZNode)
+    {
+        Node *pYNode = pZNode->get_right();
+        transplant(pZNode, pYNode);
+
+        Node *pBNode = pYNode->get_left();
+        pYNode->set_left(pZNode);
+        pZNode->set_parent(pYNode);
+        if (NULL != pBNode){
+            pBNode->set_parent(pZNode);
+        }
+        pZNode->set_right(pBNode);
+    }
+
+    /**
+     * @brief perform right rotation
+     * @param Node *pZNode, Z
+     * @return void
+     * @remarks
+     *                |                    |
+     *                Z                    Y
+     *               / \                  / \
+     *              Y   a       =>       b   Z
+     *             / \                      / \
+     *            b   c                    c   a
+     */
+    void right_rotation(Node *pZNode)
+    {
+        Node *pYNode = pZNode->get_left();
+        transplant(pZNode, pYNode);
+
+        Node *pCNode = pYNode->get_right();
+        pYNode->set_right(pZNode);
+        pZNode->set_parent(pYNode);
+        if (NULL != pCNode){
+            pCNode->set_parent(pZNode);
+        }
+        pZNode->set_left(pCNode);
     }
 
 protected:

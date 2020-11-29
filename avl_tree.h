@@ -10,6 +10,9 @@
 #include "binary_search_tree.h"
 #include "common_types.h"
 
+#define LEFT_INSERT 69
+#define RIGHT_INSERT 96
+
 /**
  * @brief avl tree node
  */
@@ -25,6 +28,17 @@ public:
      * @brief destructor
      */
     ~AVLTNode();
+
+    /**
+     * @brief to string
+     * @param
+     * @return string
+     * @remarks
+     *          in order to show node in the tree perfectly,
+     *          node should only show important information,
+     *          and should be less then 6 characters
+     */
+    string to_string() const;
 
     /**
      * @brief get height
@@ -105,7 +119,7 @@ private:
  *
  *          In an AVL tree, the heights of the two child subtrees of
  *          any node differ by at most one; if at any time they differ
- *          by more than one, rebalancing is done to restore this
+ *          by more than one, rebalance is done to restore this
  *          property
  */
 class AVL_Tree: public Binary_Search_Tree<AVLTNode>
@@ -118,13 +132,22 @@ public:
      *                     NULL if nKey is already existed
      * @remarks
      */
-    // AVLTNode *insert(uint32_t nKey);
+    AVLTNode *insert(uint32_t nKey);
+
+    /**
+     * @brief remove pNode from avl tree
+     * @param AVLTNode *pNode,
+     * @return void
+     * @remarks
+     *          pNode should be in the tree
+     */
+    void remove(AVLTNode *pNode);
 
 protected:
     /**
      * @brief perform rotation when left left insertion
      * @param AVLTNode *pZNode, Z
-     * @return void
+     * @return AVLTNode *, new parent node
      * @remarks
      *              |                               |
      *              Z                               Y
@@ -135,12 +158,12 @@ protected:
      *         / \                             / \     / \
      *        c   d                           c   d   b   a
      */
-    void rotation_on_left_left_insertion(AVLTNode *pZNode);
+    AVLTNode *rotation_on_left_left_insertion(AVLTNode *pZNode);
 
     /**
      * @brief perform rotation when left right insertion
      * @param AVLTNode *pZNode, Z
-     * @return void
+     * @return AVLTNode *, new parent node
      * @remarks
      *              |               |              |
      *              Z               Z              X 
@@ -151,12 +174,12 @@ protected:
      *             / \         / \            / \     / \
      *            c   d       b   c          b   c   d   a
      */
-    void rotation_on_left_right_insertion(AVLTNode *pZNode);
+    AVLTNode *rotation_on_left_right_insertion(AVLTNode *pZNode);
 
     /**
      * @brief perform rotation when right right insertion
      * @param AVLTNode *pZNode, Z
-     * @return void
+     * @return AVLTNode *, new parent node
      * @remarks
      *          |                                 |
      *          Z                                 Y
@@ -167,12 +190,12 @@ protected:
      *             / \                       / \     / \
      *            c   d                     a   b   c   d
      */
-    void rotation_on_right_right_insertion(AVLTNode *pZNode);
+    AVLTNode *rotation_on_right_right_insertion(AVLTNode *pZNode);
 
     /**
      * @brief perform rotation when right left insertion
      * @param AVLTNode *pZNode, Z
-     * @return void
+     * @return AVLTNode *, new parent node
      * @remarks
      *            |             |                 |
      *            Z             Z                 X 
@@ -183,35 +206,24 @@ protected:
      *           / \               / \       / \     / \
      *          c   d             d   b     a   c   d   b
      */
-    void rotation_on_right_left_insertion(AVLTNode *pZNode);
-    
-    /**
-     * @brief perform left rotation
-     * @param AVLTNode *pZNode, Z
-     * @return void
-     * @remarks
-     *              |                       |
-     *              Z                       Y
-     *             / \                     / \
-     *            a   Y         =>        Z   c
-     *               / \                 / \
-     *              b   c               a   b
-     */
-    void left_rotation(AVLTNode *pZNode);
+    AVLTNode *rotation_on_right_left_insertion(AVLTNode *pZNode);
 
     /**
-     * @brief perform right rotation
-     * @param AVLTNode *pZNode, Z
+     * @brief get height of pNode
+     * @param AVLTNode *pNode, could be NULL
+     * @return uint32_t, height of pNode,
+     *                   0 if pNode is NULL
+     * @remarks
+     */
+    uint32_t get_height(AVLTNode *pNode) const;
+
+    /**
+     * @brief update height of the pNode
+     * @param AVLTNode *pNode
      * @return void
      * @remarks
-     *                |                    |
-     *                Z                    Y
-     *               / \                  / \
-     *              Y   a       =>       b   Z
-     *             / \                      / \
-     *            b   c                    c   a
      */
-    void right_rotation(AVLTNode *pZNode);
+    void update_height(AVLTNode *pNode);
 
     /**
      * @brief rebalance the tree to restore its property
@@ -220,6 +232,56 @@ protected:
      * @remarks
      */
     void rebalance(AVLTNode *pNode);
+
+    /**
+     * @brief get rebalance start
+     * @param AVLTNode *pNode,
+     * @return AVLTNode *,
+     * @remarks
+     *          delete Z, find the ubalanced point to
+     *          call rebalance function, accoring to how
+     *          to remove
+     * 
+     *          if remove a node from a tree, there are 3
+     *          situation we need deal with
+     *
+     *          1. node Z have no child nodes, then we need
+     *             start from Z's sibling
+     *                Y                   Y
+     *               / \                 / \
+     *              X   Z     or        Z   X
+     *             / \                     / \
+     *            A   B                   A   B
+     *            A or B could be NULL
+     *
+     *          2. node Z have only 1 child node, then we start
+     *             child tree
+     *               Z                   Z
+     *                \      or         /
+     *                 Y               Y
+     *
+     *          3. node Z have both child nodes, then we replace
+     *             Z with its successor S, check S is Z's right
+     *             or not
+     *                 Z                   Z
+     *                / \                 / \
+     *               Y   S               Y   S
+     *              / \   \             / \
+     *             A   B   C    or     A   B
+     *            / \ / \
+     *           D  E F  G
+     *           3.1 if S is Z's right, go to left tree, and
+     *               get at least 2 level
+     *
+     *                Y
+     *               / \
+     *              S   X
+     *               \ / \
+     *               A B  C
+     *          3.2 if S is not Z's right, then go to S's left
+     *              sibling tree
+     */
+    AVLTNode *get_rebalance_start(AVLTNode *pNode) const;
 };
 
 /**

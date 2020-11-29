@@ -7,7 +7,7 @@
 #include "avl_tree.h"
 
 AVLTNode::AVLTNode()
-:   m_nHeight(0),
+:   m_nHeight(1),
     m_nKey(MAX_UINT32),
     m_pParent(NULL),
     m_pLeft(NULL),
@@ -17,11 +17,16 @@ AVLTNode::AVLTNode()
 
 AVLTNode::~AVLTNode()
 {
-    m_nHeight = 0;
+    m_nHeight = 1;
     m_nKey = MAX_UINT32;
     m_pParent = NULL;
     m_pLeft = NULL;
     m_pRight = NULL;
+}
+
+string AVLTNode::to_string() const
+{
+    return (std::to_string(m_nKey) + ":" + std::to_string(m_nHeight));
 }
 
 uint32_t AVLTNode::get_height() const
@@ -74,75 +79,211 @@ void AVLTNode::set_right(AVLTNode *pRight)
     m_pRight = pRight;
 }
 
-void AVL_Tree::rotation_on_left_left_insertion(AVLTNode *pZNode)
+AVLTNode *AVL_Tree::insert(uint32_t nKey)
 {
-    right_rotation(pZNode);
+    AVLTNode *pNewNode = Binary_Search_Tree<AVLTNode>::insert(nKey);
+    rebalance(pNewNode);
+    return pNewNode;
 }
 
-void AVL_Tree::rotation_on_left_right_insertion(AVLTNode *pZNode)
+void AVL_Tree::remove(AVLTNode *pNode)
 {
-    left_rotation(pZNode->get_left());
-    right_rotation(pZNode);
-}
+    AVLTNode *pBalanceStartNode = get_rebalance_start(pNode);
 
-void AVL_Tree::rotation_on_right_right_insertion(AVLTNode *pZNode)
-{
-    left_rotation(pZNode);
-}
+    Binary_Search_Tree<AVLTNode>::remove(pNode);
 
-void AVL_Tree::rotation_on_right_left_insertion(AVLTNode *pZNode)
-{
-    right_rotation(pZNode->get_right());
-    left_rotation(pZNode);
-}
-
-void AVL_Tree::left_rotation(AVLTNode *pZNode)
-{
-    AVLTNode *pYNode = pZNode->get_right();
-    transplant(pZNode, pYNode);
-
-    AVLTNode *pBNode = pYNode->get_left();
-    pYNode->set_left(pZNode);
-    pZNode->set_parent(pYNode);
-    if (NULL != pBNode){
-        pBNode->set_parent(pZNode);
-        pZNode->set_right(pBNode);
+    if (NULL != pBalanceStartNode){
+        rebalance(pBalanceStartNode);
     }
 }
 
-void AVL_Tree::right_rotation(AVLTNode *pZNode)
+AVLTNode *AVL_Tree::rotation_on_left_left_insertion(AVLTNode *pZNode)
 {
     AVLTNode *pYNode = pZNode->get_left();
-    transplant(pZNode, pYNode);
 
-    AVLTNode *pCNode = pYNode->get_right();
-    pYNode->set_right(pZNode);
-    pZNode->set_parent(pYNode);
-    if (NULL != pCNode){
-        pZNode->set_left(pCNode);
-        pCNode->set_parent(pZNode);
+    right_rotation(pZNode);
+
+    update_height(pZNode);
+    update_height(pYNode);
+
+    return pYNode;
+}
+
+AVLTNode *AVL_Tree::rotation_on_left_right_insertion(AVLTNode *pZNode)
+{
+    AVLTNode *pYNode = pZNode->get_left();
+    AVLTNode *pXNode = pYNode->get_right();
+
+    left_rotation(pYNode);
+    right_rotation(pZNode);
+
+    update_height(pZNode);
+    update_height(pYNode);
+    update_height(pXNode);
+
+    return pXNode;
+}
+
+AVLTNode *AVL_Tree::rotation_on_right_right_insertion(AVLTNode *pZNode)
+{
+    AVLTNode *pYNode = pZNode->get_right();
+
+    left_rotation(pZNode);
+
+    update_height(pZNode);
+    update_height(pYNode);
+
+    return pYNode;
+}
+
+AVLTNode *AVL_Tree::rotation_on_right_left_insertion(AVLTNode *pZNode)
+{
+    AVLTNode *pYNode = pZNode->get_right();
+    AVLTNode *pXNode = pYNode->get_left();
+
+    right_rotation(pYNode);
+    left_rotation(pZNode);
+
+    update_height(pZNode);
+    update_height(pYNode);
+    update_height(pXNode);
+
+    return pXNode;
+}
+
+uint32_t AVL_Tree::get_height(AVLTNode *pNode) const
+{
+    if (NULL != pNode){
+        return pNode->get_height();
+    } else {
+        return 0;
     }
+}
+
+void AVL_Tree::update_height(AVLTNode *pNode)
+{
+    pNode->set_height(1 + max(get_height(pNode->get_left()),
+                              get_height(pNode->get_right())));
 }
 
 void AVL_Tree::rebalance(AVLTNode *pNode)
 {
-    delete pNode;
+    uint32_t *pInsertDirection = new uint32_t[get_height(m_pRoot) + 1];
+    uint32_t nInsertDirectionIndex = 0;
+
+    AVLTNode *pCurNode = pNode;
+    AVLTNode *pParent = pCurNode->get_parent();
+    while (NULL != pParent){
+        update_height(pParent);
+
+        if (pCurNode == pParent->get_left()){
+            pInsertDirection[nInsertDirectionIndex++] = LEFT_INSERT;
+        } else {
+            pInsertDirection[nInsertDirectionIndex++] = RIGHT_INSERT;
+        }
+
+        uint32_t nHeightDifference = 0;
+        uint32_t nLeftHeight = get_height(pParent->get_left());
+        uint32_t nRightHeight = get_height(pParent->get_right());
+        if (nLeftHeight >= nRightHeight){
+            nHeightDifference = nLeftHeight - nRightHeight;
+        } else {
+            nHeightDifference = nRightHeight - nLeftHeight;
+        }
+        if (nHeightDifference > 1){
+            if ((LEFT_INSERT == pInsertDirection[nInsertDirectionIndex - 1])
+                && (LEFT_INSERT == pInsertDirection[nInsertDirectionIndex - 2])){
+                pCurNode = rotation_on_left_left_insertion(pParent);
+            } else if ((LEFT_INSERT == pInsertDirection[nInsertDirectionIndex - 1])
+                       && (RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 2])){
+                pCurNode = rotation_on_left_right_insertion(pParent);
+            } else if ((RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 1])
+                       && (LEFT_INSERT == pInsertDirection[nInsertDirectionIndex - 2])){
+                pCurNode = rotation_on_right_left_insertion(pParent);
+            } else{
+                   /**
+                   if ((RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 1])
+                       && (RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 2]))
+                    */
+                pCurNode = rotation_on_right_right_insertion(pParent);
+            }
+        } else {
+            pCurNode = pParent;
+        }
+
+        pParent = pCurNode->get_parent();
+    }
+
+    delete []pInsertDirection;
+}
+
+AVLTNode *AVL_Tree::get_rebalance_start(AVLTNode *pNode) const
+{
+    AVLTNode *pBalanceStartNode = NULL;
+    if ((NULL != pNode->get_left()) && (NULL != pNode->get_right())){
+        AVLTNode *pSuccessor = minimum(pNode->get_right());
+        if (pSuccessor == pNode->get_right()){
+            // situation 3.1
+            pBalanceStartNode = maximum(pNode->get_left());
+            if (NULL != pBalanceStartNode->get_left()){
+                pBalanceStartNode = pBalanceStartNode->get_left();
+            }
+        } else {
+            // situation 3.2
+            pBalanceStartNode = maximum(pSuccessor->get_parent());
+            if (NULL != pBalanceStartNode->get_left()){
+                pBalanceStartNode = pBalanceStartNode->get_left();
+            }
+        }
+    } else if (NULL != pNode->get_right()){
+        // situation 2
+        pBalanceStartNode = pNode->get_right();
+    } else if (NULL != pNode->get_left()){
+        // situation 2
+        pBalanceStartNode = pNode->get_left();
+    } else {
+        // situation 1
+        AVLTNode *pParent = pNode->get_parent();
+        if (NULL != pParent){
+            pBalanceStartNode = pParent;
+            if (pNode == pParent->get_left()){
+                pBalanceStartNode = maximum(pParent);
+                if (NULL != pBalanceStartNode->get_left()){
+                    pBalanceStartNode = pBalanceStartNode->get_left();
+                }
+            } else {
+                pBalanceStartNode = minimum(pParent);
+                if (NULL != pBalanceStartNode->get_right()){
+                    pBalanceStartNode = pBalanceStartNode->get_right();
+                }
+            }
+        } else {
+            // means removing root node, no need to rebalance
+        }
+    }
+    return pBalanceStartNode;
 }
 
 void avl_tree_test()
 {
     print_highlight_msg(">>> Test avl tree:\n");
-    uint32_t arrayInt[] = {10, 11, 12, 13, 14, 15/*, 5, 4, 3, 2, 1, 9, 6, 8, 7*/};
+    uint32_t arrayInt[] = {10, 11, 12, 13, 14, 15, 5, 4, 3, 2, 1, 9, 8, 7, 6};
     vector<uint32_t> vecInt;
     vecInt.insert(vecInt.end(), begin(arrayInt), end(arrayInt));
+    print_normal_msg(to_string(vecInt) + "\n");
 
     AVL_Tree oAVLTree;
     for (size_t i = 0; i < vecInt.size(); ++i){
         oAVLTree.insert(vecInt[i]);
-        print_warning_msg(oAVLTree.to_string() + "\n");
     }
+    print_warning_msg(oAVLTree.to_string() + "\n");
 
-    AVL_Tree oOtherAVLTree(oAVLTree);
-
-    print_error_msg("No test case yet.\n");
+    print_normal_msg("deleting avl tree:\n");
+    AVL_Tree oCpAVLTree(oAVLTree);
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        AVLTNode *pRemoveNode = oCpAVLTree.search(vecInt[i]);
+        oCpAVLTree.remove(pRemoveNode);
+        delete pRemoveNode;
+    }
+    print_warning_msg(oCpAVLTree.to_string() + "\n");
 }

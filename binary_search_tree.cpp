@@ -22,6 +22,11 @@ BSTNode::~BSTNode()
     m_pRight = NULL;
 }
 
+string BSTNode::to_string() const
+{
+    return (std::to_string(m_nKey));
+}
+
 uint32_t BSTNode::get_key() const
 {
     return m_nKey;
@@ -190,6 +195,7 @@ void binary_search_tree_test()
         }
     }
 
+    print_normal_msg("deleting binary search tree:\n");
     Binary_Search_Tree<BSTNode> oCpBSTree;
     oCpBSTree = oBSTree;
     for (size_t i = 0; i < vecInt.size(); ++i){
@@ -197,6 +203,5 @@ void binary_search_tree_test()
         oCpBSTree.remove(pRemoveNode);
         delete pRemoveNode;
     }
-    print_normal_msg("deleting binary tree:\n");
     print_warning_msg(oCpBSTree.to_string() + "\n");
 }
