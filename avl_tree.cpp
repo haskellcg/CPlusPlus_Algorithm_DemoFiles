@@ -6,129 +6,127 @@
 
 #include "avl_tree.h"
 
-ATNode::ATNode()
-:   BTNode(),
-    m_nHeight(0)
+AVLTNode::AVLTNode()
+:   m_nHeight(0),
+    m_nKey(MAX_UINT32),
+    m_pParent(NULL),
+    m_pLeft(NULL),
+    m_pRight(NULL)
 {
 }
 
-ATNode::ATNode(uint32_t nData, BTNode *pParent, BTNode *pLeft, BTNode *pRight, uint32_t nHeight)
-:   BTNode(nData, pParent, pLeft, pRight),
-    m_nHeight(nHeight)
+AVLTNode::~AVLTNode()
 {
+    m_nHeight = 0;
+    m_nKey = MAX_UINT32;
+    m_pParent = NULL;
+    m_pLeft = NULL;
+    m_pRight = NULL;
 }
 
-uint32_t ATNode::get_height() const
+uint32_t AVLTNode::get_height() const
 {
     return m_nHeight;
 }
 
-void ATNode::set_height(uint32_t nHeight)
+void AVLTNode::set_height(uint32_t nHeight)
 {
     m_nHeight = nHeight;
 }
 
-ATNode::~ATNode()
+uint32_t AVLTNode::get_key() const
 {
-    m_nHeight = 0;
+    return m_nKey;
 }
 
-void ATNode::copy_major_info(BTNode *pNode)
+void AVLTNode::set_key(uint32_t nKey)
 {
-    m_nHeight = ((ATNode *)pNode)->get_height();
-    BTNode::copy_major_info(pNode);
+    m_nKey = nKey;
 }
 
-AVL_Tree::AVL_Tree()
+AVLTNode *AVLTNode::get_parent() const
 {
+    return m_pParent;
 }
 
-AVL_Tree::AVL_Tree(const AVL_Tree &oOtherAVLTree)
-:   Binary_Tree()
+void AVLTNode::set_parent(AVLTNode *pParent)
 {
-    if (NULL != oOtherAVLTree.m_pRoot){
-        m_pRoot = create_node();
-        copy_node_recursive(oOtherAVLTree.m_pRoot, m_pRoot);
-    }
-    m_nSize = oOtherAVLTree.m_nSize;
+    m_pParent = pParent;
 }
 
-AVL_Tree::~AVL_Tree()
+AVLTNode *AVLTNode::get_left() const
 {
+    return m_pLeft;
 }
 
-BTNode *AVL_Tree::insert(uint32_t nData)
+void AVLTNode::set_left(AVLTNode *pLeft)
 {
-    BTNode *pResultNode = search(nData);
-    if (NULL == pResultNode){
-        BTNode *pNewBTNode = create_node();
-        pNewBTNode->set_data(nData);
-        return Binary_Tree::insert(pNewBTNode);
-    } else {
-        return NULL;
-    }
-    // TODO: add balance factor and rotation
+    m_pLeft = pLeft;
 }
 
-void AVL_Tree::rotation_on_left_left_insertion(BTNode *pNodeZ)
+AVLTNode *AVLTNode::get_right() const
 {
-    right_rotation(pNodeZ);
+    return m_pRight;
 }
 
-void AVL_Tree::rotation_on_left_right_insertion(BTNode *pNodeZ)
+void AVLTNode::set_right(AVLTNode *pRight)
 {
-    left_rotation(pNodeZ->get_left());
-    right_rotation(pNodeZ);
+    m_pRight = pRight;
 }
 
-void AVL_Tree::rotation_on_right_right_insertion(BTNode *pNodeZ)
+void AVL_Tree::rotation_on_left_left_insertion(AVLTNode *pZNode)
 {
-    left_rotation(pNodeZ);
+    right_rotation(pZNode);
 }
 
-void AVL_Tree::rotation_on_right_left_insertion(BTNode *pNodeZ)
+void AVL_Tree::rotation_on_left_right_insertion(AVLTNode *pZNode)
 {
-    right_rotation(pNodeZ->get_right());
-    left_rotation(pNodeZ);
+    left_rotation(pZNode->get_left());
+    right_rotation(pZNode);
 }
 
-void AVL_Tree::left_rotation(BTNode *pNodeZ)
+void AVL_Tree::rotation_on_right_right_insertion(AVLTNode *pZNode)
 {
-    BTNode *pNodeY = pNodeZ->get_right();
-    transplant(pNodeZ, pNodeY);
+    left_rotation(pZNode);
+}
 
-    BTNode *pNodeB = pNodeY->get_left();
-    pNodeY->set_left(pNodeZ);
-    pNodeZ->set_parent(pNodeY);
-    if (NULL != pNodeB){
-        pNodeB->set_parent(pNodeZ);
-        pNodeZ->set_right(pNodeB);
+void AVL_Tree::rotation_on_right_left_insertion(AVLTNode *pZNode)
+{
+    right_rotation(pZNode->get_right());
+    left_rotation(pZNode);
+}
+
+void AVL_Tree::left_rotation(AVLTNode *pZNode)
+{
+    AVLTNode *pYNode = pZNode->get_right();
+    transplant(pZNode, pYNode);
+
+    AVLTNode *pBNode = pYNode->get_left();
+    pYNode->set_left(pZNode);
+    pZNode->set_parent(pYNode);
+    if (NULL != pBNode){
+        pBNode->set_parent(pZNode);
+        pZNode->set_right(pBNode);
     }
 }
 
-void AVL_Tree::right_rotation(BTNode *pNodeZ)
+void AVL_Tree::right_rotation(AVLTNode *pZNode)
 {
-    BTNode *pNodeY = pNodeZ->get_left();
-    transplant(pNodeZ, pNodeY);
+    AVLTNode *pYNode = pZNode->get_left();
+    transplant(pZNode, pYNode);
 
-    BTNode *pNodeC = pNodeY->get_right();
-    pNodeY->set_right(pNodeZ);
-    pNodeZ->set_parent(pNodeY);
-    if (NULL != pNodeC){
-        pNodeZ->set_left(pNodeC);
-        pNodeC->set_parent(pNodeZ);
+    AVLTNode *pCNode = pYNode->get_right();
+    pYNode->set_right(pZNode);
+    pZNode->set_parent(pYNode);
+    if (NULL != pCNode){
+        pZNode->set_left(pCNode);
+        pCNode->set_parent(pZNode);
     }
 }
 
-BTNode *AVL_Tree::create_node() const
+void AVL_Tree::rebalance(AVLTNode *pNode)
 {
-    return (new ATNode);
-}
-
-void AVL_Tree::rebalance(BTNode *pNode)
-{
-    ATNode *pATNode = static_cast<ATNode *>(pNode);
-    delete pATNode;
+    delete pNode;
 }
 
 void avl_tree_test()

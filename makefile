@@ -14,7 +14,7 @@ PROJ                =   algorithms
 OBJS                =   avl_tree.o\
                         basic_queue.o\
                         basic_stack.o\
-                        binary_tree.o\
+                        binary_search_tree.o\
                         bubble_sort.o\
                         bucket_sort.o\
                         common_types.o\

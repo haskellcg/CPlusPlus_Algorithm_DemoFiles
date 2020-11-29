@@ -7,7 +7,7 @@
 #include "avl_tree.h"
 #include "basic_queue.h"
 #include "basic_stack.h"
-#include "binary_tree.h"
+#include "binary_search_tree.h"
 #include "bubble_sort.h"
 #include "bucket_sort.h"
 #include "counting_sort.h"
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         avl_tree_test();
         basic_queue_test();
         basic_stack_test();
-        binary_tree_test();
+        binary_search_tree_test();
         bubble_sort_test();
         bucket_sort_test();
         counting_sort_test();
@@ -53,7 +53,7 @@ int main(int argc, char *argv[])
     } else {
         // default: only test the current coding algorithm
         avl_tree_test();
-        binary_tree_test();
+        binary_search_tree_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
         string_hash_funtions_test();
