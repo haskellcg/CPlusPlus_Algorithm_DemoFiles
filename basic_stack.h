@@ -45,7 +45,7 @@ public:
      * @return
      * @remarks
      */
-    virtual ~Basic_Stack();
+    ~Basic_Stack();
     
     /**
      * @brief get the size of the stack

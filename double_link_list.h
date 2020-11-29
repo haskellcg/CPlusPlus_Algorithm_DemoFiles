@@ -78,7 +78,7 @@ public:
     /**
      * @brief destructor
      */
-    virtual ~Double_Link_List();
+    ~Double_Link_List();
 
     /**
      * @brief get number of the element in the list
