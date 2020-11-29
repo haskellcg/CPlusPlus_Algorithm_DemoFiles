@@ -200,6 +200,14 @@ protected:
      * @remarks
      */
     virtual BTNode *create_node() const;
+
+    /**
+     * @brief rebalance the tree to restore its property
+     * @param BTNode *pNode
+     * @return void
+     * @remarks
+     */
+    void rebalance(BTNode *pNode);
 };
 
 /**

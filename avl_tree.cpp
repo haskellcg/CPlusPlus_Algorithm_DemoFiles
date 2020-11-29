@@ -125,6 +125,12 @@ BTNode *AVL_Tree::create_node() const
     return (new ATNode);
 }
 
+void AVL_Tree::rebalance(BTNode *pNode)
+{
+    ATNode *pATNode = static_cast<ATNode *>(pNode);
+    delete pATNode;
+}
+
 void avl_tree_test()
 {
     print_highlight_msg(">>> Test avl tree:\n");
@@ -135,8 +141,8 @@ void avl_tree_test()
     AVL_Tree oAVLTree;
     for (size_t i = 0; i < vecInt.size(); ++i){
         oAVLTree.insert(vecInt[i]);
+        print_warning_msg(oAVLTree.to_string() + "\n");
     }
-    print_warning_msg(oAVLTree.to_string() + "\n");
 
     AVL_Tree oOtherAVLTree(oAVLTree);
 
