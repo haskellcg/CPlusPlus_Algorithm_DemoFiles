@@ -86,6 +86,11 @@ AVLTNode *AVL_Tree::insert(uint32_t nKey)
     return pNewNode;
 }
 
+void AVL_Tree::insert_recursive(uint32_t nKey)
+{
+    m_pRoot = insert_recursive(m_pRoot, nKey);
+}
+
 void AVL_Tree::remove(AVLTNode *pNode)
 {
     AVLTNode *pBalanceStartNode = get_rebalance_start(pNode);
@@ -264,6 +269,44 @@ AVLTNode *AVL_Tree::get_rebalance_start(AVLTNode *pNode) const
     return pBalanceStartNode;
 }
 
+AVLTNode *AVL_Tree::insert_recursive(AVLTNode *pRootNode, uint32_t nKey)
+{
+    if (NULL == pRootNode){
+        AVLTNode *pNewNode = new AVLTNode;
+        pNewNode->set_key(nKey);
+        ++m_nSize;
+        return pNewNode;
+    } else {
+        if (nKey < pRootNode->get_key()){
+            pRootNode->set_left(insert_recursive(pRootNode->get_left(), nKey));
+            pRootNode->get_left()->set_parent(pRootNode);
+        } else if (nKey > pRootNode->get_key()){
+            pRootNode->set_right(insert_recursive(pRootNode->get_right(), nKey));
+            pRootNode->get_right()->set_parent(pRootNode);
+        } else{
+            return pRootNode;
+        }
+
+        update_height(pRootNode);
+
+        int nLeftHeight = (int)get_height(pRootNode->get_left());
+        int nRightHeight = (int)get_height(pRootNode->get_right());
+        int nBalanceFactor = nLeftHeight - nRightHeight;
+        if ((nBalanceFactor > 1) && (nKey < pRootNode->get_left()->get_key())){
+            return rotation_on_left_left_insertion(pRootNode);
+        } else if ((nBalanceFactor > 1) && (nKey > pRootNode->get_left()->get_key())){
+            return rotation_on_left_right_insertion(pRootNode);
+        } else if ((nBalanceFactor < -1) && (nKey < pRootNode->get_right()->get_key())){
+            return rotation_on_right_left_insertion(pRootNode);
+        } else if ((nBalanceFactor < -1) && (nKey > pRootNode->get_right()->get_key())){
+            return rotation_on_right_right_insertion(pRootNode);
+        } else {
+            // balanced
+            return pRootNode;
+        }
+    }
+}
+
 void avl_tree_test()
 {
     print_highlight_msg(">>> Test avl tree:\n");
@@ -284,6 +327,12 @@ void avl_tree_test()
         AVLTNode *pRemoveNode = oCpAVLTree.search(vecInt[i]);
         oCpAVLTree.remove(pRemoveNode);
         delete pRemoveNode;
+    }
+    print_warning_msg(oCpAVLTree.to_string() + "\n");
+
+    print_normal_msg("using recurive way to insert node:\n");
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        oCpAVLTree.insert_recursive(vecInt[i]);
     }
     print_warning_msg(oCpAVLTree.to_string() + "\n");
 }

@@ -135,6 +135,15 @@ public:
     AVLTNode *insert(uint32_t nKey);
 
     /**
+     * @brief insert nKey to the tree
+     * @param uint32_t nKey, key
+     * @return void
+     * @remarks
+     *          if nKey already exists, do nothing
+     */
+    void insert_recursive(uint32_t nKey);
+
+    /**
      * @brief remove pNode from avl tree
      * @param AVLTNode *pNode,
      * @return void
@@ -142,6 +151,15 @@ public:
      *          pNode should be in the tree
      */
     void remove(AVLTNode *pNode);
+
+    /**
+     * @brief remove pNode from avl tree
+     * @param AVLTNode *pNode,
+     * @return void
+     * @remarks
+     *          pNode should be in the tree
+     */
+    void remove_recursive(AVLTNode *pNode);
 
 protected:
     /**
@@ -282,6 +300,16 @@ protected:
      *              sibling tree
      */
     AVLTNode *get_rebalance_start(AVLTNode *pNode) const;
+
+    /**
+     * @brief insert nKey to the tree that pRootNode as root
+     * @param AVLTNode *pRootNode, pRootNode tree
+     * @param uint32_t nKey, key
+     * @return AVLTNode *, new root
+     * @remarks
+     *          reference: https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+     */
+    AVLTNode *insert_recursive(AVLTNode *pRootNode, uint32_t nKey);
 };
 
 /**
