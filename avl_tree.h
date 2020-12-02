@@ -302,6 +302,14 @@ protected:
     AVLTNode *get_rebalance_start(AVLTNode *pNode) const;
 
     /**
+     * @brief get balance factor [-2, 2]
+     * @param AVLTNode *pNode, node
+     * @return int32_t, balance factor
+     * remarks
+     */
+    int32_t get_balance_factor(AVLTNode *pNode) const;
+
+    /**
      * @brief insert nKey to the tree that pRootNode as root
      * @param AVLTNode *pRootNode, pRootNode tree
      * @param uint32_t nKey, key

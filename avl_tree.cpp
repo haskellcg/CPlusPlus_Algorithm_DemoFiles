@@ -278,6 +278,13 @@ AVLTNode *AVL_Tree::get_rebalance_start(AVLTNode *pNode) const
     return pBalanceStartNode;
 }
 
+int32_t AVL_Tree::get_balance_factor(AVLTNode *pNode) const
+{
+    int32_t nLeftHeight = (int32_t)get_height(pNode->get_left());
+    int32_t nRightHeight = (int32_t)get_height(pNode->get_right());
+    return (nLeftHeight - nRightHeight);
+}
+
 AVLTNode *AVL_Tree::insert_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNode *&pNewNode)
 {
     if (NULL == pRootNode){
@@ -298,9 +305,7 @@ AVLTNode *AVL_Tree::insert_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNod
 
         update_height(pRootNode);
 
-        int nLeftHeight = (int)get_height(pRootNode->get_left());
-        int nRightHeight = (int)get_height(pRootNode->get_right());
-        int nBalanceFactor = nLeftHeight - nRightHeight;
+        int32_t nBalanceFactor = get_balance_factor(pRootNode);
         if ((nBalanceFactor > 1) && (nKey < pRootNode->get_left()->get_key())){
             return rotation_on_left_left_insertion(pRootNode);
         } else if ((nBalanceFactor > 1) && (nKey > pRootNode->get_left()->get_key())){
@@ -369,7 +374,28 @@ AVLTNode *AVL_Tree::remove_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNod
                 pRootNode = pTemp;
             }
         }
-        return pRootNode;
+
+        // rebalance and rotation
+        if (NULL != pRootNode){
+            update_height(pRootNode);
+
+            int32_t nBalanceFactor = get_balance_factor(pRootNode);
+            // it is not like the insert situation, we can do rotation_on_left_left_insertion
+            // if node is unbalanced and node.left is a little bit left sided
+            if ((nBalanceFactor > 1) && (get_balance_factor(pRootNode->get_left()) >= 0)){
+                return rotation_on_left_left_insertion(pRootNode);
+            } else if ((nBalanceFactor > 1) && (get_balance_factor(pRootNode->get_left()) < 0)){
+                return rotation_on_left_right_insertion(pRootNode);
+            } else if ((nBalanceFactor < -1) && (get_balance_factor(pRootNode->get_right()) >= 0)){
+                return rotation_on_right_left_insertion(pRootNode);
+            } else if ((nBalanceFactor < -1) && (get_balance_factor(pRootNode->get_right()) < 0)){
+                return rotation_on_right_right_insertion(pRootNode);
+            } else {
+                return pRootNode;
+            }
+        } else {
+            return pRootNode;
+        }
     }
 }
 
@@ -408,6 +434,6 @@ void avl_tree_test()
         AVLTNode *pRemovedNode = oCpAVLTree.remove_recursive(vecInt[i]);
         delete pRemovedNode;
         pRemovedNode = NULL;
-        print_warning_msg(oCpAVLTree.to_string() + "\n");
     }
+    print_warning_msg(oCpAVLTree.to_string() + "\n");
 }
