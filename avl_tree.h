@@ -137,11 +137,11 @@ public:
     /**
      * @brief insert nKey to the tree
      * @param uint32_t nKey, key
-     * @return void
+     * @return AVLTNode *, the new node inserted,
+     *                     NULL if nKey is already existed
      * @remarks
-     *          if nKey already exists, do nothing
      */
-    void insert_recursive(uint32_t nKey);
+    AVLTNode *insert_recursive(uint32_t nKey);
 
     /**
      * @brief remove pNode from avl tree
@@ -154,12 +154,12 @@ public:
 
     /**
      * @brief remove pNode from avl tree
-     * @param AVLTNode *pNode,
-     * @return void
+     * @param uint32_t nKey, key to remove
+     * @return AVLTNode *, the node removed from tree
+     *                     NULL if key not exist in tree
      * @remarks
-     *          pNode should be in the tree
      */
-    void remove_recursive(AVLTNode *pNode);
+    AVLTNode *remove_recursive(uint32_t nKey);
 
 protected:
     /**
@@ -305,11 +305,25 @@ protected:
      * @brief insert nKey to the tree that pRootNode as root
      * @param AVLTNode *pRootNode, pRootNode tree
      * @param uint32_t nKey, key
+     * @param AVLTNode *&pNewNode, the new null inserted,
+     *                             NULL if key already exists
      * @return AVLTNode *, new root
      * @remarks
      *          reference: https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
      */
-    AVLTNode *insert_recursive(AVLTNode *pRootNode, uint32_t nKey);
+    AVLTNode *insert_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNode *&pNewNode);
+
+    /**
+     * @brief remove nKey from the tree that pRootNode as root
+     * @param AVLTNode *pRootNode, pRootNode tree
+     * @param uint32_t nKey, key
+     * @param AVLTNode *&pRemovedNode, removed node,
+     *                                 NULL is key not exists
+     * @return AVLTNode *, new root
+     * @remarks
+     *          reference: https://www.geeksforgeeks.org/avl-tree-set-2-deletion/?ref=lbp
+     */
+    AVLTNode *remove_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNode *&pRemovedNode);
 };
 
 /**

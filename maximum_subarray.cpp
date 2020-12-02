@@ -152,7 +152,7 @@ void maximum_subarray_test()
     Maximum_SubArray_Result oMaximum_SubArray_CorrectResult(1, 4, 10);
     if (oMaximum_SubArray_CorrectResult == oMaximum_SubArray_Result){
         print_correct_msg("CORRECT\n");
-    } else{
+    } else {
         print_error_msg("ERROR\n");
     }
 }

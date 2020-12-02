@@ -86,9 +86,11 @@ AVLTNode *AVL_Tree::insert(uint32_t nKey)
     return pNewNode;
 }
 
-void AVL_Tree::insert_recursive(uint32_t nKey)
+AVLTNode *AVL_Tree::insert_recursive(uint32_t nKey)
 {
-    m_pRoot = insert_recursive(m_pRoot, nKey);
+    AVLTNode *pNewNode = NULL;
+    m_pRoot = insert_recursive(m_pRoot, nKey, pNewNode);
+    return pNewNode;
 }
 
 void AVL_Tree::remove(AVLTNode *pNode)
@@ -100,6 +102,13 @@ void AVL_Tree::remove(AVLTNode *pNode)
     if (NULL != pBalanceStartNode){
         rebalance(pBalanceStartNode);
     }
+}
+
+AVLTNode *AVL_Tree::remove_recursive(uint32_t nKey)
+{
+    AVLTNode *pRemovedNode= NULL;
+    m_pRoot = remove_recursive(m_pRoot, nKey, pRemovedNode);
+    return pRemovedNode;
 }
 
 AVLTNode *AVL_Tree::rotation_on_left_left_insertion(AVLTNode *pZNode)
@@ -205,7 +214,7 @@ void AVL_Tree::rebalance(AVLTNode *pNode)
             } else if ((RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 1])
                        && (LEFT_INSERT == pInsertDirection[nInsertDirectionIndex - 2])){
                 pCurNode = rotation_on_right_left_insertion(pParent);
-            } else{
+            } else {
                    /**
                    if ((RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 1])
                        && (RIGHT_INSERT == pInsertDirection[nInsertDirectionIndex - 2]))
@@ -269,21 +278,21 @@ AVLTNode *AVL_Tree::get_rebalance_start(AVLTNode *pNode) const
     return pBalanceStartNode;
 }
 
-AVLTNode *AVL_Tree::insert_recursive(AVLTNode *pRootNode, uint32_t nKey)
+AVLTNode *AVL_Tree::insert_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNode *&pNewNode)
 {
     if (NULL == pRootNode){
-        AVLTNode *pNewNode = new AVLTNode;
+        pNewNode = new AVLTNode;
         pNewNode->set_key(nKey);
         ++m_nSize;
         return pNewNode;
     } else {
         if (nKey < pRootNode->get_key()){
-            pRootNode->set_left(insert_recursive(pRootNode->get_left(), nKey));
+            pRootNode->set_left(insert_recursive(pRootNode->get_left(), nKey, pNewNode));
             pRootNode->get_left()->set_parent(pRootNode);
         } else if (nKey > pRootNode->get_key()){
-            pRootNode->set_right(insert_recursive(pRootNode->get_right(), nKey));
+            pRootNode->set_right(insert_recursive(pRootNode->get_right(), nKey, pNewNode));
             pRootNode->get_right()->set_parent(pRootNode);
-        } else{
+        } else {
             return pRootNode;
         }
 
@@ -307,6 +316,63 @@ AVLTNode *AVL_Tree::insert_recursive(AVLTNode *pRootNode, uint32_t nKey)
     }
 }
 
+AVLTNode *AVL_Tree::remove_recursive(AVLTNode *pRootNode, uint32_t nKey, AVLTNode *&pRemovedNode)
+{
+    if (NULL == pRootNode){
+        return pRootNode;
+    } else {
+        if (nKey < pRootNode->get_key()){
+            pRootNode->set_left(remove_recursive(pRootNode->get_left(), nKey, pRemovedNode));
+        } else if (nKey > pRootNode->get_key()){
+            pRootNode->set_right(remove_recursive(pRootNode->get_right(), nKey, pRemovedNode));
+        } else {
+            if (NULL == pRootNode->get_left()){
+                AVLTNode *pRight = pRootNode->get_right();
+                transplant(pRootNode, pRight);
+
+                pRootNode->set_right(NULL);
+                pRemovedNode = pRootNode;
+                --m_nSize;
+
+                pRootNode = pRight;
+            } else if (NULL == pRootNode->get_right()){
+                AVLTNode *pLeft = pRootNode->get_left();
+                transplant(pRootNode, pLeft);
+
+                pRootNode->set_left(NULL);
+                pRemovedNode = pRootNode;
+                --m_nSize;
+
+                pRootNode = pLeft;
+            } else {
+                uint32_t nSuccessorKey = successor(pRootNode)->get_key();
+                pRootNode->set_right(remove_recursive(pRootNode->get_right(), nSuccessorKey, pRemovedNode));
+
+                transplant(pRootNode, pRemovedNode);
+
+                AVLTNode *pLeft = pRootNode->get_left();
+                pRemovedNode->set_left(pLeft);
+                if (NULL != pLeft){
+                    pLeft->set_parent(pRemovedNode);
+                }
+                pRootNode->set_left(NULL);
+
+                AVLTNode *pRight = pRootNode->get_right();
+                pRemovedNode->set_right(pRight);
+                if (NULL != pRight){
+                    pRight->set_parent(pRemovedNode);
+                }
+                pRootNode->set_right(NULL);
+
+                AVLTNode *pTemp = pRemovedNode;
+                pRemovedNode = pRootNode;
+                pRootNode = pTemp;
+            }
+        }
+        return pRootNode;
+    }
+}
+
 void avl_tree_test()
 {
     print_highlight_msg(">>> Test avl tree:\n");
@@ -324,9 +390,10 @@ void avl_tree_test()
     print_normal_msg("deleting avl tree:\n");
     AVL_Tree oCpAVLTree(oAVLTree);
     for (size_t i = 0; i < vecInt.size(); ++i){
-        AVLTNode *pRemoveNode = oCpAVLTree.search(vecInt[i]);
-        oCpAVLTree.remove(pRemoveNode);
-        delete pRemoveNode;
+        AVLTNode *pRemovedNode = oCpAVLTree.search(vecInt[i]);
+        oCpAVLTree.remove(pRemovedNode);
+        delete pRemovedNode;
+        pRemovedNode = NULL;
     }
     print_warning_msg(oCpAVLTree.to_string() + "\n");
 
@@ -335,4 +402,12 @@ void avl_tree_test()
         oCpAVLTree.insert_recursive(vecInt[i]);
     }
     print_warning_msg(oCpAVLTree.to_string() + "\n");
+
+    print_normal_msg("using recursive way to deleting node:\n");
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        AVLTNode *pRemovedNode = oCpAVLTree.remove_recursive(vecInt[i]);
+        delete pRemovedNode;
+        pRemovedNode = NULL;
+        print_warning_msg(oCpAVLTree.to_string() + "\n");
+    }
 }
