@@ -30,6 +30,7 @@ OBJS                =   avl_tree.o\
                         order_statistic_funtions.o\
                         quick_sort.o\
                         radix_sort.o\
+                        red_black_tree.o\
                         selection_sort.o\
                         shell_sort.o\
                         strassen_matrix_multiply.o\

@@ -21,6 +21,7 @@
 #include "order_statistic_funtions.h"
 #include "quick_sort.h"
 #include "radix_sort.h"
+#include "red_black_tree.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
 #include "strassen_matrix_multiply.h"
@@ -46,15 +47,16 @@ int main(int argc, char *argv[])
         order_statistic_funtions_test();
         quick_sort_test();
         radix_sort_test();
+        red_black_tree_test();
         selection_sort_test();
         shell_sort_test();
         strassen_matrix_multiply_test();
         string_hash_funtions_test();
     } else {
         // default: only test the current coding algorithm
-        avl_tree_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
+        red_black_tree_test();
         string_hash_funtions_test();
     }
 
