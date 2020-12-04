@@ -1,13 +1,13 @@
 /**************************************************************************
  * author: haskellcg
- * date: 2020-12-02
- * description: red balck tree data structure
+ * date: 2020-12-05
+ * description: radix tree data structure
  *************************************************************************/
 
-#include "red_black_tree.h"
+#include "radix_tree.h"
 
-void red_black_tree_test()
+void radix_tree_test()
 {
-    print_highlight_msg(">>> Test red balck tree:\n");
+    print_highlight_msg(">>> Test radix tree:\n");
     print_error_msg("No test case yet.\n");
 }

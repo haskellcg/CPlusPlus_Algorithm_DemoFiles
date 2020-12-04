@@ -32,6 +32,7 @@ OBJS                =   avl_tree.o\
                         quick_sort.o\
                         radix_heap.o\
                         radix_sort.o\
+                        radix_tree.o\
                         red_black_tree.o\
                         selection_sort.o\
                         shell_sort.o\

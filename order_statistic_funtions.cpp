@@ -94,7 +94,7 @@ bool select_nth_with_partition(const vector<uint32_t> &vecInt, size_t nNth, uint
     return select_nth_with_partition(vecCpInt, 0, (int32_t)(vecCpInt.size() - 1), nNth, nNthValue);
 }
 
-bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &/*nNthValue*/)
+bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue)
 {
     if ((0 == nNth) || (nNth > vecInt.size())){
         return false;
@@ -123,9 +123,27 @@ bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_
     }
 
     insert_sort(vecMids);
-
     uint32_t nPivot = vecMids[vecMids.size() / 2];
-    return true;
+
+    vector<uint32_t> vecCpInt = vecInt;
+    int32_t nPartitionIndex = partition(vecCpInt, 0, vecCpInt.size() - 1, nPivot);
+    size_t nPartitionNth = (size_t)(nPartitionIndex + 1);
+    if (nNth == nPartitionNth){
+        nNthValue = vecCpInt[nPartitionIndex];
+        return true;
+    } else if (nNth < nPartitionNth){
+        vector<uint32_t> vecCpLowPart;
+        for (size_t i = 0; i < (size_t)nPartitionIndex; ++i){
+            vecCpLowPart.push_back(vecCpInt[i]);
+        }
+        return select_nth_with_5group(vecCpLowPart, nNth, nNthValue);
+    } else {
+        vector<uint32_t> vecCpHighPart;
+        for (size_t i = nPartitionIndex + 1; i < vecCpInt.size(); ++i){
+            vecCpHighPart.push_back(vecCpInt[i]);
+        }
+        return select_nth_with_5group(vecCpHighPart, nNth - nPartitionNth, nNthValue);
+    }
 }
 
 void order_statistic_funtions_test()

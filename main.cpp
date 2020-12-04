@@ -23,6 +23,7 @@
 #include "quick_sort.h"
 #include "radix_heap.h"
 #include "radix_sort.h"
+#include "radix_tree.h"
 #include "red_black_tree.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
@@ -51,6 +52,7 @@ int main(int argc, char *argv[])
         quick_sort_test();
         radix_heap_test();
         radix_sort_test();
+        radix_tree_test();
         red_black_tree_test();
         selection_sort_test();
         shell_sort_test();
@@ -60,8 +62,8 @@ int main(int argc, char *argv[])
         // default: only test the current coding algorithm
         fusion_tree_test();
         nowcoder_com_test();
-        order_statistic_funtions_test();
         radix_heap_test();
+        radix_tree_test();
         red_black_tree_test();
         string_hash_funtions_test();
     }
