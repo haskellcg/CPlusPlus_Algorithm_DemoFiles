@@ -20,6 +20,7 @@ OBJS                =   avl_tree.o\
                         common_types.o\
                         counting_sort.o\
                         double_link_list.o\
+                        fusion_tree.o\
                         hash_set.o\
                         heap_sort.o\
                         insert_sort.o\
@@ -29,6 +30,7 @@ OBJS                =   avl_tree.o\
                         nowcoder_com_first_part.o\
                         order_statistic_funtions.o\
                         quick_sort.o\
+                        radix_heap.o\
                         radix_sort.o\
                         red_black_tree.o\
                         selection_sort.o\

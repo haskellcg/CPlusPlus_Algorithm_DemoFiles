@@ -12,6 +12,7 @@
 #include "bucket_sort.h"
 #include "counting_sort.h"
 #include "double_link_list.h"
+#include "fusion_tree.h"
 #include "hash_set.h"
 #include "heap_sort.h"
 #include "insert_sort.h"
@@ -20,6 +21,7 @@
 #include "nowcoder_com_first_part.h"
 #include "order_statistic_funtions.h"
 #include "quick_sort.h"
+#include "radix_heap.h"
 #include "radix_sort.h"
 #include "red_black_tree.h"
 #include "selection_sort.h"
@@ -38,6 +40,7 @@ int main(int argc, char *argv[])
         bucket_sort_test();
         counting_sort_test();
         double_link_list_test();
+        fusion_tree_test();
         hash_set_test();
         heap_sort_test();
         insert_sort_test();
@@ -46,6 +49,7 @@ int main(int argc, char *argv[])
         nowcoder_com_test();
         order_statistic_funtions_test();
         quick_sort_test();
+        radix_heap_test();
         radix_sort_test();
         red_black_tree_test();
         selection_sort_test();
@@ -54,8 +58,10 @@ int main(int argc, char *argv[])
         string_hash_funtions_test();
     } else {
         // default: only test the current coding algorithm
+        fusion_tree_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
+        radix_heap_test();
         red_black_tree_test();
         string_hash_funtions_test();
     }

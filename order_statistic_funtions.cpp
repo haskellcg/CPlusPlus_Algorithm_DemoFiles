@@ -4,7 +4,9 @@
  * description: order statistic algorithms
  *************************************************************************/
 
+#include "insert_sort.h"
 #include "order_statistic_funtions.h"
+#include "quick_sort.h"
 
 bool get_min_value_index(const vector<uint32_t> &vecInt, size_t &nMinIndex, uint32_t &nCompareTimes)
 {
@@ -64,13 +66,65 @@ bool get_min_max_value_index(const vector<uint32_t> &vecInt, pair<size_t, size_t
     return true;
 }
 
-bool select_nth_with_partition(const vector<uint32_t> &/*vecInt*/, size_t /*nNth*/, uint32_t &/*nNthValue*/)
+bool select_nth_with_partition(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd, size_t nNth, uint32_t &nNthValue)
 {
-    return true;
+    if (nBegin == nEnd){
+        nNthValue = vecInt[nBegin];
+        return true;
+    } else {
+        int32_t nPartitionIndex = partition_random(vecInt, nBegin, nEnd);
+        size_t nPartitionNth = (size_t)(nPartitionIndex - nBegin + 1);
+        if (nNth == nPartitionNth){
+            nNthValue = vecInt[nPartitionIndex];
+            return true;
+        } else if (nNth < nPartitionNth){
+            return select_nth_with_partition(vecInt, nBegin, nPartitionIndex - 1, nNth, nNthValue);
+        } else {
+            return select_nth_with_partition(vecInt, nPartitionIndex + 1, nEnd, (nNth - nPartitionNth), nNthValue);
+        }
+    }
 }
 
-bool select_nth_with_5group(const vector<uint32_t> &/*vecInt*/, size_t /*nNth*/, uint32_t &/*nNthValue*/)
+bool select_nth_with_partition(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &nNthValue)
 {
+    if ((0 == nNth) || (nNth > vecInt.size())){
+        return false;
+    }
+    vector<uint32_t> vecCpInt = vecInt;
+    return select_nth_with_partition(vecCpInt, 0, (int32_t)(vecCpInt.size() - 1), nNth, nNthValue);
+}
+
+bool select_nth_with_5group(const vector<uint32_t> &vecInt, size_t nNth, uint32_t &/*nNthValue*/)
+{
+    if ((0 == nNth) || (nNth > vecInt.size())){
+        return false;
+    }
+    vector<vector<uint32_t>> vec5Groups;
+    vector<uint32_t> vec5Group;
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        if (0 == (i % 5)){
+            if (!vec5Group.empty()){
+                vec5Groups.push_back(vec5Group);
+            }
+            vec5Group.clear();
+        }
+        vec5Group.push_back(vecInt[i]);
+    }
+    if (!vec5Group.empty()){
+        vec5Groups.push_back(vec5Group);
+    }
+
+    // use insertion sort to sort every 5group
+    // and put every mid to group
+    vector<uint32_t> vecMids;
+    for (size_t i = 0; i < vec5Groups.size(); ++i){
+        insert_sort(vec5Groups[i]);
+        vecMids.push_back(vec5Groups[i][vec5Groups[i].size() / 2]);
+    }
+
+    insert_sort(vecMids);
+
+    uint32_t nPivot = vecMids[vecMids.size() / 2];
     return true;
 }
 
@@ -118,7 +172,7 @@ void order_statistic_funtions_test()
 
     uint32_t nNthValueWithParition = MAX_UINT32;
     select_nth_with_partition(vecSrc, 7, nNthValueWithParition);
-    if (684 == nNthValueWithParition){
+    if (648 == nNthValueWithParition){
         print_correct_msg("select_nth_with_partition CORRECT\n");
     } else {
         print_error_msg("select_nth_with_partition ERROR\n");

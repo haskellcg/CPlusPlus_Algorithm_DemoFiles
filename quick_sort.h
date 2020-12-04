@@ -10,6 +10,27 @@
 #include "common_types.h"
 
 /**
+ * @brief partition vecInt with pivot
+ * @param vector<uint32_t> &vecInt, vecInt
+ * @param int32_t nBegin, begin
+ * @param int32_t nEnd, end
+ * @param uint32_t nPivot, pivot
+ * @return int32_t, final pivot index
+ * @remarks
+ */
+int32_t partition(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd, uint32_t nPivot);
+
+/**
+ * @brief chose a element in [nBegin, nEnd] as pivot, and then partition vecInt with it
+ * @param vector<uint32_t> &vecInt, vecInt
+ * @param int32_t nBegin, begin
+ * @param int32_t nEnd, end
+ * @return int32_t, final pivot index
+ * @remarks
+ */
+int32_t partition_random(vector<uint32_t> &vecInt, int32_t nBegin, int32_t nEnd);
+
+/**
  * @brief sort vecInt with quick sort algorithm
  * @param vector<uint32_t> &vecInt, vector need to be sorted
  * @return void
