@@ -16,3 +16,7 @@
   * sort algorithm in place
     * in place: bubble sort, insert sort, selection sort, shell sort, quick sort
     * not in place: merge sort, radix sort, counting sort, heap sort, bucket sort
+  * data structure visualization
+    * [Home](https://www.cs.usfca.edu/~galles/visualization/)
+    * [Data Structures](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
+    * [Source Code](https://www.cs.usfca.edu/~galles/visualization/source.html)
