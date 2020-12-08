@@ -30,3 +30,5 @@
     * [Implementing strcmp, strlen, and strstr using SSE 4.2 instructions](https://www.strchr.com/strcmp_and_strlen_using_sse_4.2)
     * [Table-driven approach](https://www.strchr.com/table-driven)
     * [recommanded books](https://www.strchr.com/links)
+  * simulated annealing
+    * [used in MTSP](https://www.semanticscholar.org/paper/Simulated-annealing-for-multi-robot-hierarchical-Mosteo-Montano/07e560f85142bcb35394823675d06e67e346a57f)
