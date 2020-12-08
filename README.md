@@ -20,3 +20,13 @@
     * [Home](https://www.cs.usfca.edu/~galles/visualization/)
     * [Data Structures](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
     * [Source Code](https://www.cs.usfca.edu/~galles/visualization/source.html)
+  * amazing hash functions
+    * [murmurhash](https://en.wikipedia.org/wiki/MurmurHash)
+    * [hash function](http://www.azillionmonkeys.com/qed/hash.html)
+    * [hash funtions and test](https://www.strchr.com/hash_functions)
+    * [non-cryptographic hash functions](https://en.wikipedia.org/wiki/List_of_hash_functions#Non-cryptographic_hash_functions)
+    * [SipHash](https://en.wikipedia.org/wiki/SipHash)
+  * interesting blogs
+    * [Implementing strcmp, strlen, and strstr using SSE 4.2 instructions](https://www.strchr.com/strcmp_and_strlen_using_sse_4.2)
+    * [Table-driven approach](https://www.strchr.com/table-driven)
+    * [recommanded books](https://www.strchr.com/links)
