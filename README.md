@@ -31,4 +31,8 @@
     * [Table-driven approach](https://www.strchr.com/table-driven)
     * [recommanded books](https://www.strchr.com/links)
   * simulated annealing
-    * [used in MTSP](https://www.semanticscholar.org/paper/Simulated-annealing-for-multi-robot-hierarchical-Mosteo-Montano/07e560f85142bcb35394823675d06e67e346a57f)
+    * [Simulated annealing for multi-robot hierarchical task allocation with flexible constraints and objective functions](https://www.semanticscholar.org/paper/Simulated-annealing-for-multi-robot-hierarchical-Mosteo-Montano/07e560f85142bcb35394823675d06e67e346a57f)
+  * ant colony
+    * [Multi-robot Task Allocation Based on Ant Colony Algorithm](http://www.jcomputers.us/vol7/jcp0709-10.pdf)
+  * alliance algorithm
+    * [Application of the “Alliance Algorithm” to Energy Constrained Gait Optimization](https://link.springer.com/chapter/10.1007/978-3-642-32060-6_40)
