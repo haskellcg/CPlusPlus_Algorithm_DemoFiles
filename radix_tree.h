@@ -7,7 +7,10 @@
 #ifndef __RADIX_TREE_H__
 #define __RADIX_TREE_H__
 
+#include <immintrin.h>
 #include "common_types.h"
+
+#define INVALID_RT_KEY 0xFF
 
 /**
  * @brief radix tree node types
@@ -53,9 +56,14 @@ protected:
 /**
  * @brief inner node 4
  */
-class RTInnerNode4
+class RTInnerNode4: public RTBaseNode
 {
 public:
+    /**
+     * @brief default constructor
+     */
+    RTInnerNode4();
+
     /**
      * @brief get node type
      * @param
@@ -63,14 +71,59 @@ public:
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief is child full
+     * @param
+     * @return bool
+     * @remarks
+     */
+    bool is_child_full() const;
+
+    /**
+     * @brief is key exist
+     * @param uint8_t nKey, key
+     * @return bool
+     * @remarks
+     */
+    bool is_key_exists(uint8_t nKey) const;
+
+    /**
+     * @brief get child node according to key
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, child node pointer
+     *                       null if ket not exist
+     * @remarks
+     */
+    RTBaseNode *get_child_node(uint8_t nKey) const;
+
+    /**
+     * @brief insert child node
+     * @param uint8_t nKey, child key
+     * @param RTBaseNode *pChildNode, child node
+     * @return bool
+     * @remarks
+     */
+    bool insert_child_node(uint8_t nKey, RTBaseNode *pChildNode);
+
+private:
+    /*< child keys, 4 at most */
+    uint8_t m_arrayChildKeys[4];
+    /*< child RTNode pointers, 4 at most */
+    RTBaseNode *m_arrayChildNodes[4];
 };
 
 /**
  * @brief inner node 16
  */
-class RTInnerNode16
+class RTInnerNode16: public RTBaseNode
 {
 public:
+    /**
+     * @brief default constructor
+     */
+    RTInnerNode16();
+
     /**
      * @brief get node type
      * @param
@@ -78,12 +131,52 @@ public:
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief is child full
+     * @param
+     * @return bool
+     * @remarks
+     */
+    bool is_child_full() const;
+
+    /**
+     * @brief is key exist
+     * @param uint8_t nKey, key
+     * @return bool
+     * @remarks
+     */
+    bool is_key_exists(uint8_t nKey) const;
+
+    /**
+     * @brief get child node according to key
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, child node pointer
+     *                       null if ket not exist
+     * @remarks
+     */
+    RTBaseNode *get_child_node(uint8_t nKey) const;
+
+    /**
+     * @brief insert child node
+     * @param uint8_t nKey, child key
+     * @param RTBaseNode *pChildNode, child node
+     * @return bool
+     * @remarks
+     */
+    bool insert_child_node(uint8_t nKey, RTBaseNode *pChildNode);
+
+private:
+    /*< child keys, 16 at most */
+    __m128i m_arrayChildKeys;
+    /*< child RTNode pointers, 16 at most */
+    RTBaseNode *m_arrayChildNodes[16];
 };
 
 /**
  * @brief inner node 48
  */
-class RTInnerNode48
+class RTInnerNode48: public RTBaseNode
 {
 public:
     /**
@@ -98,7 +191,7 @@ public:
 /**
  * @brief inner node 4
  */
-class RTInnerNode256
+class RTInnerNode256: public RTBaseNode
 {
 public:
     /**
@@ -113,7 +206,7 @@ public:
 /**
  * @brief leaf node
  */
-class RTLeafNode
+class RTLeafNode: public RTBaseNode
 {
 public:
     /**
@@ -155,6 +248,13 @@ public:
  *                 https://www.geeksforgeeks.org/cache-organization-set-1-introduction/?ref=lbp
  *                 https://www.geeksforgeeks.org/whats-difference-between-cpu-cache-and-tlb/?ref=lbp
  *          Reiser4 FS: https://web.archive.org/web/20071024001500/http://www.namesys.com/v4/v4.html#soft_eng
+ *          SSE tutorial: https://felix.abecassis.me/2011/09/cpp-getting-started-with-sse/
+ *          MSDN SSE instructions: https://docs.microsoft.com/en-us/previous-versions/visualstudio/visual-studio-2010/y0dh78ez(v=vs.100)
+ *                  _mm_set1_epi8: Sets the 16 signed 8-bit integer values to b
+ *                 _mm_cmpeq_epi8: Compares the 16 signed or unsigned 8-bit integers in a and the 16 signed or unsigned 8-bit integers in b for equality
+ *              _mm_movemask_epi8: Creates a 16-bit mask from the most significant bits of the 16 signed or unsigned 8-bit integers in a and zero extends the upper bits
+ *                            ctz: https://stackoverflow.com/questions/17375743/what-library-do-i-have-to-use-for-ctz-command-in-c
+ *                        headers: https://stackoverflow.com/questions/11228855/header-files-for-x86-simd-intrinsics
  */
 class Radix_Tree
 {

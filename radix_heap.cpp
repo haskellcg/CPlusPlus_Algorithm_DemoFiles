@@ -6,9 +6,6 @@
 
 #include "radix_heap.h"
 
-/*< 32 bit integer, 32 + 1 */
-#define BUCKETS_NUMBER 33
-
 Radix_Heap::Radix_Heap()
 :   m_nLastDeleted(0)
 {

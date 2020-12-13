@@ -9,6 +9,9 @@
 
 #include "common_types.h"
 
+/*< 32 bit integer, 32 + 1 */
+#define BUCKETS_NUMBER 33
+
 /**
  * @brief radix heap
  * @remarks
