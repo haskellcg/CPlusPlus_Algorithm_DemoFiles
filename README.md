@@ -32,6 +32,11 @@
     * [recommanded books](https://www.strchr.com/links)
   * simulated annealing
     * [Simulated annealing for multi-robot hierarchical task allocation with flexible constraints and objective functions](https://www.semanticscholar.org/paper/Simulated-annealing-for-multi-robot-hierarchical-Mosteo-Montano/07e560f85142bcb35394823675d06e67e346a57f)
+    * [MTSP Implementations and solution modeling 1](https://www.bilibili.com/read/cv6934454?from=search)
+    * [MTSP Implementations and solution modeling 2](https://www.bilibili.com/read/cv6944280?from=search)
+    * [MTSP Implementations and solution modeling 3](https://www.bilibili.com/read/cv6952033)
+    * [Simulated Annealing - Solving the Travelling Salesman Problem (TSP)](https://www.codeproject.com/Articles/26758/Simulated-Annealing-Solving-the-Travelling-Salesma)
+    * [Travelling Salesman using simulated annealing C++](https://deerishi.github.io/tsp-using-simulated-annealing-c-)
   * ant colony
     * [Multi-robot Task Allocation Based on Ant Colony Algorithm](http://www.jcomputers.us/vol7/jcp0709-10.pdf)
   * alliance algorithm
