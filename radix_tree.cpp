@@ -4,6 +4,7 @@
  * description: radix tree data structure
  *************************************************************************/
 
+#include <cstring>
 #include "radix_tree.h"
 
 string RTBaseNode::get_value() const
@@ -81,6 +82,31 @@ RTNodeType RTInnerNode16::get_node_type() const
     return RTNodeType::INNER_NODE_16;
 }
 
+string RTInnerNode16::to_string() const
+{
+    ostringstream ossResult;
+    ossResult << "value:" << m_strValue << "\n";
+    ossResult << "keys: [";
+    uint8_t arrayChildKeys[16];
+    memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
+    for (size_t i = 0; i < 16; ++i){
+        ossResult << (uint32_t)arrayChildKeys[i];
+        if (i != 15){
+            ossResult << ", ";
+        }
+    }
+    ossResult << "]\n";
+    ossResult << "pointers: [";
+    for (size_t i = 0; i < 16; ++i){
+        ossResult << m_arrayChildNodes[i];
+        if (i != 15){
+            ossResult << ", ";
+        }
+    }
+    ossResult << "]";
+    return ossResult.str();
+}
+
 bool RTInnerNode16::is_child_full() const
 {
     __m128i sseInvalidKey = _mm_set1_epi8(INVALID_RT_KEY);
@@ -125,6 +151,12 @@ bool RTInnerNode16::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
     uint32_t nBitField = _mm_movemask_epi8(sseCmp) & nMask;
     if (0 != nBitField){
         uint32_t nInsertIndex = __builtin_ctz(nBitField);
+        uint8_t arrayChildKeys[16];
+        memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
+        arrayChildKeys[nInsertIndex] = nKey;
+        memcpy(&m_arrayChildKeys, arrayChildKeys, sizeof(arrayChildKeys));
+        // generate a mask according to nInsertIndex
+        // copy value acooding to mask to m_arrayChildKeys
         // TODO: 
         // m_arrayChildKeys[nInsertIndex] = nKey;
         m_arrayChildNodes[nInsertIndex] = pChildNode;
@@ -156,6 +188,7 @@ void radix_tree_test()
     for (size_t i = 0; i < 10; ++i){
         RTInnerNode4 *pChildNode = new RTInnerNode4;
         oRTInnerNode16.insert_child_node(i, pChildNode);
+        print_warning_msg(oRTInnerNode16.to_string());
     }
     print_normal_msg(std::to_string(oRTInnerNode16.is_child_full()) + "\n");
     print_normal_msg(std::to_string(oRTInnerNode16.is_key_exists(9)) + "\n");

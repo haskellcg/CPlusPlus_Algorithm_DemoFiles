@@ -133,6 +133,14 @@ public:
     virtual RTNodeType get_node_type() const;
 
     /**
+     * @brief show information about inner node 16
+     * @param 
+     * @return string
+     * @remarks
+     */
+    string to_string() const;
+
+    /**
      * @brief is child full
      * @param
      * @return bool
