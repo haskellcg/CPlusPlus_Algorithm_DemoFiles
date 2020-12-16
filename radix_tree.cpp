@@ -69,6 +69,20 @@ bool RTInnerNode4::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
     return false;
 }
 
+RTBaseNode *RTInnerNode4::remove_child_node(uint8_t nKey)
+{
+    RTBaseNode *pRemovedNode = NULL;
+    for (size_t i= 0; i < 4; ++i){
+        if (nKey == m_arrayChildKeys[i]){
+            m_arrayChildKeys[i] = INVALID_RT_KEY;
+            pRemovedNode = m_arrayChildNodes[i];
+            m_arrayChildNodes[i] = NULL;
+            break;
+        }
+    }
+    return pRemovedNode;
+}
+
 RTInnerNode16::RTInnerNode16()
 {
     m_arrayChildKeys = _mm_set1_epi8(INVALID_RT_KEY);
@@ -155,10 +169,6 @@ bool RTInnerNode16::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
         memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
         arrayChildKeys[nInsertIndex] = nKey;
         memcpy(&m_arrayChildKeys, arrayChildKeys, sizeof(arrayChildKeys));
-        // generate a mask according to nInsertIndex
-        // copy value acooding to mask to m_arrayChildKeys
-        // TODO: 
-        // m_arrayChildKeys[nInsertIndex] = nKey;
         m_arrayChildNodes[nInsertIndex] = pChildNode;
         return true;
     } else {
@@ -166,9 +176,95 @@ bool RTInnerNode16::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
     }
 }
 
+RTBaseNode *RTInnerNode16::remove_child_node(uint8_t nKey)
+{
+    RTBaseNode *pRemovedNode = NULL;
+
+    __m128i sseKey = _mm_set1_epi8(nKey);
+    __m128i sseCmp = _mm_cmpeq_epi8(sseKey, m_arrayChildKeys);
+    uint32_t nMask = (1 << 16) - 1;
+    uint32_t nBitField = _mm_movemask_epi8(sseCmp) & nMask;
+    if (0 != nBitField){
+        uint32_t nRemoveIndex = __builtin_ctz(nBitField);
+        uint8_t arrayChildKeys[16];
+        memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
+        arrayChildKeys[nRemoveIndex] = INVALID_RT_KEY;
+        memcpy(&m_arrayChildKeys, arrayChildKeys, sizeof(arrayChildKeys));
+        pRemovedNode = m_arrayChildNodes[nRemoveIndex];
+        m_arrayChildNodes[nRemoveIndex] = NULL;
+    }
+
+    return pRemovedNode;
+}
+
+RTInnerNode48::RTInnerNode48()
+{
+    for (size_t i = 0; i < 256; ++i){
+        m_arrayChildKeys[i] = INVALID_RT_KEY;
+    }
+    for (size_t i = 0; i < 48; ++i){
+        m_arrayChildNodes[i] = NULL;
+    }
+}
+
 RTNodeType RTInnerNode48::get_node_type() const
 {
     return RTNodeType::INNER_NODE_48;
+}
+
+bool RTInnerNode48::is_child_full() const
+{
+    for (size_t i = 0; i < 48; ++i){
+        if (NULL == m_arrayChildNodes[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool RTInnerNode48::is_key_exists(uint8_t nKey) const
+{
+    return (INVALID_RT_KEY != m_arrayChildKeys[nKey]);
+}
+
+RTBaseNode *RTInnerNode48::get_child_node(uint8_t nKey) const
+{
+    uint8_t nChildPointerIndex = m_arrayChildKeys[nKey];
+    if (INVALID_RT_KEY != nChildPointerIndex){
+        return m_arrayChildNodes[nChildPointerIndex];
+    } else {
+        return NULL;
+    }
+}
+
+bool RTInnerNode48::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
+{
+    if (INVALID_RT_KEY == m_arrayChildKeys[nKey]){
+        size_t nInsertIndex = 0;
+        for (; nInsertIndex < 48; ++nInsertIndex){
+            if (NULL == m_arrayChildNodes[nInsertIndex]){
+                m_arrayChildNodes[nInsertIndex] = pChildNode;
+                break;
+            }
+        }
+        if (nInsertIndex < 48){
+            m_arrayChildKeys[nKey] = nInsertIndex;
+            return true;
+        }
+    }
+    return false;
+}
+
+RTBaseNode *RTInnerNode48::remove_child_node(uint8_t nKey)
+{
+    RTBaseNode *pRemovedNode = NULL;
+    uint8_t nChildPointerIndex = m_arrayChildKeys[nKey];
+    if (INVALID_RT_KEY != nChildPointerIndex){
+        pRemovedNode = m_arrayChildNodes[nChildPointerIndex];
+        m_arrayChildNodes[nChildPointerIndex] = NULL;
+        m_arrayChildKeys[nKey] = INVALID_RT_KEY;
+    }
+    return pRemovedNode;
 }
 
 RTNodeType RTInnerNode256::get_node_type() const

@@ -12,6 +12,8 @@
 
 #define INVALID_RT_KEY 0xFF
 
+// TODO: add remove child methods
+
 /**
  * @brief radix tree node types
  */
@@ -106,6 +108,14 @@ public:
      */
     bool insert_child_node(uint8_t nKey, RTBaseNode *pChildNode);
 
+    /**
+     * @brief remove child node from inner node
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, removed node
+     * @remarks
+     */
+    RTBaseNode *remove_child_node(uint8_t nKey);
+
 private:
     /*< child keys, 4 at most */
     uint8_t m_arrayChildKeys[4];
@@ -174,6 +184,14 @@ public:
      */
     bool insert_child_node(uint8_t nKey, RTBaseNode *pChildNode);
 
+    /**
+     * @brief remove child node from inner node
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, removed node
+     * @remarks
+     */
+    RTBaseNode *remove_child_node(uint8_t nKey);
+
 private:
     /*< child keys, 16 at most */
     __m128i m_arrayChildKeys;
@@ -188,12 +206,65 @@ class RTInnerNode48: public RTBaseNode
 {
 public:
     /**
+     * @brief default constructor
+     */
+    RTInnerNode48();
+
+    /**
      * @brief get node type
      * @param
      * @return RTNodeType, node type enum
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief is child full
+     * @param
+     * @return bool
+     * @remarks
+     */
+    bool is_child_full() const;
+
+    /**
+     * @brief is key exist
+     * @param uint8_t nKey, key
+     * @return bool
+     * @remarks
+     */
+    bool is_key_exists(uint8_t nKey) const;
+
+    /**
+     * @brief get child node according to key
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, child node pointer
+     *                       null if ket not exist
+     * @remarks
+     */
+    RTBaseNode *get_child_node(uint8_t nKey) const;
+
+    /**
+     * @brief insert child node
+     * @param uint8_t nKey, child key
+     * @param RTBaseNode *pChildNode, child node
+     * @return bool
+     * @remarks
+     */
+    bool insert_child_node(uint8_t nKey, RTBaseNode *pChildNode);
+
+    /**
+     * @brief remove child node from inner node
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, removed node
+     * @remarks
+     */
+    RTBaseNode *remove_child_node(uint8_t nKey);
+
+private:
+    /*< child keys, 48 at most, 256 is for direct access */
+    uint8_t m_arrayChildKeys[256];
+    /*< child RTNode pointers, 48 at most */
+    RTBaseNode *m_arrayChildNodes[48];
 };
 
 /**
@@ -209,6 +280,52 @@ public:
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief is child full
+     * @param
+     * @return bool
+     * @remarks
+     */
+    bool is_child_full() const;
+
+    /**
+     * @brief is key exist
+     * @param uint8_t nKey, key
+     * @return bool
+     * @remarks
+     */
+    bool is_key_exists(uint8_t nKey) const;
+
+    /**
+     * @brief get child node according to key
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, child node pointer
+     *                       null if ket not exist
+     * @remarks
+     */
+    RTBaseNode *get_child_node(uint8_t nKey) const;
+
+    /**
+     * @brief insert child node
+     * @param uint8_t nKey, child key
+     * @param RTBaseNode *pChildNode, child node
+     * @return bool
+     * @remarks
+     */
+    bool insert_child_node(uint8_t nKey, RTBaseNode *pChildNode);
+
+    /**
+     * @brief remove child node from inner node
+     * @param uint8_t nKey, child key
+     * @return RTBaseNode *, removed node
+     * @remarks
+     */
+    RTBaseNode *remove_child_node(uint8_t nKey);
+
+private:
+    /*< child RTNode pointers, 256 at most */
+    RTBaseNode *m_arrayChildNodes[256];
 };
 
 /**
