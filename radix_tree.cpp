@@ -267,9 +267,56 @@ RTBaseNode *RTInnerNode48::remove_child_node(uint8_t nKey)
     return pRemovedNode;
 }
 
+RTInnerNode256::RTInnerNode256()
+{
+    for (size_t i = 0; i < 256; ++i){
+        m_arrayChildNodes[i] = NULL;
+    }
+}
+
 RTNodeType RTInnerNode256::get_node_type() const
 {
     return RTNodeType::INNER_NODE_256;
+}
+
+bool RTInnerNode256::is_child_full() const
+{
+    for (size_t i = 0; i < 256; ++i){
+        if (NULL == m_arrayChildNodes[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
+bool RTInnerNode256::is_key_exists(uint8_t nKey) const
+{
+    return (NULL != m_arrayChildNodes[nKey]);
+}
+
+RTBaseNode *RTInnerNode256::get_child_node(uint8_t nKey) const
+{
+    return m_arrayChildNodes[nKey];
+}
+
+bool RTInnerNode256::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
+{
+    if (NULL == m_arrayChildNodes[nKey]){
+        m_arrayChildNodes[nKey] = pChildNode;
+        return true;
+    } else {
+        return false;
+    }
+}
+
+RTBaseNode *RTInnerNode256::remove_child_node(uint8_t nKey)
+{
+    RTBaseNode *pRemovedNode = NULL;
+    if (NULL != m_arrayChildNodes[nKey]){
+        pRemovedNode = m_arrayChildNodes[nKey];
+        m_arrayChildNodes[nKey] = NULL;
+    }
+    return pRemovedNode;
 }
 
 RTNodeType RTLeafNode::get_node_type() const
@@ -281,7 +328,7 @@ void radix_tree_test()
 {
     print_highlight_msg(">>> Test radix tree:\n");
     RTInnerNode16 oRTInnerNode16;
-    for (size_t i = 0; i < 10; ++i){
+    for (size_t i = 0; i < 16; ++i){
         RTInnerNode4 *pChildNode = new RTInnerNode4;
         oRTInnerNode16.insert_child_node(i, pChildNode);
         print_warning_msg(oRTInnerNode16.to_string());

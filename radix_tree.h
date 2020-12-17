@@ -12,8 +12,6 @@
 
 #define INVALID_RT_KEY 0xFF
 
-// TODO: add remove child methods
-
 /**
  * @brief radix tree node types
  */
@@ -273,6 +271,11 @@ private:
 class RTInnerNode256: public RTBaseNode
 {
 public:
+    /**
+     * @brief default constructor
+     */
+    RTInnerNode256();
+
     /**
      * @brief get node type
      * @param
