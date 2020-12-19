@@ -31,6 +31,11 @@ class RTBaseNode
 {
 public:
     /**
+     * @brief virutal destructor
+     */
+    virtual ~RTBaseNode();
+
+    /**
      * @brief get node type
      * @param
      * @return RTNodeType, node type enum
@@ -65,12 +70,25 @@ public:
     RTInnerNode4();
 
     /**
+     * @brief virutal destructor
+     */
+    virtual ~RTInnerNode4();
+
+    /**
      * @brief get node type
      * @param
      * @return RTNodeType, node type enum
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief show information about inner node 4
+     * @param 
+     * @return string
+     * @remarks
+     */
+    string to_string() const;
 
     /**
      * @brief is child full
@@ -131,6 +149,11 @@ public:
      * @brief default constructor
      */
     RTInnerNode16();
+
+    /**
+     * @brief virutal destructor
+     */
+    virtual ~RTInnerNode16();
 
     /**
      * @brief get node type
@@ -209,6 +232,19 @@ public:
     RTInnerNode48();
 
     /**
+     * @brief virutal destructor
+     */
+    virtual ~RTInnerNode48();
+
+    /**
+     * @brief show information about inner node 48
+     * @param 
+     * @return string
+     * @remarks
+     */
+    string to_string() const;
+
+    /**
      * @brief get node type
      * @param
      * @return RTNodeType, node type enum
@@ -277,12 +313,25 @@ public:
     RTInnerNode256();
 
     /**
+     * @brief virutal destructor
+     */
+    virtual ~RTInnerNode256();
+
+    /**
      * @brief get node type
      * @param
      * @return RTNodeType, node type enum
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief show information about inner node 256
+     * @param 
+     * @return string
+     * @remarks
+     */
+    string to_string() const;
 
     /**
      * @brief is child full
@@ -338,12 +387,25 @@ class RTLeafNode: public RTBaseNode
 {
 public:
     /**
+     * @brief virutal destructor
+     */
+    virtual ~RTLeafNode();
+
+    /**
      * @brief get node type
      * @param
      * @return RTNodeType, node type enum
      * @remarks
      */
     virtual RTNodeType get_node_type() const;
+
+    /**
+     * @brief show information about leaf node
+     * @param 
+     * @return string
+     * @remarks
+     */
+    string to_string() const;
 };
 
 /**
@@ -386,6 +448,73 @@ public:
  */
 class Radix_Tree
 {
+public:
+    /**
+     * @brief default constructor
+     */
+    Radix_Tree();
+
+    /**
+     * @brief destructor
+     */
+    ~Radix_Tree();
+
+    /**
+     * @brief print all the keys
+     */
+    vector<string> to_string() const;
+
+    /**
+     * @brief search strKey to the tree
+     * @param const string &strKey, key string
+     * @return bool, true if key exist
+     *               false if key not in the tree
+     * @remarks
+     */
+    bool search(const string &strKey) const;
+
+    /**
+     * @brief insert strKey to the tree
+     * @param const string &strKey, key string
+     * @return bool, true if insert success
+     *               false if key already exists
+     * @remarks
+     */
+    bool insert(const string &strKey);
+
+    /**
+     * @brief remove strKey from the tree
+     * @param const string &strKey, the key need to remove
+     * @return bool, true if key get removed
+     *               false if key is not exist
+     * @remarks
+     */
+    bool remove(const string &strKey);
+
+private:
+    /**
+     * @brief private copy constructor
+     */
+    Radix_Tree(const Radix_Tree &oOtherRadixTree);
+
+    /**
+     * @brief private assign operator
+     */
+    Radix_Tree &operator=(const Radix_Tree &oOtherRadixTree);
+
+    /**
+     * @brief print pCurNode's result to the vecResult according to strParent
+     * @param RTBaseNode *pCurNode, current root node
+     * @param const string &strParent, parent string so far
+     * @param vector<string> &vecResult, result strings
+     * @return void
+     * @remarks
+     */
+    void to_string_recursive(RTBaseNode *pCurNode, const string &strParent, vector<string> &vecResult) const;
+
+private:
+    /*< root node of the tree */
+    RTBaseNode *m_pRoot;
 };
 
 /**

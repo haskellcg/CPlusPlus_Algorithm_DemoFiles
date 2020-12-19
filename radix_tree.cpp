@@ -7,6 +7,10 @@
 #include <cstring>
 #include "radix_tree.h"
 
+RTBaseNode::~RTBaseNode()
+{
+}
+
 string RTBaseNode::get_value() const
 {
     return m_strValue;
@@ -25,9 +29,44 @@ RTInnerNode4::RTInnerNode4()
     }
 }
 
+RTInnerNode4::~RTInnerNode4()
+{
+    for (size_t i = 0; i < 4; ++i){
+        if (INVALID_RT_KEY != m_arrayChildKeys[i]){
+            m_arrayChildKeys[i] = INVALID_RT_KEY;
+            delete m_arrayChildNodes[i];
+            m_arrayChildNodes[i] = NULL;
+        }
+    }
+}
+
 RTNodeType RTInnerNode4::get_node_type() const
 {
     return RTNodeType::INNER_NODE_4;
+}
+
+string RTInnerNode4::to_string() const
+{
+    ostringstream ossResult;
+    ossResult << "TYPE: INNER_NODE_4\n";
+    ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "keys:     [";
+    for (size_t i = 0; i < 4; ++i){
+        ossResult << setw(3) << (uint32_t)m_arrayChildKeys[i];
+        if (i != 3){
+            ossResult << ", ";
+        }
+    }
+    ossResult << "]\n";
+    ossResult << "pointers: [";
+    for (size_t i = 0; i < 4; ++i){
+        ossResult << m_arrayChildNodes[i];
+        if (i != 3){
+            ossResult << ", ";
+        }
+    }
+    ossResult << "]";
+    return ossResult.str();
 }
 
 bool RTInnerNode4::is_child_full() const
@@ -91,6 +130,17 @@ RTInnerNode16::RTInnerNode16()
     }
 }
 
+RTInnerNode16::~RTInnerNode16()
+{
+    m_arrayChildKeys = _mm_set1_epi8(INVALID_RT_KEY);
+    for (size_t i = 0; i < 16; ++i){
+        if (NULL != m_arrayChildNodes[i]){
+            delete m_arrayChildNodes[i];
+            m_arrayChildNodes[i] = NULL;
+        }
+    }
+}
+
 RTNodeType RTInnerNode16::get_node_type() const
 {
     return RTNodeType::INNER_NODE_16;
@@ -99,14 +149,18 @@ RTNodeType RTInnerNode16::get_node_type() const
 string RTInnerNode16::to_string() const
 {
     ostringstream ossResult;
-    ossResult << "value:" << m_strValue << "\n";
-    ossResult << "keys: [";
+    ossResult << "TYPE: INNER_NODE_16\n";
+    ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "keys:     [";
     uint8_t arrayChildKeys[16];
     memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
     for (size_t i = 0; i < 16; ++i){
-        ossResult << (uint32_t)arrayChildKeys[i];
+        ossResult << setw(3) << (uint32_t)arrayChildKeys[i];
         if (i != 15){
             ossResult << ", ";
+            if (0 == ((i + 1) % 4)){
+                ossResult << "\n           ";
+            }
         }
     }
     ossResult << "]\n";
@@ -115,6 +169,9 @@ string RTInnerNode16::to_string() const
         ossResult << m_arrayChildNodes[i];
         if (i != 15){
             ossResult << ", ";
+            if (0 == ((i + 1) % 4)){
+                ossResult << "\n           ";
+            }
         }
     }
     ossResult << "]";
@@ -207,9 +264,51 @@ RTInnerNode48::RTInnerNode48()
     }
 }
 
+RTInnerNode48::~RTInnerNode48()
+{
+    for (size_t i = 0; i < 256; ++i){
+        uint8_t nChildPointerIndex = m_arrayChildKeys[i];
+        m_arrayChildKeys[i] = INVALID_RT_KEY;
+        if (INVALID_RT_KEY != nChildPointerIndex){
+            delete m_arrayChildNodes[nChildPointerIndex];
+            m_arrayChildNodes[nChildPointerIndex] = NULL;
+        }
+    }
+}
+
 RTNodeType RTInnerNode48::get_node_type() const
 {
     return RTNodeType::INNER_NODE_48;
+}
+
+string RTInnerNode48::to_string() const
+{
+    ostringstream ossResult;
+    ossResult << "TYPE: INNER_NODE_48\n";
+    ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "keys:     [";
+    for (size_t i = 0; i < 256; ++i){
+        ossResult << setw(3) << (uint32_t)m_arrayChildKeys[i];
+        if (i != 255){
+            ossResult << ", ";
+            if (0 == ((i + 1) % 12)){
+                ossResult << "\n           ";
+            }
+        }
+    }
+    ossResult << "]\n";
+    ossResult << "pointers: [";
+    for (size_t i = 0; i < 48; ++i){
+        ossResult << m_arrayChildNodes[i];
+        if (i != 47){
+            ossResult << ", ";
+            if (0 == ((i + 1) % 12)){
+                ossResult << "\n           ";
+            }
+        }
+    }
+    ossResult << "]";
+    return ossResult.str();
 }
 
 bool RTInnerNode48::is_child_full() const
@@ -274,9 +373,40 @@ RTInnerNode256::RTInnerNode256()
     }
 }
 
+RTInnerNode256::~RTInnerNode256()
+{
+    for (size_t i = 0; i < 256; ++i){
+        if (NULL != m_arrayChildNodes[i]){
+            delete m_arrayChildNodes[i];
+            m_arrayChildNodes[i] = NULL;
+        }
+    }
+}
+
 RTNodeType RTInnerNode256::get_node_type() const
 {
     return RTNodeType::INNER_NODE_256;
+}
+
+string RTInnerNode256::to_string() const
+{
+    ostringstream ossResult;
+    ossResult << "TYPE: INNER_NODE_256\n";
+    ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "keys:     [";
+    ossResult << "]\n";
+    ossResult << "pointers: [";
+    for (size_t i = 0; i < 256; ++i){
+        ossResult << m_arrayChildNodes[i];
+        if (i != 255){
+            ossResult << ", ";
+            if (0 == ((i + 1) % 12)){
+                ossResult << "\n           ";
+            }
+        }
+    }
+    ossResult << "]";
+    return ossResult.str();
 }
 
 bool RTInnerNode256::is_child_full() const
@@ -319,21 +449,230 @@ RTBaseNode *RTInnerNode256::remove_child_node(uint8_t nKey)
     return pRemovedNode;
 }
 
+RTLeafNode::~RTLeafNode()
+{
+}
+
 RTNodeType RTLeafNode::get_node_type() const
 {
     return RTNodeType::LEAF_NODE;
 }
 
+string RTLeafNode::to_string() const
+{
+    ostringstream ossResult;
+    ossResult << "TYPE: LEAF_NODE\n";
+    ossResult << "value:    [" << m_strValue << "]";
+    return ossResult.str();
+}
+
+Radix_Tree::Radix_Tree()
+:   m_pRoot(NULL)
+{
+}
+
+Radix_Tree::~Radix_Tree()
+{
+    if (NULL != m_pRoot){
+        delete m_pRoot;
+        m_pRoot = NULL;
+    }
+}
+
+vector<string> Radix_Tree::to_string() const
+{
+    vector<string> vecResult;
+    if (NULL != m_pRoot){
+        to_string_recursive(m_pRoot, "", vecResult);
+    }
+    return vecResult;
+}
+
+void Radix_Tree::to_string_recursive(RTBaseNode *pCurNode, const string &strParent, vector<string> &vecResult) const
+{
+    RTNodeType enumCurNodeType = pCurNode->get_node_type();
+    switch (enumCurNodeType){
+        case INNER_NODE_4:
+            {
+                
+            }
+            break;
+        case INNER_NODE_16:
+            {
+                
+            }
+            break;
+        case INNER_NODE_48:
+            {
+                
+            }
+            break;
+        case INNER_NODE_256:
+            {
+                
+            }
+            break;
+        case LEAF_NODE:
+            {
+                vecResult.push_back(strParent + pCurNode->get_value());
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 void radix_tree_test()
 {
     print_highlight_msg(">>> Test radix tree:\n");
-    RTInnerNode16 oRTInnerNode16;
-    for (size_t i = 0; i < 16; ++i){
-        RTInnerNode4 *pChildNode = new RTInnerNode4;
-        oRTInnerNode16.insert_child_node(i, pChildNode);
-        print_warning_msg(oRTInnerNode16.to_string());
+
+    /*< inner node 4 test */
+    RTInnerNode4 oRTInnerNode4;
+    oRTInnerNode4.set_value("inner_node_4");
+    if (!oRTInnerNode4.is_child_full()){
+        print_correct_msg("inner node 4 start with empty child.\n");
+    } else {
+        print_error_msg("inner node 4 start with not empty child.\n");
     }
-    print_normal_msg(std::to_string(oRTInnerNode16.is_child_full()) + "\n");
-    print_normal_msg(std::to_string(oRTInnerNode16.is_key_exists(9)) + "\n");
-    print_error_msg("No test case yet.\n");
+    for (size_t i = 0; i < 4; ++i){
+        RTLeafNode *pChildNode = new RTLeafNode;
+        oRTInnerNode4.insert_child_node(i, pChildNode);
+
+        if (NULL == oRTInnerNode4.get_child_node(i)){
+            print_error_msg("child node with key: " + std::to_string(i) + " insert failed.\n");
+        }
+    }
+    print_warning_msg(oRTInnerNode4.to_string() + "\n");
+    if (oRTInnerNode4.is_child_full()){
+        print_correct_msg("inner node 4 is full after 4 times insertion.\n");
+    } else {
+        print_error_msg("inner node 4 is not full after 4 times insertion.\n");
+    }
+    for (size_t i = 0; i < 3; ++i){
+        RTBaseNode *pRemovedNode = oRTInnerNode4.remove_child_node(i);
+        if (NULL != pRemovedNode){
+            delete pRemovedNode;
+            pRemovedNode = NULL;
+        } else {
+            print_error_msg("remove child with key: " + std::to_string(i) + " failed.\n");
+        }
+    }
+    if (oRTInnerNode4.is_key_exists(3)){
+        print_correct_msg("child node 3 is not removed.\n");
+    } else {
+        print_error_msg("child not 3 is not found.\n");
+    }
+
+    /*< inner node 16 test */
+    RTInnerNode16 oRTInnerNode16;
+    oRTInnerNode16.set_value("inner_node_16");
+    if (!oRTInnerNode16.is_child_full()){
+        print_correct_msg("inner node 16 start with empty child.\n");
+    } else {
+        print_error_msg("inner node 16 start with not empty child.\n");
+    }
+    for (size_t i = 0; i < 16; ++i){
+        RTLeafNode *pChildNode = new RTLeafNode;
+        oRTInnerNode16.insert_child_node(i, pChildNode);
+
+        if (NULL == oRTInnerNode16.get_child_node(i)){
+            print_error_msg("child node with key: " + std::to_string(i) + " insert failed.\n");
+        }
+    }
+    print_warning_msg(oRTInnerNode16.to_string() + "\n");
+    if (oRTInnerNode16.is_child_full()){
+        print_correct_msg("inner node 16 is full after 16 times insertion.\n");
+    } else {
+        print_error_msg("inner node 16 is not full after 16 times insertion.\n");
+    }
+    for (size_t i = 0; i < 15; ++i){
+        RTBaseNode *pRemovedNode = oRTInnerNode16.remove_child_node(i);
+        if (NULL != pRemovedNode){
+            delete pRemovedNode;
+            pRemovedNode = NULL;
+        } else {
+            print_error_msg("remove child with key: " + std::to_string(i) + " failed.\n");
+        }
+    }
+    if (oRTInnerNode16.is_key_exists(15)){
+        print_correct_msg("child node 15 is not removed.\n");
+    } else {
+        print_error_msg("child not 15 is not found.\n");
+    }
+
+    /*< inner node 48 test */
+    RTInnerNode48 oRTInnerNode48;
+    oRTInnerNode48.set_value("inner_node_48");
+    if (!oRTInnerNode48.is_child_full()){
+        print_correct_msg("inner node 48 start with empty child.\n");
+    } else {
+        print_error_msg("inner node 48 start with not empty child.\n");
+    }
+    for (size_t i = 0; i < 48; ++i){
+        RTLeafNode *pChildNode = new RTLeafNode;
+        oRTInnerNode48.insert_child_node(i, pChildNode);
+
+        if (NULL == oRTInnerNode48.get_child_node(i)){
+            print_error_msg("child node with key: " + std::to_string(i) + " insert failed.\n");
+        }
+    }
+    print_warning_msg(oRTInnerNode48.to_string() + "\n");
+    if (oRTInnerNode48.is_child_full()){
+        print_correct_msg("inner node 48 is full after 48 times insertion.\n");
+    } else {
+        print_error_msg("inner node 48 is not full after 48 times insertion.\n");
+    }
+    for (size_t i = 0; i < 47; ++i){
+        RTBaseNode *pRemovedNode = oRTInnerNode48.remove_child_node(i);
+        if (NULL != pRemovedNode){
+            delete pRemovedNode;
+            pRemovedNode = NULL;
+        } else {
+            print_error_msg("remove child with key: " + std::to_string(i) + " failed.\n");
+        }
+    }
+    if (oRTInnerNode48.is_key_exists(47)){
+        print_correct_msg("child node 47 is not removed.\n");
+    } else {
+        print_error_msg("child not 47 is not found.\n");
+    }
+
+    /*< inner node 256 test */
+    RTInnerNode256 oRTInnerNode256;
+    oRTInnerNode256.set_value("inner_node_256");
+    if (!oRTInnerNode256.is_child_full()){
+        print_correct_msg("inner node 256 start with empty child.\n");
+    } else {
+        print_error_msg("inner node 256 start with not empty child.\n");
+    }
+    for (size_t i = 0; i < 256; ++i){
+        RTLeafNode *pChildNode = new RTLeafNode;
+        oRTInnerNode256.insert_child_node(i, pChildNode);
+
+        if (NULL == oRTInnerNode256.get_child_node(i)){
+            print_error_msg("child node with key: " + std::to_string(i) + " insert failed.\n");
+        }
+    }
+    print_warning_msg(oRTInnerNode256.to_string() + "\n");
+    if (oRTInnerNode256.is_child_full()){
+        print_correct_msg("inner node 256 is full after 256 times insertion.\n");
+    } else {
+        print_error_msg("inner node 256 is not full after 256 times insertion.\n");
+    }
+    for (size_t i = 0; i < 255; ++i){
+        RTBaseNode *pRemovedNode = oRTInnerNode256.remove_child_node(i);
+        if (NULL != pRemovedNode){
+            delete pRemovedNode;
+            pRemovedNode = NULL;
+        } else {
+            print_error_msg("remove child with key: " + std::to_string(i) + " failed.\n");
+        }
+    }
+    if (oRTInnerNode256.is_key_exists(255)){
+        print_correct_msg("child node 255 is not removed.\n");
+    } else {
+        print_error_msg("child not 255 is not found.\n");
+    }
+
+    /*< radix tree test */
 }
