@@ -643,6 +643,15 @@ string Radix_Tree::to_string() const
     return strResult;
 }
 
+bool Radix_Tree::search(const string &strKey) const
+{
+    if (NULL != m_pRoot){
+        return search_recursive(m_pRoot, strKey, 0);
+    } else {
+        return false;
+    }
+}
+
 bool Radix_Tree::insert(const string &strKey)
 {
     if (NULL != m_pRoot){
@@ -679,6 +688,65 @@ void Radix_Tree::to_string_recursive(RTBaseNode *pCurNode, const string &strPare
         default:
             break;
     }
+}
+
+bool Radix_Tree::search_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex) const
+{
+    string strCurValue = pCurNode->get_value();
+    size_t nCurValueIndex = 0;
+    size_t nKeyIndex = nStartIndex;
+    for (; (nCurValueIndex < strCurValue.size()) && (nKeyIndex < strKey.size()); ++nCurValueIndex, ++nKeyIndex){
+        if (strCurValue[nCurValueIndex] != strKey[nKeyIndex]){
+            break;
+        }
+    }
+
+    if ((nCurValueIndex >= strCurValue.size()) && (nKeyIndex < strKey.size())){
+        uint8_t nKey = strKey[nKeyIndex];
+        switch (pCurNode->get_node_type()){
+            case INNER_NODE_4:
+            case INNER_NODE_16:
+            case INNER_NODE_48:
+            case INNER_NODE_256:
+                {
+                    RTBaseNode *pChildNode = pCurNode->get_child_node(nKey);
+                    if (NULL != pChildNode){
+                        return search_recursive(pChildNode, strKey, nKeyIndex);
+                    }
+                }
+                break;
+            case LEAF_NODE:
+                break;
+            default:
+                break;
+        }
+    } else if ((nCurValueIndex < strCurValue.size()) && (nKeyIndex >= strKey.size())){
+        // false
+    } else if ((nCurValueIndex >= strCurValue.size()) && (nKeyIndex >= strKey.size())){
+        switch (pCurNode->get_node_type()){
+            case INNER_NODE_4:
+            case INNER_NODE_16:
+            case INNER_NODE_48:
+            case INNER_NODE_256:
+                {
+                    if (pCurNode->is_key_exists(0)){
+                        return true;
+                    }
+                }
+                break;
+            case LEAF_NODE:
+                {
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+    } else {
+        // (strCurValue[nCurValueIndex] != strKey[nKeyIndex])
+        // false
+    }
+    return false;
 }
 
 void Radix_Tree::replace_nodes(RTBaseNode *pOldNode, RTBaseNode *pNewNode)
@@ -967,15 +1035,18 @@ void radix_tree_test()
     }
 
     /*< radix tree test */
+    string arrayKeys[] = {"she", "shemale", "shea", "sheab",
+                          "sheabc", "her", "him", "sh", "h",
+                          "123", "12", "12345", "56778"};
+    vector<string> vecKeys;
+    vecKeys.insert(vecKeys.end(), begin(arrayKeys), end(arrayKeys));
+
     Radix_Tree oRadixTree;
-    oRadixTree.insert("she");
-    oRadixTree.insert("shemale");
-    oRadixTree.insert("shea");
-    oRadixTree.insert("sheab");
-    oRadixTree.insert("sheabc");
-    oRadixTree.insert("her");
-    oRadixTree.insert("him");
-    oRadixTree.insert("sh");
-    oRadixTree.insert("h");
+    for (size_t i = 0; i < vecKeys.size(); ++i){
+        oRadixTree.insert(vecKeys[i]);
+        if (!oRadixTree.search(vecKeys[i])){
+            print_error_msg("search key: " + vecKeys[i] + " failed.\n");
+        }
+    }
     print_warning_msg(oRadixTree.to_string() + "\n");
 }

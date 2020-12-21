@@ -724,6 +724,16 @@ private:
     void to_string_recursive(RTBaseNode *pCurNode, const string &strParent, vector<string> &vecResult) const;
 
     /**
+     * @brief search key in pCurNode
+     * @param RTBaseNode *pCurNode, current node
+     * @param const string &strKey, key
+     * @param size_t nStartIndex, start index to do match
+     * @return bool, true if key exists
+     *               false if key not exists
+     */
+    bool search_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex) const;
+
+    /**
      * @brief replace pOldNode with pNewNode
      * @param RTBaseNode *pOldNode, old node
      * @param RTBaseNode *pNewNode, new node
