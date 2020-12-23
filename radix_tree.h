@@ -113,6 +113,14 @@ public:
      * @remarks
      */
     virtual RTBaseNode *upgrade() = 0;
+
+    /**
+     * @brief downgrade inner node level
+     * @param
+     * @return RTBaseNode, downgraded node
+     * @remarks
+     */
+    virtual RTBaseNode *downgrade() = 0;
     
     /**
      * @brief get value
@@ -232,6 +240,16 @@ public:
      */
     virtual RTBaseNode *upgrade();
     
+    /**
+     * @brief downgrade inner node level
+     * @param
+     * @return RTBaseNode, downgraded node
+     * @remarks
+     *          if there are valid nodes in the node, call this
+     *          method will cause these nodes lose
+     */
+    virtual RTBaseNode *downgrade();
+    
 private:
     /*< child keys, 4 at most */
     uint8_t m_arrayChildKeys[4];
@@ -328,6 +346,16 @@ public:
      * @remarks
      */
     virtual RTBaseNode *upgrade();
+    
+    /**
+     * @brief downgrade inner node level
+     * @param
+     * @return RTBaseNode, downgraded node
+     * @remarks
+     *          if there are 4 more valid nodes in the node, call this
+     *          method will cause these nodes lose
+     */
+    virtual RTBaseNode *downgrade();
     
 private:
     /*< child keys, 16 at most */
@@ -426,6 +454,16 @@ public:
      */
     virtual RTBaseNode *upgrade();
     
+    /**
+     * @brief downgrade inner node level
+     * @param
+     * @return RTBaseNode, downgraded node
+     * @remarks
+     *          if there are 16 more valid nodes in the node, call this
+     *          method will cause these nodes lose
+     */
+    virtual RTBaseNode *downgrade();
+    
 private:
     /*< child keys, 48 at most, 256 is for direct access */
     uint8_t m_arrayChildKeys[256];
@@ -523,6 +561,16 @@ public:
      */
     virtual RTBaseNode *upgrade();
     
+    /**
+     * @brief downgrade inner node level
+     * @param
+     * @return RTBaseNode, downgraded node
+     * @remarks
+     *          if there are 48 more valid nodes in the node, call this
+     *          method will cause these nodes lose
+     */
+    virtual RTBaseNode *downgrade();
+    
 private:
     /*< child RTNode pointers, 256 at most */
     RTBaseNode *m_arrayChildNodes[256];
@@ -617,6 +665,15 @@ public:
      * @remarks
      */
     virtual RTBaseNode *upgrade();
+
+    /**
+     * @brief downgrade inner node level
+     * @param
+     * @return RTBaseNode, downgraded node
+     * @remarks
+     */
+    virtual RTBaseNode *downgrade();
+    
 };
 
 /**
@@ -751,6 +808,16 @@ private:
      *               false if key already exists
      */
     bool insert_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex);
+
+    /**
+     * @brief remove key in pCurNode
+     * @param RTBaseNode *pCurNode, current node
+     * @param const string &strKey, key
+     * @param size_t nStartIndex, start index to do match
+     * @return bool, true if key exists
+     *               false if key not exists
+     */
+    bool remove_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex);
 
 private:
     /*< root node of the tree */

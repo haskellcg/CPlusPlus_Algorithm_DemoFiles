@@ -155,11 +155,20 @@ RTBaseNode *RTInnerNode4::upgrade()
     pUpgradedNode->set_value(get_value());
     for (size_t i= 0; i < 4; ++i){
         if (INVALID_RT_KEY != m_arrayChildKeys[i]){
-            pUpgradedNode->insert_child_node(m_arrayChildKeys[i],
-                                             remove_child_node(m_arrayChildKeys[i]));
+            RTBaseNode *pRemovedNode = remove_child_node(m_arrayChildKeys[i]);
+            if (!pUpgradedNode->insert_child_node(m_arrayChildKeys[i], pRemovedNode)){
+                delete pRemovedNode;
+            }
         }
     }
     return pUpgradedNode;
+}
+
+RTBaseNode *RTInnerNode4::downgrade()
+{
+    RTBaseNode *pDowngradedNode = new RTLeafNode;
+    pDowngradedNode->set_value(get_value());
+    return pDowngradedNode;
 }
 
 RTInnerNode16::RTInnerNode16()
@@ -314,11 +323,31 @@ RTBaseNode *RTInnerNode16::upgrade()
     memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
     for (size_t i= 0; i < 16; ++i){
         if (INVALID_RT_KEY != arrayChildKeys[i]){
-            pUpgradedNode->insert_child_node(arrayChildKeys[i],
-                                             remove_child_node(arrayChildKeys[i]));
+            RTBaseNode *pRemovedNode = remove_child_node(arrayChildKeys[i]);
+            if (!pUpgradedNode->insert_child_node(arrayChildKeys[i], pRemovedNode)){
+                delete pRemovedNode;
+            }
         }
     }
     return pUpgradedNode;
+}
+
+RTBaseNode *RTInnerNode16::downgrade()
+{
+    RTBaseNode *pDowngradedNode = new RTInnerNode4;
+    pDowngradedNode->set_value(get_value());
+
+    uint8_t arrayChildKeys[16];
+    memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
+    for (size_t i= 0; i < 16; ++i){
+        if (INVALID_RT_KEY != arrayChildKeys[i]){
+            RTBaseNode *pRemovedNode = remove_child_node(arrayChildKeys[i]);
+            if (!pDowngradedNode->insert_child_node(arrayChildKeys[i], pRemovedNode)){
+                delete pRemovedNode;
+            }
+        }
+    }
+    return pDowngradedNode;
 }
 
 RTInnerNode48::RTInnerNode48()
@@ -451,11 +480,29 @@ RTBaseNode *RTInnerNode48::upgrade()
 
     for (size_t i= 0; i < 256; ++i){
         if (INVALID_RT_KEY != m_arrayChildKeys[i]){
-            pUpgradedNode->insert_child_node(i,
-                                             remove_child_node(i));
+            RTBaseNode *pRemovedNode = remove_child_node(i);
+            if (!pUpgradedNode->insert_child_node(i, pRemovedNode)){
+                delete pRemovedNode;
+            }
         }
     }
     return pUpgradedNode;
+}
+
+RTBaseNode *RTInnerNode48::downgrade()
+{
+    RTBaseNode *pDowngradedNode = new RTInnerNode16;
+    pDowngradedNode->set_value(get_value());
+
+    for (size_t i= 0; i < 256; ++i){
+        if (INVALID_RT_KEY != m_arrayChildKeys[i]){
+            RTBaseNode *pRemovedNode = remove_child_node(i);
+            if (!pDowngradedNode->insert_child_node(i, pRemovedNode)){
+                delete pRemovedNode;
+            }
+        }
+    }
+    return pDowngradedNode;
 }
 
 RTInnerNode256::RTInnerNode256()
@@ -557,6 +604,23 @@ RTBaseNode *RTInnerNode256::upgrade()
     return this;
 }
 
+RTBaseNode *RTInnerNode256::downgrade()
+{
+    RTBaseNode *pDowngradedNode = new RTInnerNode48;
+    pDowngradedNode->set_value(get_value());
+
+    for (size_t i = 0; i < 256; ++i){
+        if (NULL != m_arrayChildNodes[i]){
+            RTBaseNode *pRemovedNode = remove_child_node(i);
+            if (!pDowngradedNode->insert_child_node(i, pRemovedNode)){
+                delete pRemovedNode;
+            }
+        }
+    }
+
+    return pDowngradedNode;
+}
+
 RTLeafNode::RTLeafNode()
 {
 }
@@ -609,6 +673,13 @@ RTBaseNode *RTLeafNode::remove_child_node(uint8_t /*< nKey */)
 
 RTBaseNode *RTLeafNode::upgrade()
 {
+    RTBaseNode *pUpgradedNode = new RTInnerNode4;
+    pUpgradedNode->set_value(get_value());
+    return pUpgradedNode;
+}
+
+RTBaseNode *RTLeafNode::downgrade()
+{
     return this;
 }
 
@@ -660,6 +731,15 @@ bool Radix_Tree::insert(const string &strKey)
         m_pRoot = new RTLeafNode;
         m_pRoot->set_value(strKey);
         return true;
+    }
+}
+
+bool Radix_Tree::remove(const string &strKey)
+{
+    if (NULL != m_pRoot){
+        return remove_recursive(m_pRoot, strKey, 0);
+    } else {
+        return false;
     }
 }
 
@@ -721,7 +801,7 @@ bool Radix_Tree::search_recursive(RTBaseNode *pCurNode, const string &strKey, si
                 break;
         }
     } else if ((nCurValueIndex < strCurValue.size()) && (nKeyIndex >= strKey.size())){
-        // false
+
     } else if ((nCurValueIndex >= strCurValue.size()) && (nKeyIndex >= strKey.size())){
         switch (pCurNode->get_node_type()){
             case INNER_NODE_4:
@@ -744,7 +824,6 @@ bool Radix_Tree::search_recursive(RTBaseNode *pCurNode, const string &strKey, si
         }
     } else {
         // (strCurValue[nCurValueIndex] != strKey[nKeyIndex])
-        // false
     }
     return false;
 }
@@ -878,6 +957,64 @@ bool Radix_Tree::insert_recursive(RTBaseNode *pCurNode, const string &strKey, si
         pParent->insert_child_node(nKey_1, pCurNode);
         pParent->insert_child_node(nKey_2, pNewNode);
         return true;
+    }
+    return false;
+}
+
+bool Radix_Tree::remove_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex)
+{
+    string strCurValue = pCurNode->get_value();
+    size_t nCurValueIndex = 0;
+    size_t nKeyIndex = nStartIndex;
+    for (; (nCurValueIndex < strCurValue.size()) && (nKeyIndex < strKey.size()); ++nCurValueIndex, ++nKeyIndex){
+        if (strCurValue[nCurValueIndex] != strKey[nKeyIndex]){
+            break;
+        }
+    }
+
+    if ((nCurValueIndex >= strCurValue.size()) && (nKeyIndex < strKey.size())){
+        uint8_t nKey = strKey[nKeyIndex];
+        switch (pCurNode->get_node_type()){
+            case INNER_NODE_4:
+            case INNER_NODE_16:
+            case INNER_NODE_48:
+            case INNER_NODE_256:
+                {
+                    RTBaseNode *pChildNode = pCurNode->get_child_node(nKey);
+                    if (NULL != pChildNode){
+                        return search_recursive(pChildNode, strKey, nKeyIndex);
+                    }
+                }
+                break;
+            case LEAF_NODE:
+                break;
+            default:
+                break;
+        }
+    } else if ((nCurValueIndex < strCurValue.size()) && (nKeyIndex >= strKey.size())){
+
+    } else if ((nCurValueIndex >= strCurValue.size()) && (nKeyIndex >= strKey.size())){
+        switch (pCurNode->get_node_type()){
+            case INNER_NODE_4:
+            case INNER_NODE_16:
+            case INNER_NODE_48:
+            case INNER_NODE_256:
+                {
+                    if (pCurNode->is_key_exists(0)){
+                        return true;
+                    }
+                }
+                break;
+            case LEAF_NODE:
+                {
+                    return true;
+                }
+                break;
+            default:
+                break;
+        }
+    } else {
+        // (strCurValue[nCurValueIndex] != strKey[nKeyIndex])
     }
     return false;
 }
@@ -1047,6 +1184,11 @@ void radix_tree_test()
         if (!oRadixTree.search(vecKeys[i])){
             print_error_msg("search key: " + vecKeys[i] + " failed.\n");
         }
+    }
+    print_warning_msg(oRadixTree.to_string() + "\n");
+    oRadixTree.remove("56778");
+    if (oRadixTree.search("56778")){
+        print_error_msg("remove key: 56778 failed.\n");
     }
     print_warning_msg(oRadixTree.to_string() + "\n");
 }
