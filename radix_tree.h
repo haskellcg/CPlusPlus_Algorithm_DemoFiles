@@ -680,6 +680,7 @@ public:
  * @brief radix tree
  * @remarks
  *          IPs problem: https://blog.sqreen.com/demystifying-radix-trees/
+ *          数据结构之Radix Tree: https://ivanzz1001.github.io/records/post/data-structure/2018/11/18/ds-radix-tree
  *          Bloom Filter: https://en.wikipedia.org/wiki/Bloom_filter
  *
  *          Visualization: https://www.cs.usfca.edu/~galles/visualization/RadixTree.html
@@ -688,6 +689,7 @@ public:
  *          Difference Radix Tree with Trie: https://stackoverflow.com/questions/14708134/
  *                                           what-is-the-difference-between-trie-and-radix-trie-data-structures
  *          Radix Tree in Linux: https://lwn.net/Articles/175432/
+ *                               http://www.infradead.org/~mchehab/kernel_docs/core-api/assoc_array.html
  *          Radix Tree Adaptive: https://db.in.tum.de/~leis/papers/ART.pdf
  *                               T tree
  *                               B+ tree
