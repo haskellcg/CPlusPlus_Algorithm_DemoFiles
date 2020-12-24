@@ -680,7 +680,7 @@ public:
  * @brief radix tree
  * @remarks
  *          IPs problem: https://blog.sqreen.com/demystifying-radix-trees/
- *          数据结构之Radix Tree: https://ivanzz1001.github.io/records/post/data-structure/2018/11/18/ds-radix-tree
+ *          Ivanzz's blog Radix Tree: https://ivanzz1001.github.io/records/post/data-structure/2018/11/18/ds-radix-tree
  *          Bloom Filter: https://en.wikipedia.org/wiki/Bloom_filter
  *
  *          Visualization: https://www.cs.usfca.edu/~galles/visualization/RadixTree.html
