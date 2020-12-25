@@ -8,13 +8,15 @@
 #include "radix_tree.h"
 
 RTBaseNode::RTBaseNode()
-:   m_pParent(NULL)
+:   m_pParent(NULL),
+    m_nChildNum(0)
 {
 }
 
 RTBaseNode::~RTBaseNode()
 {
     m_pParent = NULL;
+    m_nChildNum = 0;
 }
 
 string RTBaseNode::get_value() const
@@ -35,6 +37,11 @@ RTBaseNode *RTBaseNode::get_parent() const
 void RTBaseNode::set_parent(RTBaseNode *pParent)
 {
     m_pParent = pParent;
+}
+
+size_t RTBaseNode::get_child_number() const
+{
+    return m_nChildNum;
 }
 
 RTInnerNode4::RTInnerNode4()
@@ -61,6 +68,7 @@ string RTInnerNode4::to_string() const
     ostringstream ossResult;
     ossResult << "TYPE: INNER_NODE_4\n";
     ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "childnum: [" << m_nChildNum << "]\n";
     ossResult << "keys:     [";
     for (size_t i = 0; i < 4; ++i){
         ossResult << setw(3) << (uint32_t)m_arrayChildKeys[i];
@@ -96,12 +104,12 @@ void RTInnerNode4::get_valid_child_nodes(vector<RTBaseNode *> &vecValidChildNode
 
 bool RTInnerNode4::is_child_full() const
 {
-    for (size_t i = 0; i < 4; ++i){
-        if (INVALID_RT_KEY == m_arrayChildKeys[i]){
-            return false;
-        }
-    }
-    return true;
+    return (4 == m_nChildNum);
+}
+
+bool RTInnerNode4::is_downgradable() const
+{
+    return (0 == m_nChildNum);
 }
 
 bool RTInnerNode4::is_key_exists(uint8_t nKey) const
@@ -128,6 +136,7 @@ bool RTInnerNode4::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
             m_arrayChildKeys[i] = nKey;
             m_arrayChildNodes[i] = pChildNode;
             pChildNode->set_parent(this);
+            ++m_nChildNum;
             return true;
         }
     }
@@ -143,6 +152,7 @@ RTBaseNode *RTInnerNode4::remove_child_node(uint8_t nKey)
             pRemovedNode = m_arrayChildNodes[i];
             m_arrayChildNodes[i] = NULL;
             pRemovedNode->set_parent(NULL);
+            --m_nChildNum;
             break;
         }
     }
@@ -154,9 +164,10 @@ RTBaseNode *RTInnerNode4::upgrade()
     RTBaseNode *pUpgradedNode = new RTInnerNode16;
     pUpgradedNode->set_value(get_value());
     for (size_t i= 0; i < 4; ++i){
-        if (INVALID_RT_KEY != m_arrayChildKeys[i]){
-            RTBaseNode *pRemovedNode = remove_child_node(m_arrayChildKeys[i]);
-            if (!pUpgradedNode->insert_child_node(m_arrayChildKeys[i], pRemovedNode)){
+        uint8_t nKey = m_arrayChildKeys[i];
+        if (INVALID_RT_KEY != nKey){
+            RTBaseNode *pRemovedNode = remove_child_node(nKey);
+            if (!pUpgradedNode->insert_child_node(nKey, pRemovedNode)){
                 delete pRemovedNode;
             }
         }
@@ -195,6 +206,7 @@ string RTInnerNode16::to_string() const
     ostringstream ossResult;
     ossResult << "TYPE: INNER_NODE_16\n";
     ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "childnum: [" << m_nChildNum << "]\n";
     ossResult << "keys:     [";
     uint8_t arrayChildKeys[16];
     memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
@@ -238,15 +250,12 @@ void RTInnerNode16::get_valid_child_nodes(vector<RTBaseNode *> &vecValidChildNod
 
 bool RTInnerNode16::is_child_full() const
 {
-    __m128i sseInvalidKey = _mm_set1_epi8(INVALID_RT_KEY);
-    __m128i sseCmp = _mm_cmpeq_epi8(sseInvalidKey, m_arrayChildKeys);
-    uint32_t nMask = (1 << 16) - 1;
-    uint32_t nBitField = _mm_movemask_epi8(sseCmp) & nMask;
-    if (0 != nBitField){
-        return false;
-    } else {
-        return true;
-    }
+    return (16 == m_nChildNum);
+}
+
+bool RTInnerNode16::is_downgradable() const
+{
+    return (m_nChildNum <= 4);
 }
 
 bool RTInnerNode16::is_key_exists(uint8_t nKey) const
@@ -286,6 +295,7 @@ bool RTInnerNode16::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
         memcpy(&m_arrayChildKeys, arrayChildKeys, sizeof(arrayChildKeys));
         m_arrayChildNodes[nInsertIndex] = pChildNode;
         pChildNode->set_parent(this);
+        ++m_nChildNum;
         return true;
     } else {
         return false;
@@ -309,6 +319,7 @@ RTBaseNode *RTInnerNode16::remove_child_node(uint8_t nKey)
         pRemovedNode = m_arrayChildNodes[nRemoveIndex];
         m_arrayChildNodes[nRemoveIndex] = NULL;
         pRemovedNode->set_parent(NULL);
+        --m_nChildNum;
     }
 
     return pRemovedNode;
@@ -322,9 +333,10 @@ RTBaseNode *RTInnerNode16::upgrade()
     uint8_t arrayChildKeys[16];
     memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
     for (size_t i= 0; i < 16; ++i){
-        if (INVALID_RT_KEY != arrayChildKeys[i]){
-            RTBaseNode *pRemovedNode = remove_child_node(arrayChildKeys[i]);
-            if (!pUpgradedNode->insert_child_node(arrayChildKeys[i], pRemovedNode)){
+        uint8_t nKey = arrayChildKeys[i];
+        if (INVALID_RT_KEY != nKey){
+            RTBaseNode *pRemovedNode = remove_child_node(nKey);
+            if (!pUpgradedNode->insert_child_node(nKey, pRemovedNode)){
                 delete pRemovedNode;
             }
         }
@@ -340,9 +352,10 @@ RTBaseNode *RTInnerNode16::downgrade()
     uint8_t arrayChildKeys[16];
     memcpy(arrayChildKeys, &m_arrayChildKeys, sizeof(arrayChildKeys));
     for (size_t i= 0; i < 16; ++i){
-        if (INVALID_RT_KEY != arrayChildKeys[i]){
-            RTBaseNode *pRemovedNode = remove_child_node(arrayChildKeys[i]);
-            if (!pDowngradedNode->insert_child_node(arrayChildKeys[i], pRemovedNode)){
+        uint8_t nKey = arrayChildKeys[i];
+        if (INVALID_RT_KEY != nKey){
+            RTBaseNode *pRemovedNode = remove_child_node(nKey);
+            if (!pDowngradedNode->insert_child_node(nKey, pRemovedNode)){
                 delete pRemovedNode;
             }
         }
@@ -377,6 +390,7 @@ string RTInnerNode48::to_string() const
     ostringstream ossResult;
     ossResult << "TYPE: INNER_NODE_48\n";
     ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "childnum: [" << m_nChildNum << "]\n";
     ossResult << "keys:     [";
     for (size_t i = 0; i < 256; ++i){
         ossResult << setw(3) << (uint32_t)m_arrayChildKeys[i];
@@ -418,12 +432,12 @@ void RTInnerNode48::get_valid_child_nodes(vector<RTBaseNode *> &vecValidChildNod
 
 bool RTInnerNode48::is_child_full() const
 {
-    for (size_t i = 0; i < 48; ++i){
-        if (NULL == m_arrayChildNodes[i]){
-            return false;
-        }
-    }
-    return true;
+    return (48 == m_nChildNum);
+}
+
+bool RTInnerNode48::is_downgradable() const
+{
+    return (m_nChildNum <= 16);
 }
 
 bool RTInnerNode48::is_key_exists(uint8_t nKey) const
@@ -454,6 +468,7 @@ bool RTInnerNode48::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
         }
         if (nInsertIndex < 48){
             m_arrayChildKeys[nKey] = nInsertIndex;
+            ++m_nChildNum;
             return true;
         }
     }
@@ -469,6 +484,7 @@ RTBaseNode *RTInnerNode48::remove_child_node(uint8_t nKey)
         m_arrayChildNodes[nChildPointerIndex] = NULL;
         m_arrayChildKeys[nKey] = INVALID_RT_KEY;
         pRemovedNode->set_parent(NULL);
+        --m_nChildNum;
     }
     return pRemovedNode;
 }
@@ -527,6 +543,7 @@ string RTInnerNode256::to_string() const
     ostringstream ossResult;
     ossResult << "TYPE: INNER_NODE_256\n";
     ossResult << "value:    [" << m_strValue << "]\n";
+    ossResult << "childnum: [" << m_nChildNum << "]\n";
     ossResult << "keys:     [";
     ossResult << "]\n";
     ossResult << "pointers: [";
@@ -559,12 +576,12 @@ void RTInnerNode256::get_valid_child_nodes(vector<RTBaseNode *> &vecValidChildNo
 
 bool RTInnerNode256::is_child_full() const
 {
-    for (size_t i = 0; i < 256; ++i){
-        if (NULL == m_arrayChildNodes[i]){
-            return false;
-        }
-    }
-    return true;
+    return (256 == m_nChildNum);
+}
+
+bool RTInnerNode256::is_downgradable() const
+{
+    return (m_nChildNum <= 48);
 }
 
 bool RTInnerNode256::is_key_exists(uint8_t nKey) const
@@ -582,6 +599,7 @@ bool RTInnerNode256::insert_child_node(uint8_t nKey, RTBaseNode *pChildNode)
     if (NULL == m_arrayChildNodes[nKey]){
         m_arrayChildNodes[nKey] = pChildNode;
         pChildNode->set_parent(this);
+        ++m_nChildNum;
         return true;
     } else {
         return false;
@@ -595,6 +613,7 @@ RTBaseNode *RTInnerNode256::remove_child_node(uint8_t nKey)
         pRemovedNode = m_arrayChildNodes[nKey];
         m_arrayChildNodes[nKey] = NULL;
         pRemovedNode->set_parent(NULL);
+        --m_nChildNum;
     }
     return pRemovedNode;
 }
@@ -634,6 +653,7 @@ string RTLeafNode::to_string() const
     ostringstream ossResult;
     ossResult << "TYPE: LEAF_NODE\n";
     ossResult << "value:    [" << m_strValue << "]";
+    ossResult << "childnum: [" << m_nChildNum << "]\n";
     return ossResult.str();
 }
 
@@ -649,6 +669,11 @@ void RTLeafNode::get_valid_child_nodes(vector<RTBaseNode *> & /*< vecValidChildN
 bool RTLeafNode::is_child_full() const
 {
     return true;
+}
+
+bool RTLeafNode::is_downgradable() const
+{
+    return false;
 }
 
 bool RTLeafNode::is_key_exists(uint8_t /*< nKey */) const
@@ -961,6 +986,17 @@ bool Radix_Tree::insert_recursive(RTBaseNode *pCurNode, const string &strKey, si
     return false;
 }
 
+void Radix_Tree::remove_from_parent(RTBaseNode *pCurNode)
+{
+    string strCurValue = pCurNode->get_value();
+    RTBaseNode *pParent = pCurNode->get_parent();
+    if (NULL != pParent){
+        pParent->remove_child_node(strCurValue[0]);
+    } else {
+        m_pRoot = NULL;
+    }
+}
+
 bool Radix_Tree::remove_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex)
 {
     string strCurValue = pCurNode->get_value();
@@ -976,13 +1012,34 @@ bool Radix_Tree::remove_recursive(RTBaseNode *pCurNode, const string &strKey, si
         uint8_t nKey = strKey[nKeyIndex];
         switch (pCurNode->get_node_type()){
             case INNER_NODE_4:
+                {
+                    RTBaseNode *pChildNode = pCurNode->get_child_node(nKey);
+                    if (NULL != pChildNode){
+                        if (remove_recursive(pChildNode, strKey, nKeyIndex)){
+                            if (pCurNode->is_downgradable()){
+                                remove_from_parent(pCurNode);
+                                delete pCurNode;
+                            }
+                            return true;
+                        }
+                    }
+                }
+                break;
             case INNER_NODE_16:
             case INNER_NODE_48:
             case INNER_NODE_256:
                 {
                     RTBaseNode *pChildNode = pCurNode->get_child_node(nKey);
                     if (NULL != pChildNode){
-                        return search_recursive(pChildNode, strKey, nKeyIndex);
+                        if (remove_recursive(pChildNode, strKey, nKeyIndex)){
+                            if (pCurNode->is_downgradable()){
+                                RTBaseNode *pNewNode = pCurNode->downgrade();
+                                replace_nodes(pCurNode, pNewNode);
+                                delete pCurNode;
+                                pCurNode = NULL;
+                            }
+                            return true;
+                        }
                     }
                 }
                 break;
@@ -996,17 +1053,37 @@ bool Radix_Tree::remove_recursive(RTBaseNode *pCurNode, const string &strKey, si
     } else if ((nCurValueIndex >= strCurValue.size()) && (nKeyIndex >= strKey.size())){
         switch (pCurNode->get_node_type()){
             case INNER_NODE_4:
+                {
+                    if (pCurNode->is_key_exists(0)){
+                        delete pCurNode->remove_child_node(0);
+                        if (pCurNode->is_downgradable()){
+                            remove_from_parent(pCurNode);
+                            delete pCurNode;
+                        }
+                        return true;
+                    }
+                }
+                break;
             case INNER_NODE_16:
             case INNER_NODE_48:
             case INNER_NODE_256:
                 {
                     if (pCurNode->is_key_exists(0)){
+                        delete pCurNode->remove_child_node(0);
+                        if (pCurNode->is_downgradable()){
+                            RTBaseNode *pNewNode = pCurNode->downgrade();
+                            replace_nodes(pCurNode, pNewNode);
+                            delete pCurNode;
+                            pCurNode = NULL;
+                        }
                         return true;
                     }
                 }
                 break;
             case LEAF_NODE:
                 {
+                    remove_from_parent(pCurNode);
+                    delete pCurNode;
                     return true;
                 }
                 break;
@@ -1174,7 +1251,8 @@ void radix_tree_test()
     /*< radix tree test */
     string arrayKeys[] = {"she", "shemale", "shea", "sheab",
                           "sheabc", "her", "him", "sh", "h",
-                          "123", "12", "12345", "56778"};
+                          "123", "12", "12345", "56778",
+                          "11", "13", "14", "15", /*"16", "17", "18", "19"*/};
     vector<string> vecKeys;
     vecKeys.insert(vecKeys.end(), begin(arrayKeys), end(arrayKeys));
 
@@ -1186,9 +1264,11 @@ void radix_tree_test()
         }
     }
     print_warning_msg(oRadixTree.to_string() + "\n");
-    oRadixTree.remove("56778");
-    if (oRadixTree.search("56778")){
-        print_error_msg("remove key: 56778 failed.\n");
+    for (size_t i = 0; i < vecKeys.size(); ++i){
+        oRadixTree.remove(vecKeys[i]);
+        if (oRadixTree.search(vecKeys[i])){
+            print_error_msg("remove key: " + vecKeys[i] + " failed.\n");
+        }
     }
     print_warning_msg(oRadixTree.to_string() + "\n");
 }

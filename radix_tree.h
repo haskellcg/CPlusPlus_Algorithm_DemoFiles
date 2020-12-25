@@ -73,6 +73,14 @@ public:
     virtual bool is_child_full() const = 0;
 
     /**
+     * @brief is child number ok for downgrade
+     * @param
+     * @return bool
+     * @remarks
+     */
+    virtual bool is_downgradable() const = 0;
+
+    /**
      * @brief is key exist
      * @param uint8_t nKey, key
      * @return bool
@@ -142,12 +150,20 @@ public:
      */
     void set_parent(RTBaseNode *pParent);
 
+    /**
+     * @brief get number of child node
+     */
+    size_t get_child_number() const;
+
 protected:
     /*< the value of the node */
     string m_strValue;
 
     /*< parent node */
     RTBaseNode *m_pParent;
+
+    /*< number of child nodes */
+    size_t m_nChildNum;
 };
 
 /**
@@ -197,6 +213,14 @@ public:
      * @remarks
      */
     virtual bool is_child_full() const;
+
+    /**
+     * @brief is child number ok for downgrade
+     * @param
+     * @return bool
+     * @remarks
+     */
+    virtual bool is_downgradable() const;
 
     /**
      * @brief is key exist
@@ -306,6 +330,14 @@ public:
     virtual bool is_child_full() const;
 
     /**
+     * @brief is child number ok for downgrade
+     * @param
+     * @return bool
+     * @remarks
+     */
+    virtual bool is_downgradable() const;
+
+    /**
      * @brief is key exist
      * @param uint8_t nKey, key
      * @return bool
@@ -411,6 +443,14 @@ public:
      * @remarks
      */
     bool is_child_full() const;
+
+    /**
+     * @brief is child number ok for downgrade
+     * @param
+     * @return bool
+     * @remarks
+     */
+    virtual bool is_downgradable() const;
 
     /**
      * @brief is key exist
@@ -520,6 +560,14 @@ public:
     virtual bool is_child_full() const;
 
     /**
+     * @brief is child number ok for downgrade
+     * @param
+     * @return bool
+     * @remarks
+     */
+    virtual bool is_downgradable() const;
+
+    /**
      * @brief is key exist
      * @param uint8_t nKey, key
      * @return bool
@@ -623,6 +671,14 @@ public:
      * @remarks
      */
     virtual bool is_child_full() const;
+
+    /**
+     * @brief is child number ok for downgrade
+     * @param
+     * @return bool
+     * @remarks
+     */
+    virtual bool is_downgradable() const;
 
     /**
      * @brief is key exist
@@ -810,6 +866,14 @@ private:
      *               false if key already exists
      */
     bool insert_recursive(RTBaseNode *pCurNode, const string &strKey, size_t nStartIndex);
+
+    /**
+     * @brief remove pCurNode from its parent node
+     * @param RTBaseNode *pCurNode, current node
+     * @return void
+     * @remarks
+     */
+    void remove_from_parent(RTBaseNode *pCurNode);
 
     /**
      * @brief remove key in pCurNode

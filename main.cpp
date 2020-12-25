@@ -62,7 +62,6 @@ int main(int argc, char *argv[])
         // default: only test the current coding algorithm
         fusion_tree_test();
         nowcoder_com_test();
-        radix_tree_test();
         red_black_tree_test();
         string_hash_funtions_test();
     }
