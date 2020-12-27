@@ -41,3 +41,12 @@
     * [Multi-robot Task Allocation Based on Ant Colony Algorithm](http://www.jcomputers.us/vol7/jcp0709-10.pdf)
   * alliance algorithm
     * [Application of the “Alliance Algorithm” to Energy Constrained Gait Optimization](https://link.springer.com/chapter/10.1007/978-3-642-32060-6_40)
+  * TSP Problem
+    * [Naive and Dynamic programming](https://www.geeksforgeeks.org/travelling-salesman-problem-set-1/)
+    * [动态规划](https://blog.csdn.net/qq_39559641/article/details/101209534)
+    * [dynamic programming introduction](https://people.eecs.berkeley.edu/~vazirani/algorithms/chap6.pdf)
+    * [Greedy approach?](https://www.geeksforgeeks.org/travelling-salesman-problem-greedy-approach/?ref=rp)
+    * [Backtracking](https://www.geeksforgeeks.org/travelling-salesman-problem-implementation-using-backtracking/?ref=lbp)
+  * MRTA
+    * [Task allocation in other company](http://www.okagv.com/agvzs_14442827.html)
+    * [多机器人任务分配研究与实现](https://www.docin.com/p-779098001.html)
