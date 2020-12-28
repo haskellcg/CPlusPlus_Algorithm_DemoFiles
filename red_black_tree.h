@@ -109,8 +109,33 @@ private:
     RBTNode *m_pRight;
 };
 
+/**
+ * @brief red black tree properties:
+ *        1. every node has a color either red or black
+ *        2. the root of tree is always black
+ *        3. there are no two adjacent red nodes (a red node cannot have a red parent or red child)
+ *        4. every path from a node (include root) to any of its descendant NULL node has the same number of black node
+ */
 class Red_Black_Tree: public Binary_Search_Tree<RBTNode>
 {
+public:
+    /** 
+     * @brief insert nKey as RBTNode to red black tree
+     * @param uint32_t nKey, key
+     * @return RBTNode *, null if nKey already in the tree,
+     *                    or node created
+     * @remarks
+     */
+    RBTNode *insert(uint32_t nKey);
+
+    /**
+     * @brief remove pNode from red black tree
+     * @param RBTNode *pNode,
+     * @return void
+     * @remarks
+     *          pNode must be in the tree
+     */
+    void remove(RBTNode *pNode);
 };
 
 /**

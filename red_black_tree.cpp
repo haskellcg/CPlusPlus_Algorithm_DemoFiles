@@ -82,6 +82,16 @@ void RBTNode::set_right(RBTNode *pRight)
     m_pRight = pRight;
 }
 
+RBTNode *Red_Black_Tree::insert(uint32_t nKey)
+{
+    return Binary_Search_Tree<RBTNode>::insert(nKey);
+}
+
+void Red_Black_Tree::remove(RBTNode *pNode)
+{
+    Binary_Search_Tree<RBTNode>::remove(pNode);
+}
+
 void red_black_tree_test()
 {
     print_highlight_msg(">>> Test red balck tree:\n");
@@ -96,6 +106,4 @@ void red_black_tree_test()
         oRedBlackTree.insert(vecInt[i]);
         print_warning_msg(oRedBlackTree.to_string() + "\n");
     }
-        
-    print_error_msg("No test case yet.\n");
 }
