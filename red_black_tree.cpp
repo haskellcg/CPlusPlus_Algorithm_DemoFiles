@@ -7,7 +7,7 @@
 #include "red_black_tree.h"
 
 RBTNode::RBTNode()
-:   m_enumColor(RBTNODE_BLACK),
+:   m_enumColor(RBTNODE_RED),
     m_nKey(MAX_UINT32),
     m_pParent(NULL),
     m_pLeft(NULL),
@@ -84,12 +84,64 @@ void RBTNode::set_right(RBTNode *pRight)
 
 RBTNode *Red_Black_Tree::insert(uint32_t nKey)
 {
-    return Binary_Search_Tree<RBTNode>::insert(nKey);
+    RBTNode *pNewNode = Binary_Search_Tree<RBTNode>::insert(nKey);
+    insert_fixup(pNewNode);
+    return pNewNode;
 }
 
 void Red_Black_Tree::remove(RBTNode *pNode)
 {
     Binary_Search_Tree<RBTNode>::remove(pNode);
+}
+
+void Red_Black_Tree::insert_fixup(RBTNode *pNode)
+{
+    RBTNode *pCurNode = pNode;
+    RBTNode *pParent = pCurNode->get_parent();
+    while ((NULL != pParent) && (RBTNODE_RED == pParent->get_color())){
+
+        if (pParent == pParent->get_parent()->get_left()){
+            RBTNode *pUncle = pParent->get_parent()->get_right();
+
+            if ((NULL != pUncle) && (RBTNODE_RED == pUncle->get_color())){
+                pParent->set_color(RBTNODE_BLACK);
+                pUncle->set_color(RBTNODE_BLACK);
+                pParent->get_parent()->set_color(RBTNODE_RED);
+                pCurNode = pParent->get_parent();
+                pParent = pCurNode->get_parent();
+            } else{
+                if (pCurNode == pParent->get_right()){
+                    pCurNode = pParent;
+                    left_rotation(pCurNode);
+                    pParent = pCurNode->get_parent();
+                }
+                pParent->set_color(RBTNODE_BLACK);
+                pParent->get_parent()->set_color(RBTNODE_RED);
+                right_rotation(pParent->get_parent());
+            }
+        } else {
+            RBTNode *pUncle = pParent->get_parent()->get_left();
+
+            if ((NULL != pUncle) && (RBTNODE_RED == pUncle->get_color())){
+                pParent->set_color(RBTNODE_BLACK);
+                pUncle->set_color(RBTNODE_BLACK);
+                pParent->get_parent()->set_color(RBTNODE_RED);
+                pCurNode = pParent->get_parent();
+                pParent = pCurNode->get_parent();
+            } else {
+                if (pCurNode == pParent->get_left()){
+                    pCurNode = pParent;
+                    right_rotation(pCurNode);
+                    pParent = pCurNode->get_parent();
+                }
+                pParent->set_color(RBTNODE_BLACK);
+                pParent->get_parent()->set_color(RBTNODE_RED);
+                left_rotation(pParent->get_parent());
+            }
+        }
+    }
+
+    m_pRoot->set_color(RBTNODE_BLACK);
 }
 
 void red_black_tree_test()
@@ -105,5 +157,16 @@ void red_black_tree_test()
     for (size_t i = 0; i < vecInt.size(); ++i){
         oRedBlackTree.insert(vecInt[i]);
         print_warning_msg(oRedBlackTree.to_string() + "\n");
+    }
+
+    for (size_t i = 0; i < vecInt.size(); ++i){
+        RBTNode *pRemoveNode = oRedBlackTree.search(vecInt[i]);
+        if (NULL != pRemoveNode){
+            oRedBlackTree.remove(pRemoveNode);
+            delete pRemoveNode;
+            // print_warning_msg(oRedBlackTree.to_string() + "\n");
+        } else {
+            print_error_msg("remove key: " + std::to_string(vecInt[i]) + " failed.\n");
+        }
     }
 }

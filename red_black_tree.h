@@ -136,6 +136,15 @@ public:
      *          pNode must be in the tree
      */
     void remove(RBTNode *pNode);
+
+private:
+    /**
+     * @brief fixup the attribute if pNode break them
+     * @param RBTNode *pNode, new node
+     * @return void
+     * @remarks
+     */
+    void insert_fixup(RBTNode *pNode);
 };
 
 /**
