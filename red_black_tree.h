@@ -111,12 +111,22 @@ private:
 
 /**
  * @brief red black tree properties:
- *        1. every node has a color either red or black
- *        2. the root of tree is always black
- *        3. there are no two adjacent red nodes (a red node cannot have a red parent or red child)
- *        4. every path from a node (include root) to any of its descendant NULL node has the same number of black node
+ *          1. every node has a color either red or black
+ *          2. the root of tree is always black
+ *          3. there are no two adjacent red nodes (a red node cannot have a red parent or red child)
+ *          4. every path from a node (include root) to any of its descendant NULL node has the same number of black node
  *
- *        Visual of insertion and deletion: https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+ *          Visual of insertion and deletion: https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
+ *          Skip Lists: https://web.archive.org/web/20081018112547/http://www.cs.auckland.ac.nz/software/AlgAnim/niemann/s_skl.htm
+ *          Skip Lists Introduction: https://web.archive.org/web/20081019102355/http://www.cs.auckland.ac.nz/software/AlgAnim/niemann/s_skip.pdf
+ *          Splay Tree: https://en.wikipedia.org/wiki/Splay_tree
+ *          Scapegoat Tree: https://en.wikipedia.org/wiki/Scapegoat_tree
+ *          Self Balancing Binary Search Trees: https://www.geeksforgeeks.org/self-balancing-binary-search-trees-comparisons/
+ *          AA Tree: https://en.wikipedia.org/wiki/AA_tree
+ *          Treap: https://en.wikipedia.org/wiki/Treap
+ *          Treap, Randomized Search Tree: http://faculty.washington.edu/aragon/pubs/rst89.pdf
+ *          Treap Visual Introduction: https://medium.com/carpanese/a-visual-introduction-to-treap-data-structure-part-1-6196d6cc12ee
+ *          A Visual Introduction to Centroid Decomposition: https://medium.com/carpanese/an-illustrated-introduction-to-centroid-decomposition-8c1989d53308
  */
 class Red_Black_Tree: public Binary_Search_Tree<RBTNode>
 {
