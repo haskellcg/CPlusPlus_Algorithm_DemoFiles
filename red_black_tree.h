@@ -115,6 +115,8 @@ private:
  *        2. the root of tree is always black
  *        3. there are no two adjacent red nodes (a red node cannot have a red parent or red child)
  *        4. every path from a node (include root) to any of its descendant NULL node has the same number of black node
+ *
+ *        Visual of insertion and deletion: https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
  */
 class Red_Black_Tree: public Binary_Search_Tree<RBTNode>
 {
@@ -139,12 +141,79 @@ public:
 
 private:
     /**
-     * @brief fixup the attribute if pNode break them
+     * @brief fixup the attribute if pNode break them after insert
      * @param RBTNode *pNode, new node
      * @return void
      * @remarks
+     *          insert explain: https://www.geeksforgeeks.org/red-black-tree-set-2-insert/
+     *
+     *          1. parent and uncle nodes are all red, only do re-coloring
+     *                  G:B
+     *                 /   \
+     *              P:R     U:R
+     *             /
+     *          C:R
+     *
+     *          2. parent is red, but uncle is black, do LL rotation and re-coloring
+     *                  G:B
+     *                 /   \
+     *              P:R     U:B
+     *             /
+     *          C:R
+     *
+     *          3. parent is red, but uncle is black, do LR rotation and re-coloring
+     *                  G:B
+     *                 /   \
+     *              P:R     U:B
+     *                 \
+     *                  C:R
+     *
+     *          4./5./6. same as above, but P is G.right
      */
     void insert_fixup(RBTNode *pNode);
+
+    /**
+     * @brief fixup the attribute if pNode break them after remove
+     * @param RBTNode *pRemovedNodeChild, child of the removed node
+     * @param RBTNode *pRemovedNodeParent, parent of the removed node
+     * @return void
+     * @remarks
+     *          pNode could be NULL
+     *
+     *          remove explain: https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/?ref=lbp
+     *
+     *          0. unlike the book, if pRemovedNodeChild is NULL, do rotation with pRemovedNodeParent
+     *              P:RB
+     *                  \
+     *                   B:RB
+     *
+     *          1. brother is red, do re-coloring and left rotation, and check 2./3./4. situations
+     *              P:B
+     *             /   \
+     *          C:B     B:R
+     *
+     *          2. brother is black, and both all his children is black, do recoloring and make C = P
+     *              P:R
+     *             /   \
+     *          C:B     B:B
+     *                 /   \
+     *             BL:B     BR:B
+     *
+     *          3. brother is black, and only his right child is black, do recoloring and rotation
+     *              P:R
+     *             /   \
+     *          C:B     B:B
+     *                 /   \
+     *             BL:R     BR:B
+     *
+     *          3. brother is black, and only his left child is black, do recoloring and rotation
+     *              P:R
+     *             /   \
+     *          C:B     B:B
+     *                 /   \
+     *             BL:B     BR:R
+     */
+    void remove_fixup(RBTNode *pRemovedNodeChild, RBTNode *pRemovedNodeParent);
 };
 
 /**

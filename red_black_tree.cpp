@@ -91,7 +91,45 @@ RBTNode *Red_Black_Tree::insert(uint32_t nKey)
 
 void Red_Black_Tree::remove(RBTNode *pNode)
 {
-    Binary_Search_Tree<RBTNode>::remove(pNode);
+    RBTNode_Color enumRemovedNodeColor = pNode->get_color();
+    RBTNode *pRemovedNodeParent = pNode->get_parent();
+    RBTNode *pRemovedNodeChild = NULL;
+
+    if (NULL == pNode->get_left()){
+        pRemovedNodeChild = pNode->get_right();
+        transplant(pNode, pRemovedNodeChild);
+        pNode->set_right(NULL);
+    } else if (NULL == pNode->get_right()){
+        pRemovedNodeChild = pNode->get_left();
+        transplant(pNode, pRemovedNodeChild);
+        pNode->set_left(NULL);
+    } else {
+        RBTNode *pSuccessor = minimum(pNode->get_right());
+
+        enumRemovedNodeColor = pSuccessor->get_color();
+        pRemovedNodeParent = pSuccessor->get_parent();
+        pRemovedNodeChild = pSuccessor->get_right();
+
+        if (pSuccessor != pNode->get_right()){
+            transplant(pSuccessor, pSuccessor->get_right());
+            pSuccessor->set_right(pNode->get_right());
+            pNode->get_right()->set_parent(pSuccessor);
+        } else {
+            pRemovedNodeParent = pSuccessor;
+        }
+        transplant(pNode, pSuccessor);
+        pNode->set_right(NULL);
+        pSuccessor->set_left(pNode->get_left());
+        pNode->get_left()->set_parent(pSuccessor);
+        pNode->set_left(NULL);
+        pSuccessor->set_color(pNode->get_color());
+        pNode->set_color(RBTNODE_RED);
+    }
+    --m_nSize;
+
+    if (RBTNODE_BLACK == enumRemovedNodeColor){
+        remove_fixup(pRemovedNodeChild, pRemovedNodeParent);
+    }
 }
 
 void Red_Black_Tree::insert_fixup(RBTNode *pNode)
@@ -144,6 +182,84 @@ void Red_Black_Tree::insert_fixup(RBTNode *pNode)
     m_pRoot->set_color(RBTNODE_BLACK);
 }
 
+void Red_Black_Tree::remove_fixup(RBTNode *pRemovedNodeChild, RBTNode *pRemovedNodeParent)
+{
+    if (NULL == pRemovedNodeParent){
+        return;
+    }
+
+    RBTNode *pCurNode = pRemovedNodeChild;
+    while ((m_pRoot != pCurNode) && ((NULL == pCurNode) || (RBTNODE_BLACK == pCurNode->get_color()))){
+
+        RBTNode *pParent = NULL;
+        if (NULL != pCurNode){
+            pParent = pCurNode->get_parent();
+        } else {
+            pParent = pRemovedNodeParent;
+        }
+
+        if ((pCurNode == pParent->get_left()) || ((NULL == pCurNode) && (NULL != pParent->get_right()))){
+
+            RBTNode *pBrotherNode = pParent->get_right();
+            if (RBTNODE_RED == pBrotherNode->get_color()){
+                pBrotherNode->set_color(RBTNODE_BLACK);
+                pParent->set_color(RBTNODE_RED);
+                left_rotation(pParent);
+                pBrotherNode = pParent->get_right();
+            }
+            if (((NULL == pBrotherNode->get_left()) || (RBTNODE_BLACK == pBrotherNode->get_left()->get_color()))
+                && ((NULL == pBrotherNode->get_right()) || (RBTNODE_BLACK == pBrotherNode->get_right()->get_color()))){
+                pBrotherNode->set_color(RBTNODE_RED);
+                pCurNode = pParent;
+                pParent = pCurNode->get_parent();
+            } else {
+                if ((NULL == pBrotherNode->get_right()) || (RBTNODE_BLACK == pBrotherNode->get_right()->get_color())){
+                    pBrotherNode->get_left()->set_color(RBTNODE_BLACK);
+                    pBrotherNode->set_color(RBTNODE_RED);
+                    right_rotation(pBrotherNode);
+                    pBrotherNode = pParent->get_right();
+                }
+                pBrotherNode->set_color(pParent->get_color());
+                pParent->set_color(RBTNODE_BLACK);
+                pBrotherNode->get_right()->set_color(RBTNODE_BLACK);
+                left_rotation(pParent);
+                pCurNode = m_pRoot;
+                pParent = pCurNode->get_parent();
+            }
+        } else {
+
+            RBTNode *pBrotherNode = pParent->get_left();
+            if ((NULL != pBrotherNode) && (RBTNODE_RED == pBrotherNode->get_color())){
+                pBrotherNode->set_color(RBTNODE_BLACK);
+                pParent->set_color(RBTNODE_RED);
+                right_rotation(pParent);
+                pBrotherNode = pParent->get_left();
+            }
+            if (((NULL == pBrotherNode->get_left()) || (RBTNODE_BLACK == pBrotherNode->get_left()->get_color()))
+                && ((NULL == pBrotherNode->get_right()) || (RBTNODE_BLACK == pBrotherNode->get_right()->get_color()))){
+                pBrotherNode->set_color(RBTNODE_RED);
+                pCurNode = pParent;
+                pParent = pCurNode->get_parent();
+            } else {
+                if ((NULL == pBrotherNode->get_left()) || (RBTNODE_BLACK == pBrotherNode->get_left()->get_color())){
+                    pBrotherNode->get_right()->set_color(RBTNODE_BLACK);
+                    pBrotherNode->set_color(RBTNODE_RED);
+                    left_rotation(pBrotherNode);
+                    pBrotherNode = pParent->get_left();
+                }
+                pBrotherNode->set_color(pParent->get_color());
+                pParent->set_color(RBTNODE_BLACK);
+                pBrotherNode->get_left()->set_color(RBTNODE_BLACK);
+                right_rotation(pParent);
+                pCurNode = m_pRoot;
+                pParent = pCurNode->get_parent();
+            }
+        }
+    }
+
+    pCurNode->set_color(RBTNODE_BLACK);
+}
+
 void red_black_tree_test()
 {
     print_highlight_msg(">>> Test red balck tree:\n");
@@ -156,10 +272,12 @@ void red_black_tree_test()
     Red_Black_Tree oRedBlackTree;
     for (size_t i = 0; i < vecInt.size(); ++i){
         oRedBlackTree.insert(vecInt[i]);
-        print_warning_msg(oRedBlackTree.to_string() + "\n");
+        // print_warning_msg(oRedBlackTree.to_string() + "\n");
     }
+    print_warning_msg(oRedBlackTree.to_string() + "\n");
 
     for (size_t i = 0; i < vecInt.size(); ++i){
+        // print_error_msg("removing key :" + std::to_string(vecInt[i]) + "\n");
         RBTNode *pRemoveNode = oRedBlackTree.search(vecInt[i]);
         if (NULL != pRemoveNode){
             oRedBlackTree.remove(pRemoveNode);
