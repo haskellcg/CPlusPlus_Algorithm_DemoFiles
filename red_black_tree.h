@@ -127,6 +127,12 @@ private:
  *          Treap, Randomized Search Tree: http://faculty.washington.edu/aragon/pubs/rst89.pdf
  *          Treap Visual Introduction: https://medium.com/carpanese/a-visual-introduction-to-treap-data-structure-part-1-6196d6cc12ee
  *          A Visual Introduction to Centroid Decomposition: https://medium.com/carpanese/an-illustrated-introduction-to-centroid-decomposition-8c1989d53308
+ *
+ *          Variation:
+ *              1. add size attribute: x.size = x.left.size + x.right.size + 1
+ *              2. interval tree: overlap --  ((i.low <= j.high) && (j.low <= i.high))
+ *                                i.max   --  max value of the subtree of i as root
+ *                                check: https://iq.opengenus.org/interval-tree/
  */
 class Red_Black_Tree: public Binary_Search_Tree<RBTNode>
 {

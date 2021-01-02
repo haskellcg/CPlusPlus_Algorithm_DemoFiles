@@ -49,3 +49,8 @@
   * MRTA
     * [Task allocation in other company](http://www.okagv.com/agvzs_14442827.html)
     * [多机器人任务分配研究与实现](https://www.docin.com/p-779098001.html)
+  * Computational Geometry
+    * [Computational Geometry - From theory to practice, From linear objects to curved objects](https://tel.archives-ouvertes.fr/tel-00175997/file/english.pdf)
+    * [Computational Geometry](http://www.cs.virginia.edu/~robins/cs6161/slides/Algorithms%20-%20slide%20set%204%20v116%20-%2004%20Computational_Geometry.pdf)
+    * [COMPUTATIONAL GEOMETRY INTRODUCTION](https://cw.fel.cvut.cz/b181/_media/courses/cg/lectures/01-intro.pdf)
+    * [CGAL](https://www.cgal.org/)
