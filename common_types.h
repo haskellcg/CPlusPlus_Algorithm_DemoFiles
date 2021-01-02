@@ -18,6 +18,7 @@
 #define MAX_UINT32 0xffffffff
 #define MIN_UINT32 0
 #define MIN_INT32 0x80000000
+#define PRINT_DEFAULT_ERROR print_error_msg("No test case yet.\n");
 
 using namespace std;
 

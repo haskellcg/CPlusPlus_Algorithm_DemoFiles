@@ -24,6 +24,7 @@ OBJS                =   avl_tree.o\
                         hash_set.o\
                         heap_sort.o\
                         insert_sort.o\
+                        josephus_problem.o\
                         main.o\
                         maximum_subarray.o\
                         merge_sort.o\
