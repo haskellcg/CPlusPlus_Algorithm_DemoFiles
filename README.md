@@ -1,5 +1,5 @@
 # CPlusPlus_Algorithm_DemoFiles
-  * a good wensite to learn algorithms with some pictures    
+  * a good website to learn algorithms with some pictures    
     * [DSA](https://www.tutorialspoint.com/data_structures_algorithms/index.htm)
     * [luogu](https://www.luogu.com.cn/)
   * relate to Strassen algorithm    
@@ -54,3 +54,17 @@
     * [Computational Geometry](http://www.cs.virginia.edu/~robins/cs6161/slides/Algorithms%20-%20slide%20set%204%20v116%20-%2004%20Computational_Geometry.pdf)
     * [COMPUTATIONAL GEOMETRY INTRODUCTION](https://cw.fel.cvut.cz/b181/_media/courses/cg/lectures/01-intro.pdf)
     * [CGAL](https://www.cgal.org/)
+  * Dynamic Programming
+    * [Dynamic Programming](https://en.wikipedia.org/wiki/Dynamic_programming)
+    * [Bellman Equation](https://en.wikipedia.org/wiki/Bellman_equation)
+    * [Checker Borad Problem](https://en.wikipedia.org/wiki/Dynamic_programming#Checkerboard)
+    * [Egg Dropping Puzzle](https://en.wikipedia.org/wiki/Dynamic_programming#Egg_dropping_puzzle)
+    * [Tower of Hanoi Puzzle](https://en.wikipedia.org/wiki/Dynamic_programming#Tower_of_Hanoi_puzzle)
+    * [Sequence Alignment](https://en.wikipedia.org/wiki/Dynamic_programming#Sequence_alignment)
+    * [A type of balanced 0-1 matrix](https://en.wikipedia.org/wiki/Dynamic_programming#A_type_of_balanced_0%E2%80%931_matrix)
+    * [A tutorial on Dynamic Programming](https://mat.gsia.cmu.edu/classes/dynamic/dynamic.html)
+    * [Another tutorial on Dynamic Programming](https://web.archive.org/web/20080626183359/http://www.avatar.se/lectures/molbioinfo2001/dynprog/dynamic.html)
+    * [A Gentle Introduction toDynamic Programming and the Viterbi Algorithm](https://www.cambridge.org/resources/0521882672/7934_kaeslin_dynpro_new.pdf)
+    * [A Simple Introduction to DynamicProgramming in Macroeconomic Models](https://researchspace.auckland.ac.nz/bitstream/handle/2292/190/230.pdf)
+    * [Video Lectures](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/)
+    * [Dynamic Programming: from novice to advanced](https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/)
