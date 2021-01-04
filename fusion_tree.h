@@ -14,6 +14,8 @@
  * @param
  * @return void
  * @remarks
+ *          Wiki: https://en.jinzhao.wiki/wiki/Fusion_tree
+ *          Fusion Tree Lecture: http://courses.csail.mit.edu/6.851/spring07/scribe/lec13.pdf
  */
 void fusion_tree_test();
 
