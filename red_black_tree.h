@@ -119,6 +119,7 @@ private:
  *          Visual of insertion and deletion: https://www.cs.usfca.edu/~galles/visualization/RedBlack.html
  *          Skip Lists: https://web.archive.org/web/20081018112547/http://www.cs.auckland.ac.nz/software/AlgAnim/niemann/s_skl.htm
  *          Skip Lists Introduction: https://web.archive.org/web/20081019102355/http://www.cs.auckland.ac.nz/software/AlgAnim/niemann/s_skip.pdf
+ *          Redis SortedSet by Skip List: https://blog.csdn.net/yanshuanche3765/article/details/82121043
  *          Splay Tree: https://en.wikipedia.org/wiki/Splay_tree
  *          Scapegoat Tree: https://en.wikipedia.org/wiki/Scapegoat_tree
  *          Self Balancing Binary Search Trees: https://www.geeksforgeeks.org/self-balancing-binary-search-trees-comparisons/
