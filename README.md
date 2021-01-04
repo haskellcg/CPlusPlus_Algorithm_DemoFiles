@@ -68,3 +68,8 @@
     * [A Simple Introduction to DynamicProgramming in Macroeconomic Models](https://researchspace.auckland.ac.nz/bitstream/handle/2292/190/230.pdf)
     * [Video Lectures](https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-046j-introduction-to-algorithms-sma-5503-fall-2005/video-lectures/)
     * [Dynamic Programming: from novice to advanced](https://www.topcoder.com/community/data-science/data-science-tutorials/dynamic-programming-from-novice-to-advanced/)
+    * [OR/MS Games: 1. A Neglected Educational Resource](https://pubsonline.informs.org/doi/pdf/10.1287/ited.2.3.86)
+    * [OR/MS Games: 2. Towers of Hanoi](https://pubsonline.informs.org/doi/pdf/10.1287/ited.3.1.45)
+    * [OR/MS Games: 3. Counterfeit Coin Problem](https://pubsonline.informs.org/doi/pdf/10.1287/ited.3.2.32)
+    * [OR/MS Games: 4. The Joy of Egg-Dropping in Braunschweig and Hong Kong](https://pubsonline.informs.org/doi/pdf/10.1287/ited.4.1.48)
+    * [扔鸡蛋问题详解](https://blog.csdn.net/joylnwang/article/details/6769160)
