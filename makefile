@@ -26,6 +26,7 @@ OBJS                =   avl_tree.o\
                         insert_sort.o\
                         josephus_problem.o\
                         main.o\
+                        matrix_circle_print.o\
                         maximum_subarray.o\
                         merge_sort.o\
                         nowcoder_com_first_part.o\
