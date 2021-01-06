@@ -31,6 +31,7 @@
 #include "shell_sort.h"
 #include "strassen_matrix_multiply.h"
 #include "string_hash_funtions.h"
+#include "tower_of_hanoi_problem.h"
 
 int main(int argc, char *argv[])
 {
@@ -62,12 +63,13 @@ int main(int argc, char *argv[])
         shell_sort_test();
         strassen_matrix_multiply_test();
         string_hash_funtions_test();
+        tower_of_hanoi_problem_solution_test();
     } else {
         // default: only test the current coding algorithm
         fusion_tree_test();
-        matrix_circle_print_test();
         nowcoder_com_test();
         string_hash_funtions_test();
+        tower_of_hanoi_problem_solution_test();
     }
 
     return 0;

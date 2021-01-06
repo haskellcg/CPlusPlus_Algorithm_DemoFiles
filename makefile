@@ -40,6 +40,7 @@ OBJS                =   avl_tree.o\
                         shell_sort.o\
                         strassen_matrix_multiply.o\
                         string_hash_funtions.o\
+                        tower_of_hanoi_problem.o\
 
 INCLUDES            =   \
 

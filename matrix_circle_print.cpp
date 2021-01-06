@@ -12,12 +12,12 @@ string circle_print_matrix_outline(const vector<vector<int32_t>> &matrixSrc, siz
     if ((1 == nWidth) || (1 == nHeight)){
         if (1 == nWidth){
             for(size_t i = 0; i < nHeight; ++i){
-                ossResult << ",";
+                ossResult << ", ";
                 ossResult << matrixSrc[nX + i][nY];
             }
         } else{
             for (size_t i = 0; i < nWidth; ++i){
-                ossResult << ",";
+                ossResult << ", ";
                 ossResult << matrixSrc[nX][nY + i];
             }
         }
@@ -87,5 +87,10 @@ void matrix_circle_print_test()
     }
     print_normal_msg(to_string(matrixSrc) + "\n");
     print_warning_msg("circle print matrix:\n");
-    print_normal_msg(circle_print_matrix(matrixSrc) + "\n");
+    string strExpectResult = ", 1, 2, 3, 4, 5, 10, 15, 20, 25, 24, 23, 22, 21, 16, 11, 6, 7, 8, 9, 14, 19, 18, 17, 12, 13";
+    if (strExpectResult == circle_print_matrix(matrixSrc)){
+        print_correct_msg("OK\n");
+    } else {
+        print_error_msg("ERROR\n");
+    }
 }
