@@ -22,6 +22,7 @@
 #include "merge_sort.h"
 #include "nowcoder_com_first_part.h"
 #include "order_statistic_funtions.h"
+#include "permutation_generator.h"
 #include "quick_sort.h"
 #include "radix_heap.h"
 #include "radix_sort.h"
@@ -54,6 +55,7 @@ int main(int argc, char *argv[])
         merge_sort_test();
         nowcoder_com_test();
         order_statistic_funtions_test();
+        permutation_generator_test();
         quick_sort_test();
         radix_heap_test();
         radix_sort_test();
@@ -68,8 +70,8 @@ int main(int argc, char *argv[])
         // default: only test the current coding algorithm
         fusion_tree_test();
         nowcoder_com_test();
+        permutation_generator_test();
         string_hash_funtions_test();
-        tower_of_hanoi_problem_solution_test();
     }
 
     return 0;

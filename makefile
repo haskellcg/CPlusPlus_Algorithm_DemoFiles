@@ -31,6 +31,7 @@ OBJS                =   avl_tree.o\
                         merge_sort.o\
                         nowcoder_com_first_part.o\
                         order_statistic_funtions.o\
+                        permutation_generator.o\
                         quick_sort.o\
                         radix_heap.o\
                         radix_sort.o\
