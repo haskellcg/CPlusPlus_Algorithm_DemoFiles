@@ -70,7 +70,6 @@ int main(int argc, char *argv[])
         // default: only test the current coding algorithm
         fusion_tree_test();
         nowcoder_com_test();
-        permutation_generator_test();
         string_hash_funtions_test();
     }
 

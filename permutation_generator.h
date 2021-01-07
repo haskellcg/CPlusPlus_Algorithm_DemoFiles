@@ -10,6 +10,16 @@
 #include "common_types.h"
 
 /**
+ * @brief generate permution according to strSrc
+ * @param string &strSrc, string to permutation
+ * @param size_t nStartIndex, the index start to do permutation
+ * @param vector<string> &vecPermutations, result permutations
+ * @return void
+ * @remarks
+ */
+void string_permutation_generator(string &strSrc, size_t nStartIndex, vector<string> &vecPermutations);
+
+/**
  * @brief test permutation generator
  * @param
  * @return void
