@@ -16,6 +16,8 @@
  * @param vector<string> &vecPermutations, result permutations
  * @return void
  * @remarks
+ *          reference: https://www.geeksforgeeks.org/generate-all-the-permutation-of-a-list-in-python/
+ *          reference: https://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
  */
 void string_permutation_generator(string &strSrc, size_t nStartIndex, vector<string> &vecPermutations);
 
