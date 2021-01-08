@@ -20,6 +20,7 @@ OBJS                =   avl_tree.o\
                         common_types.o\
                         counting_sort.o\
                         double_link_list.o\
+                        egg_dropping_puzzle.o\
                         fusion_tree.o\
                         hash_set.o\
                         heap_sort.o\

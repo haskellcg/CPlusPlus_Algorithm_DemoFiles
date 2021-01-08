@@ -12,6 +12,7 @@
 #include "bucket_sort.h"
 #include "counting_sort.h"
 #include "double_link_list.h"
+#include "egg_dropping_puzzle.h"
 #include "fusion_tree.h"
 #include "hash_set.h"
 #include "heap_sort.h"
@@ -45,6 +46,7 @@ int main(int argc, char *argv[])
         bucket_sort_test();
         counting_sort_test();
         double_link_list_test();
+        egg_dropping_puzzle_solution_test();
         fusion_tree_test();
         hash_set_test();
         heap_sort_test();
@@ -68,6 +70,7 @@ int main(int argc, char *argv[])
         tower_of_hanoi_problem_solution_test();
     } else {
         // default: only test the current coding algorithm
+        egg_dropping_puzzle_solution_test();
         fusion_tree_test();
         nowcoder_com_test();
         string_hash_funtions_test();
