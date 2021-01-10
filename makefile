@@ -38,6 +38,7 @@ OBJS                =   avl_tree.o\
                         radix_sort.o\
                         radix_tree.o\
                         red_black_tree.o\
+                        rod_cutting_problem.o\
                         selection_sort.o\
                         shell_sort.o\
                         strassen_matrix_multiply.o\

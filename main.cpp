@@ -29,6 +29,7 @@
 #include "radix_sort.h"
 #include "radix_tree.h"
 #include "red_black_tree.h"
+#include "rod_cutting_problem.h"
 #include "selection_sort.h"
 #include "shell_sort.h"
 #include "strassen_matrix_multiply.h"
@@ -63,6 +64,7 @@ int main(int argc, char *argv[])
         radix_sort_test();
         radix_tree_test();
         red_black_tree_test();
+        rod_cutting_problem_solution_test();
         selection_sort_test();
         shell_sort_test();
         strassen_matrix_multiply_test();
@@ -70,9 +72,9 @@ int main(int argc, char *argv[])
         tower_of_hanoi_problem_solution_test();
     } else {
         // default: only test the current coding algorithm
-        egg_dropping_puzzle_solution_test();
         fusion_tree_test();
         nowcoder_com_test();
+        rod_cutting_problem_solution_test();
         string_hash_funtions_test();
     }
 
