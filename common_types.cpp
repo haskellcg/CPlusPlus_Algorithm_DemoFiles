@@ -31,18 +31,6 @@ string to_string(const vector<int32_t> &vecInt)
     return to_string<int32_t>(vecInt);
 }
 
-string to_string(const vector<vector<int32_t>> &matrixInt)
-{
-    string strResult = "{\n";
-    for (size_t i = 0; i < matrixInt.size(); ++i){
-        strResult += "\t";
-        strResult += to_string(matrixInt[i]);
-        strResult += "\n";
-    }
-    strResult += "}";
-    return strResult;
-}
-
 bool copy_part_of_matrix(const vector<vector<int32_t>> &matrixSrc,
                          size_t nRowIndex, size_t nColumnIndex,
                          size_t nColumns, size_t nRows,

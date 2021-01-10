@@ -15,8 +15,9 @@
 #include <string>
 #include <vector>
 
-#define MAX_UINT32 0xffffffff
+#define MAX_UINT32 0xFFFFFFFF
 #define MIN_UINT32 0
+#define MAX_INT32 0x7FFFFFFF
 #define MIN_INT32 0x80000000
 #define PRINT_DEFAULT_ERROR print_error_msg("No test case yet.\n");
 
@@ -39,17 +40,28 @@ string to_string(const vector<uint32_t> &vecInt);
 string to_string(const vector<int32_t> &vecInt);
 
 /**
- * @brief covert matrixInt to string like this:
+ * @brief covert matrixSrc to string like this:
  *      {
  *          [x, x, x, x],
  *          ....
  *          [x, x, x, x]
  *      }
- * @param const vector<vector<int32_t>> &matrixInt, the matrix need to be convert
+ * @param const vector<vector<T>> &matrixSrc, the matrix need to be convert
  * @return string
  * @remarks
  */
-string to_string(const vector<vector<int32_t>> &matrixInt);
+template <typename T>
+string to_string(const vector<vector<T>> &matrixSrc)
+{
+    string strResult = "{\n";
+    for (size_t i = 0; i < matrixSrc.size(); ++i){
+        strResult += "\t";
+        strResult += to_string(matrixSrc[i]);
+        strResult += "\n";
+    }
+    strResult += "}";
+    return strResult;
+}
 
 /**
  * @brief copy part of matrixSrc according to [nRowIndex, nColumnIndex, nColumns, nRows]
