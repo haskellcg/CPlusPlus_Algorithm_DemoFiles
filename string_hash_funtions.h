@@ -10,6 +10,16 @@
 #include "common_types.h"
 
 /**
+ * @brief more about hash functions
+ * @remarks
+ *          murmurhash: https://en.wikipedia.org/wiki/MurmurHash)
+ *          hash function: http://www.azillionmonkeys.com/qed/hash.html)
+ *          hash funtions and test: https://www.strchr.com/hash_functions)
+ *          non-cryptographic hash functions: https://en.wikipedia.org/wiki/List_of_hash_functions#Non-cryptographic_hash_functions)
+ *          SipHash: https://en.wikipedia.org/wiki/SipHash)
+ */
+
+/**
  * @brief BKDR hash
  * @param const char *pString, string
  * @return uint32_t,
