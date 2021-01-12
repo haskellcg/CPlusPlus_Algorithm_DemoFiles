@@ -18,6 +18,9 @@
   * [Computational Geometry](http://www.cs.virginia.edu/~robins/cs6161/slides/Algorithms%20-%20slide%20set%204%20v116%20-%2004%20Computational_Geometry.pdf)
   * [COMPUTATIONAL GEOMETRY INTRODUCTION](https://cw.fel.cvut.cz/b181/_media/courses/cg/lectures/01-intro.pdf)
   * [CGAL](https://www.cgal.org/)
+  
+## Discrete Search
+  * [Discrete Search Problem](https://zhuanlan.zhihu.com/p/89626842)
    
 ## Dynamic Programming:
   * 动态规划与分治法相似，都是通过组合子问题的解来求解原问题，"programming"指的是一种表格法，并非计算机程序
