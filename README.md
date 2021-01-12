@@ -30,6 +30,10 @@
     * 递归地定义最优解的值
     * 计算最优解的值，通常采用自底向上的方法
     * 利用计算出的信息构造一个最优解
+  * 动态规划方法是付出额外的内存空间来节省计算时间，是典型的时空权衡的例子，而时间上的节省可能是非常大的，可能将指数时间的解转换为多项式时间的解
+  * 两种实现方法:
+    * 带备忘录的自顶向下法(top-down with memoization method)
+    * 自底向上法(bottom-up method)
   * [Dynamic Programming](https://en.wikipedia.org/wiki/Dynamic_programming)
   * [Bellman Equation](https://en.wikipedia.org/wiki/Bellman_equation)
   * [Checker Borad Problem](https://en.wikipedia.org/wiki/Dynamic_programming#Checkerboard)
