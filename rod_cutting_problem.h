@@ -54,6 +54,23 @@ public:
     void bottom_up_method(uint32_t nLength);
 
 private:
+    /**
+     * @brief calculate max profit for nLength rod cutting problem
+     * @param uint32_t nLength, length
+     * @return void
+     * @remarks
+     */
+    void top_down_memoization_method_recursive(uint32_t nLength);
+
+    /**
+     * @brief get price according to the length
+     * @param uint32_t nLength, length
+     * @return uint32_t, price, 0 if price not in the table
+     * @remarks
+     */
+    uint32_t get_price(uint32_t nLength) const;
+
+private:
     /*< rod price table, <rod length, price> */
     map<uint32_t, uint32_t> m_mapPriceTable;
     /*< optimal solution for certain length */
