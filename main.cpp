@@ -18,6 +18,7 @@
 #include "heap_sort.h"
 #include "insert_sort.h"
 #include "josephus_problem.h"
+#include "matrix_chain_multiplication_problem.h"
 #include "matrix_circle_print.h"
 #include "maximum_subarray.h"
 #include "merge_sort.h"
@@ -53,6 +54,7 @@ int main(int argc, char *argv[])
         heap_sort_test();
         insert_sort_test();
         josephus_problem_test();
+        matrix_chain_multiplication_problem_solution_test();
         matrix_circle_print_test();
         maximum_subarray_test();
         merge_sort_test();
@@ -73,8 +75,8 @@ int main(int argc, char *argv[])
     } else {
         // default: only test the current coding algorithm
         fusion_tree_test();
+        matrix_chain_multiplication_problem_solution_test();
         nowcoder_com_test();
-        rod_cutting_problem_solution_test();
         string_hash_funtions_test();
     }
 
