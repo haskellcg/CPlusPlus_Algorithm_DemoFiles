@@ -15,6 +15,22 @@ void Matrix_Chain_Multiplication_Problem_Solution::set_matrices(vector<pair<uint
     m_vecMatrices = vecMatrices;
 }
 
+string Matrix_Chain_Multiplication_Problem_Solution::show_matrices() const
+{
+    ostringstream ossResult;
+    for (size_t i = 0; i < m_vecMatrices.size(); ++i){
+        if (0 != i){
+            ossResult << " x ";
+        }
+        ossResult << "[";
+        ossResult << m_vecMatrices[i].first;
+        ossResult << ", ";
+        ossResult << m_vecMatrices[i].second;
+        ossResult << "]";
+    }
+    return ossResult.str();
+}
+
 void Matrix_Chain_Multiplication_Problem_Solution::dp_bottom_up_method(vector<vector<uint32_t>> &matrixMultiplyTimes, vector<vector<uint32_t>> &matrixBracketPosition)
 {
     for (size_t i = 0; i < m_vecMatrices.size(); ++i){
@@ -35,7 +51,7 @@ void Matrix_Chain_Multiplication_Problem_Solution::dp_bottom_up_method(vector<ve
             size_t nEndIndex = nStartIndex + nSubProblemSize;
             // subproblem [nStartIndex, nEndIndex]
             uint32_t nMinMultiplyTimes = MAX_UINT32;
-            uint32_t nBestBracketPosition = MAX_UINT32;
+            size_t nBestBracketPosition = MAX_UINT32;
             for (size_t nBracketPosition = nStartIndex; nBracketPosition < nEndIndex; ++nBracketPosition){
                 uint32_t nCurrentMultiplyTimes = matrixMultiplyTimes[nStartIndex][nBracketPosition] +
                                                  matrixMultiplyTimes[nBracketPosition + 1][nEndIndex] +
@@ -52,6 +68,75 @@ void Matrix_Chain_Multiplication_Problem_Solution::dp_bottom_up_method(vector<ve
     }
 }
 
+string Matrix_Chain_Multiplication_Problem_Solution::dp_bottom_up_method_show_result(const vector<vector<uint32_t>> &matrixMultiplyTimes,
+                                                                                     const vector<vector<uint32_t>> &matrixBracketPosition) const
+{
+    ostringstream ossResult;
+
+    ossResult << "multiplication times result:\n";
+    ossResult << "{\n";
+    for (size_t i = 0; i < matrixMultiplyTimes.size(); ++i){
+        ossResult << "\t[";
+        for (size_t j = 0; j < matrixMultiplyTimes[i].size(); ++j){
+            if (0 != j){
+                ossResult << ", ";
+            }
+            if (MAX_UINT32 != matrixMultiplyTimes[i][j]){
+                ossResult << setw(4) << matrixMultiplyTimes[i][j];
+            } else {
+                ossResult << setw(4) << '-';
+            }
+        }
+        ossResult << "]\n";
+    }
+    ossResult << "}\n";
+
+    ossResult << "bracket position result:\n";
+    ossResult << "{\n";
+    for (size_t i = 0; i < matrixBracketPosition.size(); ++i){
+        ossResult << "\t[";
+        for (size_t j = 0; j < matrixBracketPosition[i].size(); ++j){
+            if (0 != j){
+                ossResult << ", ";
+            }
+            if (MAX_UINT32 != matrixBracketPosition[i][j]){
+                ossResult << setw(4) << matrixBracketPosition[i][j];
+            } else {
+                ossResult << setw(4) << '-';
+            }
+        }
+        ossResult << "]\n";
+    }
+    ossResult << "}\n";
+
+    ossResult << "Bracket form:\n";
+    ossResult << dp_bottom_up_method_show_bracket_form_recursive(matrixBracketPosition, 0, m_vecMatrices.size() - 1);
+
+    return ossResult.str();
+}
+
+string Matrix_Chain_Multiplication_Problem_Solution::dp_bottom_up_method_show_bracket_form_recursive(const vector<vector<uint32_t>> &matrixBracketPosition, size_t nStartIndex, size_t nEndIndex) const
+{
+    ostringstream ossResult;
+
+    if (nStartIndex == nEndIndex){
+        ossResult << "[";
+        ossResult << m_vecMatrices[nStartIndex].first;
+        ossResult << ", ";
+        ossResult << m_vecMatrices[nStartIndex].second;
+        ossResult << "]";
+    } else {
+        ossResult << "(";
+        size_t nBracketPosition = matrixBracketPosition[nStartIndex][nEndIndex];
+        ossResult << dp_bottom_up_method_show_bracket_form_recursive(matrixBracketPosition, nStartIndex, nBracketPosition);
+        ossResult << " x ";
+        ossResult << dp_bottom_up_method_show_bracket_form_recursive(matrixBracketPosition, nBracketPosition + 1, nEndIndex);
+        ossResult << ")";
+    }
+
+    return ossResult.str();
+}
+
 void matrix_chain_multiplication_problem_solution_test()
 {
     print_highlight_msg(">>> Test matrix chain multiplication problem solution:\n");
@@ -65,6 +150,7 @@ void matrix_chain_multiplication_problem_solution_test()
     vector<vector<uint32_t>> matrixBracketPosition;
     Matrix_Chain_Multiplication_Problem_Solution oMatrixChainMultiplicationProblemSolution;
     oMatrixChainMultiplicationProblemSolution.set_matrices(vecMatrices);
+    print_normal_msg("matrices: " + oMatrixChainMultiplicationProblemSolution.show_matrices() + "\n");
 
     /*< test dp_bottom_up_method */
     oMatrixChainMultiplicationProblemSolution.dp_bottom_up_method(matrixMultiplyTimes, matrixBracketPosition);
@@ -75,5 +161,8 @@ void matrix_chain_multiplication_problem_solution_test()
     } else {
         print_error_msg("dp_bottom_up_method Error.\n");
     }
+    print_warning_msg("dp_bottom_up_method result:\n");
+    print_warning_msg(oMatrixChainMultiplicationProblemSolution.dp_bottom_up_method_show_result(matrixMultiplyTimes,
+                                                                                                matrixBracketPosition) + "\n");
 }
 

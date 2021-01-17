@@ -44,6 +44,14 @@ public:
     void set_matrices(vector<pair<uint32_t, uint32_t>> &vecMatrices);
 
     /**
+     * @brief show matrices
+     * @param
+     * @return string
+     * @remarks
+     */
+    string show_matrices() const;
+
+    /**
      * @brief solve problem with dynamic programming bottom up method
      * @param vector<vector<uint32_t>> &matrixMultiplyTimes, multiply times result
      * @param vector<vector<uint32_t>> &matrixBracketPosition, multiply best bracket position
@@ -51,6 +59,27 @@ public:
      * @remarks
      */
     void dp_bottom_up_method(vector<vector<uint32_t>> &matrixMultiplyTimes, vector<vector<uint32_t>> &matrixBracketPosition);
+
+    /**
+     * @brief show dp_bottom_up_method result
+     * @param const vector<vector<uint32_t>> &matrixMultiplyTimes, multiply times result
+     * @param const vector<vector<uint32_t>> &matrixBracketPosition, multiply best bracket position
+     * @return string, result string
+     * @remarks
+     */
+    string dp_bottom_up_method_show_result(const vector<vector<uint32_t>> &matrixMultiplyTimes,
+                                           const vector<vector<uint32_t>> &matrixBracketPosition) const;
+
+private:
+    /**
+     * @brief show bracket form recursive
+     * @param const vector<vector<uint32_t>> &matrixBracketPosition, bracket position result
+     * @param size_t nStartIndex, start index for sub problem
+     * @param size_t nEndIndex, end index for sub problem
+     * @return string, bracket form string
+     * @remarks
+     */
+    string dp_bottom_up_method_show_bracket_form_recursive(const vector<vector<uint32_t>> &matrixBracketPosition, size_t nStartIndex, size_t nEndIndex) const;
 
 private:
     /*< matrices with <rows, columns> */
