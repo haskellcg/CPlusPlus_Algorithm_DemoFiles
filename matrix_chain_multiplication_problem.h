@@ -29,6 +29,8 @@
  *          Hu & Shing:           http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0211028.pdf
  *                                http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf
  *
+ *                                [PART I]
+ *
  *                                The diagonals are the partial products. A partition of an n-gon corresponds to an alphabetic 
  *                            tree of n-1 leaves or the parenthesis problem of n- 1 symbols (see, for example, Gardner [6]). It 
  *                            is easy to see the one-to-one correspondence between the multiplication of n- 1 matrices to either
@@ -80,6 +82,38 @@
  *                                          min (Wx, Wz) > min (Wy, Ww), max (Wx, Wz) < max (Wy, Ww).
  *
  *                                COROLLARY 3. All arcs in an optimum partition must be either vertical arcs or horizontal arcs.
+ *
+ *                                THEOREM 3. Let V and Vz be two arbitrary vertices which are not ad]acent in a polygon, and Vw
+ *                                           be the smallest vertex ]rom Vx to Vz in the clockwise manner Vw Vx, Vw Vz), and V be
+ *                                           the smallest vertex from Vz to V in the clockwise manner, Vy Vx, Vy Vz). This is shown
+ *                                           in Fig. 6, where without loss of generality we assume that Vx < Vz and Vy < Vw. A necessary
+ *                                           condition ]’or Vx- Vz to exist as an h-arc in the l-optimum partition is that
+ *                                           Wy < Wx <=’Wz < Ww.
+ *
+ *                                COROLLARY 4. A weaker necessary condition for Vx- Vz to exist as an h-arc in the l-optimum partition is that
+ *                                             Vx < Vy < Vz < Vw.
+ *
+ *                                We call any arc which satisfies this weaker necessary condition a potential h-arc.
+ *
+ *                                COROLLARY 5. Let Vw be the largest vertex in the polygon and Vx and Vz be its two neighboring vertices. If
+ *                                             there exists a vertex Vy such that Vy < Vx and Vy < Vz, then Vx- Vz is a potential h-arc.
+ *
+ *                                Two arcs are called compatible if both arcs can exist simultaneously in a partition.
+ *
+ *                                THtSORtSM 4. All potential h-arcs are compatible.
+ *
+ *                                The process of cutting out the largest vertex can be made into an algorithm which is O(n). We shall call this
+ *                                algorithm the one-sweep algorithm. The output of the one-sweep algorithm is a set $ of n-3 arcs.
+ *
+ *                                The one-sweep algorithm, Starting from the smallest vertex, say V1, we travel in the clockwise direction around
+ *                                the polygon and push the weights of the vertices successively onto the stack as follows (Wl will be at the
+ *                                bottom of the stack).
+ *                                (a) Let Vt be the top element on the stack, Vt-1 be the element immediately below Vt, and Vc be the element to
+ *                                    be pushed onto the stack. If there are two or more vertices on the stack and w > we, add V_I- V to S, pop V
+ *                                    off the stack; if there is only one vertex on the stack or Wt <= Wc, push w onto the stack. Repeat this step
+ *                                    until the nth vertex has been pushed onto the stack.
+ *                                (b) If there are more than three vertices on the stack, add Vt-1-V to $, pop Vt off the stack and repeat this step,
+ *                                    else stop
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
