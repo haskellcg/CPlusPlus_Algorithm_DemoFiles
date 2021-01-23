@@ -34,6 +34,52 @@
  *                            is easy to see the one-to-one correspondence between the multiplication of n- 1 matrices to either
  *                            the alphabetic binary tree or the parenthesis problem of n- 1 symbols. Here, we establish the 
  *                            correspondence between the matrix-chain product and the partition of a convex polygon directly.
+ *
+ *                                LEMMA 1. Any order of multiplying n- 1 matrices corresponds to a partition of an n-gon.
+ *
+ *                                LEMMA 2. The minimum numbers of operations needed to evaluate the following matrix chain products are identical.
+ *
+ *                                The diagonals inside the polygon are called arcs.
+ *                                In a partition of an n-gon, the degree of a vertex is the number of arcs incident on the vertex plus two.
+ *
+ *                                LEMMA 3. In any partition of an n-gon, n not less than 4, there are at least two triangles, each having a vertex
+ *                                         of degree two.
+ *
+ *                                LEMMA 4. Let P and P’ both be n-gons where the corresponding weights of the vertices satisfy wi not less than wI. Then the 
+ *                                         cost of an optimum partition of P is less than or equal to the cost of an optimum partition of P’.
+ *
+ *                                In the rest of the paper, we shall use V, V2," ", V, to denote vertices which are ordered according to their weights
+ *                                After the vertices are labeled, we define an arc V-V. to be less than another arc V- Vq
+ *
+ *                                We define a partition P to be lexicographically less than a partition Q if the ordered sequence of arcs associated with
+ *                                P is lexicographically less than that associated with Q.
+ *
+ *                                When there is more than one optimum partition, we use the l-optimum partition (i.e., lexicographically-optimum partition)
+ *                                to mean the lexicographically smallest optimum partition
+ *
+ *                                THEOREM 1. For every way of choosing V1, V2, (as prescribed), there is always an optimum partition containing V1- V2 and VI- V3.
+ *
+ *                                COROLLARY 1. For every way of choosing Vx, V,... (as prescribed), the l-optimum partition always contains Va- Vz and V- V3.
+ *
+ *                                A polygon having .Va adjacent to Vz and V3 by sides will be called a basic polygon.
+ *
+ *                                THEOREM 2. A necessary but not sufficient condition for Vz-V3 to exist in an optimum partition of a basic polygon **FORMULA**
+ *                                           Furthermore, if V2- V3 is not present in the l-optimum partition, then V1, V4 are always connected in the l-optimum partition.
+ *
+ *                                LEMMA 5. In an optimum partition of an n-gon, let Vx, Vy, Vz and Vw be four vertices of an inscribed quadrilateral V and Vz are
+ *                                         not adjacent in the quadrilateral). A necessary condition for Vx-V to exist is **FORMULA**
+ *
+ *                                A partition is called stable if every quadrilateral in the partition satisfies Lemma5 FOPMULA
+ *
+ *                                COROLLARY 2. An optimum partition is stable but a stable partition may not be optimum.
+ *
+ *                                We define Vx - Vz to be a vertical arc if
+ *                                          min (Wx, Wz) < min (Wy, Ww);
+ *                                          min (Wx, Wz) = min (Wy, Ww), max (Wx, Wz) <= max (Wy, Ww);
+ *                                We define Vx- Vz to be a horizontal arc if
+ *                                          min (Wx, Wz) > min (Wy, Ww), max (Wx, Wz) < max (Wy, Ww).
+ *
+ *                                COROLLARY 3. All arcs in an optimum partition must be either vertical arcs or horizontal arcs.
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
