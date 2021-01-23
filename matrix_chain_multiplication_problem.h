@@ -24,8 +24,16 @@
  *
  *          Chin-Hu-Shing Approximating Algorithm:
  *                                https://pdfs.semanticscholar.org/e8b8/40a921f7967b30ac161b3dd9654b27998ddb.pdf
+ *
+ *
  *          Hu & Shing:           http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0211028.pdf
  *                                http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf
+ *
+ *                                The diagonals are the partial products. A partition of an n-gon corresponds to an alphabetic 
+ *                            tree of n-1 leaves or the parenthesis problem of n- 1 symbols (see, for example, Gardner [6]). It 
+ *                            is easy to see the one-to-one correspondence between the multiplication of n- 1 matrices to either
+ *                            the alphabetic binary tree or the parenthesis problem of n- 1 symbols. Here, we establish the 
+ *                            correspondence between the matrix-chain product and the partition of a convex polygon directly.
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
