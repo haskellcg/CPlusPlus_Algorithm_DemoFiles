@@ -173,7 +173,23 @@
  *
  *                                This shows that the existence of an h-arc depends on the existence of another h-arc.
  *
- *                                The left-hand side of (7) is denoted by S(hk\hn)
+ *                                The left-hand side of (7) is denoted by S(hk\hn), is called the supporting weight of the arc h with respect to the upper
+ *                                subpolygon bounded above by hn
+ *
+ *                                If S(hi\hj)<S(hi\hk), we have S(hi\hj)<S(hi\hk)<S(hi\h). On the other hand, if S(hi\hi)> S(hi\hk), we have
+ *                                S(hi\hi)> S(hi\hk)> S(hi\h).
+ *
+ *                                Define S(h,\h,) to be zero. We say that an arc h is the ceiling of another arc hi if either condition (i) or conditions
+ *                                (iia), (iib), and (iic) are satisfied
+ *                                **FORMULA**
+ *
+ *                                We say that an arc hi is a son of another arc hi if the following conditions are satisfied:
+ *                                **FORMULA**
+ *
+ *                                (i) if the father of any arc hj exists in the l-optimum partition, then the arc hj will also exist in the same partition
+ *                                (ii) if the father of h does not exist in the l-optimum partition, then the arc h also does not exist in the same partition.
+ *
+ *                                P11 to be continue
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
