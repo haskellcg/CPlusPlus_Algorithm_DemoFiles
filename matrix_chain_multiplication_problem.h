@@ -189,7 +189,54 @@
  *                                (i) if the father of any arc hj exists in the l-optimum partition, then the arc hj will also exist in the same partition
  *                                (ii) if the father of h does not exist in the l-optimum partition, then the arc h also does not exist in the same partition.
  *
- *                                P11 to be continue
+ *                                From the definitions of the ceiling and the father-son relationship, we have the following observations:
+ *                                (i) Every arc can have at most one father but an arc can have many sons. Also, the ancestor-descendant relationship is a
+ *                                    transitive relationship. (Note that the ancestor-descendant relationship applies to arcs which are positive with respect
+ *                                    to the whole monotone polygon as well.)
+ *                                (ii) Every arc can have at most one ceiling but an arc can be the ceiling of many arcs.
+ *                                (iii) All the h-arcs in the/-optimum partition of the subpolygon bounded by an arc hi and its ceiling are descendants of h.
+ *                                (iv) The ceiling of h cannot lie below any of the ceilings of hj’s descendants.
+ *
+ *                                THEOREM 5. Let h be a potential h-arc. If h is present in the l-optimum partition of a monotone polygon, its ceiling h will
+ *                                           also be present in the l-optimum partition.
+ *
+ *                                THFOREM 6. The sons of an arc hi will exist in the l-optimum partition o] a monotone polygon if and only i) h is present in
+ *                                           the l-optimum partition.
+ *
+ *                                COROLLARY 1. The descendants of any arc hi will exist in the l-optimum partition of a monotone polygon if and only if h
+ *                                             exists in the l-optimum partitions.
+ *
+ *                                THEOREM 7. Let hi and hi be two potential h-arcs such that hi is above h and the l-optimum partition in the subpolygon bounded
+ *                                           by h and hi is a ]’an. If S(hi\hi’s ceiling)>-min (w, w), then h and all its descendants cannot exist in the
+ *                                           1-optimum partition of any subpolygon bounded above by h, and below by any potential h-arc not higher than h.
+ *
+ *                                Now, what we have to do is to find an innermost block to start our computations. After obtaining the list of potential h-arcs
+ *                                of the monotone polygon using the onesweep algorithm, we know that the degenerated arc hn is the ceiling of the highest
+ *                                potential h-arc in the list, and this potential h-arc does not have any descendants. So, we should start from the highest
+ *                                potential h-arc and work our way down the list of potential h-arcs.
+ *
+ *                                ALGORITHM M
+ *                                (I) Get all the potential h-arcs of the polygon by the one-sweep algorithm [6]. (All these arcs form a vertical list, with
+ *                                    the highest arc closest to the maximum vertex Vn and the lowest arc closest to the minimum vertex V1.)
+ *                                (II) Process the potential h-arcs one by one, from the top to the bottom. Let hi be the potential h-arc being processed, let
+ *                                     hk be the potential h-arc immediately above hi, and let hi be the potential h-arc immediately below hi in the monotone
+ *                                     polygon. (If hi is the highest potential h-arc in the polygon, hk will be the degenerate arc hn; if hi is the lowest
+ *                                     potential h-arc in the polygon, hi will be the degenerated arc hi.) Note that by the time we start processing hi, we have
+ *                                     already obtained the l-optimum partition of the subpolygon between hi and h,. We have also located the ceilings of every
+ *                                     h-arc in the l-optimum partition of this subpolygon. When we process hi, we first locate the ceiling of hi and condense
+ *                                     all hi’s descendants into hi. Then we obtain the/-optimum partition of the subpolygon between hi and h, by deleting those
+ *                                     blocks of arcs which cannot exist in the/-optimum partition of the subpolygon between hi and hn.
+ *                                While (hi the degenerated arc h 1) do 
+ *                                Begin
+ *                                1. [To locate the ceiling of hi].
+ *                                2. [To delete those blocks of arcs which cannot exist in the/-optimum partition of the subpolygon between hi and hn].
+ *                                3. [Prepare to process next arc].
+ *                                (III) Output the l-optimum partition consisting of the arcs which remain in the list of potential h-arcs after Step II as h-arcs.
+ *                                Then stop.
+ *
+ *                                THEOREM 8. The partition produced by Algorithm M is l-optimum.
+ *
+ *                                P18 to be continued
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
