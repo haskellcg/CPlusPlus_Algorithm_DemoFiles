@@ -236,7 +236,53 @@
  *
  *                                THEOREM 8. The partition produced by Algorithm M is l-optimum.
  *
- *                                P18 to be continued
+ *                                One way to implement Algorithm M is to place all potential h-arcs obtained in Step I in a linear linked list, with the highest
+ *                                arc at the head of the list and the lowest arc at the tail of the list. Each of these potential h-arcs, say hi, is associated
+ *                                with a record variable with the following fields:
+ *                                (i) the label of the end vertex which is closer to V1 in the clockwise direction;
+ *                                (ii) the label of the other end vertex;
+ *                                (iii) the ceiling of hi;
+ *                                (iv) the list of sons of hi;
+ *                                (v) the cost of the /-optimum partition in the subpolygon between hi and its ceiling
+ *                                (vi) the quantity (wi" wj + wj wi + w}" w i)- We W where Wi, W are- weights of the end vertices of the potential h-arc hi and wi
+ *                                     w are the weights of the end vertices of hi’s ceiling
+ *                                (vii) the supporting weight S(hi\hi’s ceiling).
+ *
+ *                                Since the sums of adjacent products of the form wi: wi are used repeatedly in calculating the cost of the fan between two
+ *                                adjacent potential h-arcs and the denominators of the supporting weights, we can eliminate a lot of repeated calculations by
+ *                                initializing the elements of an array CP to
+ *                                CP[1]=O and CP[i]=w:wi for2_<-i_-<n.
+ *                                Then the sum of the adjacent products Wi: W can be obtained from CP[j]-CP[i].
+ *
+ *                                THEOREM 9. Algorithm M runs in O(n) time
+ *
+ *                                we know that all potential h-arcs are still compatible in a general convex polygon. However, unlike those in a monotone polygon,
+ *                                the potential h-arcs no longer form a linear list. Instead, they form a tree, called an arc-tree.
+ *
+ *                                We say that a set of potential h-arcs Ui is the ceiling of another potential h-arc hi (or simply hi’s ceiling for short) if either
+ *                                condition (i) or conditions (iia), (iib), (iic) and (iid) are satisfied:
+ *                                **CONDITIONS**
+ *
+ *                                We say that an arc hi is a son of another arc hi if the following conditions are satisfied:
+ *                                **CONDITIONS**
+ *
+ *                                THEOREM 10. If a potential h-arc h exists in the l-optimum partition of a convex polygon, all potential h-arcs in its ceiling
+ *                                            will also exist in the l-optimum partition
+ *
+ *                                THEOREM 11. The sons of an arc hi will exist in the l-optimum partition of a convex polygon if and only if h is present in the
+ *                                            l-optimum partition.
+ *
+ *                                COROLLARY 2. The descendants of an arc h will exist in the l-optimum partition of a convex polygon if and only if h exists in
+ *                                             the l-optimum partition.
+ *
+ *                                THEOREM 12. Let X be a set of potential h-arcs above another potential h-arc such that (i) ]:or any two arcs hi, hk X, neither
+ *                                            hi is above hk nor hk is above hi if hi # hk, and (ii) the l-optimum partition in the subpolygon between hi and the
+ *                                            arcs in Xis a fan. Let h be a potential h-arc in X such that for any hk X, S(hi\hi’s ceiling)>--_S(hk\hk’S ceiling),
+ *                                            ff S(hi\hi’s ceiling)>-min (wi, wl) where wi, wl are the weights associated with the end vertices of hi, then h and
+ *                                            all its descendants cannot exist in the l-optimum partition of any upper subpolygon bounded below by a potential h-arc
+ *                                            no higher than hi.
+ *
+ *                                P22 To be continued
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
