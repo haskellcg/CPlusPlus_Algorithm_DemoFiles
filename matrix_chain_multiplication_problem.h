@@ -28,6 +28,7 @@
  *
  *          Hu & Shing:           http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0211028.pdf
  *                                http://www.cs.ust.hk/mjg_lib/bibs/DPSu/DPSu.Files/0213017.pdf
+ *                                http://i.stanford.edu/pub/cstr/reports/cs/tr/81/875/CS-TR-81-875.pdf
  *
  *                                [PART I]
  *
