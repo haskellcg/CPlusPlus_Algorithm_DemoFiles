@@ -215,7 +215,7 @@
  *                                potential h-arc in the list, and this potential h-arc does not have any descendants. So, we should start from the highest
  *                                potential h-arc and work our way down the list of potential h-arcs.
  *
- *                                ALGORITHM M
+ *                                ALGORITHM M: monotone basic polygon
  *                                (I) Get all the potential h-arcs of the polygon by the one-sweep algorithm [6]. (All these arcs form a vertical list, with
  *                                    the highest arc closest to the maximum vertex Vn and the lowest arc closest to the minimum vertex V1.)
  *                                (II) Process the potential h-arcs one by one, from the top to the bottom. Let hi be the potential h-arc being processed, let
@@ -282,7 +282,18 @@
  *                                            all its descendants cannot exist in the l-optimum partition of any upper subpolygon bounded below by a potential h-arc
  *                                            no higher than hi.
  *
- *                                P22 To be continued
+ *                                ALGORITHM P: general convex polygon
+ *                                (I) Get all the potential h-arcs of the polygon by the one-sweep algorithm [6]. (All these arcs form a tree.)
+ *                                (II) Append the degenerated arcs to the arc tree obtained in Step I and label all leaf nodes as "processed."
+ *                                (III) Process the potential h-arcs, one by one, from the leaves to the root. (We cannot process a potential h-arc until all the
+ *                                      potential h-arcs in its subtrees have been processed.) Let h be the arc to be processed, h be the arc immediately below h
+ *                                      in the arc tree, X be the set of potential h-arcs immediately above hi in the arc tree, and h,, be an arc in X such that
+ *                                      **FORMULA**
+ *                                (IV) Output the l-optimum partition consisting of the arcs which remain in the arc tree after Step II as h arcs. Then stop.
+ *
+ *                                THEOREM 9’. Algorithm P runs in O(n log n) time.
+ *
+ *                                **implementations**
  */
 class Matrix_Chain_Multiplication_Problem_Solution
 {
