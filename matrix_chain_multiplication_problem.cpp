@@ -164,5 +164,12 @@ void matrix_chain_multiplication_problem_solution_test()
     print_warning_msg("dp_bottom_up_method result:\n");
     print_warning_msg(oMatrixChainMultiplicationProblemSolution.dp_bottom_up_method_show_result(matrixMultiplyTimes,
                                                                                                 matrixBracketPosition) + "\n");
+
+    /*< test l-optimal partition of convex polygon method */
+    print_normal_msg("l-optimal partition of convex polygon method:\n");
+    print_normal_msg("algorithm P:\n");
+    PRINT_DEFAULT_ERROR
+    print_normal_msg("algorithm M:\n");
+    PRINT_DEFAULT_ERROR
 }
 
