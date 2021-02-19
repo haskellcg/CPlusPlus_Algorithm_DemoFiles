@@ -26,6 +26,7 @@ OBJS                =   avl_tree.o\
                         heap_sort.o\
                         insert_sort.o\
                         josephus_problem.o\
+                        longest_common_subsequence_problem.o\
                         main.o\
                         matrix_chain_multiplication_problem.o\
                         matrix_circle_print.o\

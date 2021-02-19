@@ -149,6 +149,4 @@ void rod_cutting_problem_solution_test()
     print_normal_msg("bottom up method result:\n");
     oRodCuttingProblemSolution.bottom_up_method(30);
     print_normal_msg(oRodCuttingProblemSolution.show_solution() + "\n");
-
-    PRINT_DEFAULT_ERROR
 }
