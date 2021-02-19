@@ -35,6 +35,12 @@
   * 两种实现方法:
     * 带备忘录的自顶向下法(top-down with memoization method)
     * 自底向上法(bottom-up method)
+  * 最优子结构
+    * 无权最短路径：找到一条由u到v的边数最少的路径，该路径必然是简单路径，该问题具有最有子结构，可以使用动态规划算法求解
+    * 无权最长路径：找到一条由u到v的边数最多的路径，该路径需要加上简单路径的要求，该问题是NP问题
+  * 重叠子问题
+  * 重构最优解
+  * 备忘
   * [Dynamic Programming](https://en.wikipedia.org/wiki/Dynamic_programming)
   * [Bellman Equation](https://en.wikipedia.org/wiki/Bellman_equation)
   * [Checker Borad Problem](https://en.wikipedia.org/wiki/Dynamic_programming#Checkerboard)
