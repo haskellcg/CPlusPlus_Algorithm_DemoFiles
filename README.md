@@ -59,6 +59,7 @@
   * [OR/MS Games: 3. Counterfeit Coin Problem](https://pubsonline.informs.org/doi/pdf/10.1287/ited.3.2.32)
   * [OR/MS Games: 4. The Joy of Egg-Dropping in Braunschweig and Hong Kong](https://pubsonline.informs.org/doi/pdf/10.1287/ited.4.1.48)
   * [扔鸡蛋问题详解](https://blog.csdn.net/joylnwang/article/details/6769160)
+  * [8 Queens Problem](https://zhuanlan.zhihu.com/p/99209213)
   
 ## Interesting Blogs
   * [Implementing strcmp, strlen, and strstr using SSE 4.2 instructions](https://www.strchr.com/strcmp_and_strlen_using_sse_4.2)
