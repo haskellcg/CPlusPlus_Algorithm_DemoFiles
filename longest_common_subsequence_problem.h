@@ -10,6 +10,11 @@
 #include "common_types.h"
 
 /**
+ * @brief
+ *        CSDN blog: https://blog.csdn.net/hrn1216/article/details/51534607
+ */
+
+/**
  * @brief test sulotion for longest common subsequence problem
  * @param
  * @return void
