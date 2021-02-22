@@ -12,7 +12,12 @@
 /**
  * @brief
  *        CSDN blog: https://blog.csdn.net/hrn1216/article/details/51534607
+ * @param const string &strA, string A
+ * @param const string &strB, string B
+ * @return string, longest common subsequence
+ * @remarks
  */
+string longest_common_subsequence_problem_solution(const string &strA, const string &strB);
 
 /**
  * @brief test sulotion for longest common subsequence problem
