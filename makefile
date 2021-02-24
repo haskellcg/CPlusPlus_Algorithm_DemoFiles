@@ -18,6 +18,7 @@ OBJS                =   avl_tree.o\
                         bubble_sort.o\
                         bucket_sort.o\
                         common_types.o\
+                        computational_geometry_utils.o\
                         counting_sort.o\
                         double_link_list.o\
                         egg_dropping_puzzle.o\

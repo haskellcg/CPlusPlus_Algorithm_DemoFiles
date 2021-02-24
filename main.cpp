@@ -10,6 +10,7 @@
 #include "binary_search_tree.h"
 #include "bubble_sort.h"
 #include "bucket_sort.h"
+#include "computational_geometry_utils.h"
 #include "counting_sort.h"
 #include "double_link_list.h"
 #include "egg_dropping_puzzle.h"
@@ -47,6 +48,7 @@ int main(int argc, char *argv[])
         binary_search_tree_test();
         bubble_sort_test();
         bucket_sort_test();
+        computational_geometry_utils_test();
         counting_sort_test();
         double_link_list_test();
         egg_dropping_puzzle_solution_test();
@@ -76,6 +78,7 @@ int main(int argc, char *argv[])
         tower_of_hanoi_problem_solution_test();
     } else {
         // default: only test the current coding algorithm
+        computational_geometry_utils_test();
         fusion_tree_test();
         longest_common_subsequence_problem_solution_test();
         matrix_chain_multiplication_problem_solution_test();
