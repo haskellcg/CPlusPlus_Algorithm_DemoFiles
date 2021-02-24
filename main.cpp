@@ -78,7 +78,6 @@ int main(int argc, char *argv[])
         tower_of_hanoi_problem_solution_test();
     } else {
         // default: only test the current coding algorithm
-        computational_geometry_utils_test();
         fusion_tree_test();
         longest_common_subsequence_problem_solution_test();
         matrix_chain_multiplication_problem_solution_test();

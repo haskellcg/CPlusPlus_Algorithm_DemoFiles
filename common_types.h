@@ -20,6 +20,7 @@
 #define MAX_INT32 0x7FFFFFFF
 #define MIN_INT32 0x80000000
 #define PRINT_DEFAULT_ERROR print_error_msg("No test case yet.\n");
+#define PI 3.14159265
 
 using namespace std;
 
