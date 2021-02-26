@@ -79,7 +79,6 @@ int main(int argc, char *argv[])
     } else {
         // default: only test the current coding algorithm
         fusion_tree_test();
-        longest_common_subsequence_problem_solution_test();
         matrix_chain_multiplication_problem_solution_test();
         nowcoder_com_test();
         string_hash_funtions_test();
