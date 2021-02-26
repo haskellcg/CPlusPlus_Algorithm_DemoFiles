@@ -16,6 +16,7 @@
  * @param const string &strB, string B
  * @return string, longest common subsequence
  * @remarks
+ *          相似度指标:最长公共子序列
  */
 string longest_common_subsequence_problem_solution(const string &strA, const string &strB);
 
