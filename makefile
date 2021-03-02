@@ -34,6 +34,7 @@ OBJS                =   avl_tree.o\
                         maximum_subarray.o\
                         merge_sort.o\
                         nowcoder_com_first_part.o\
+                        optimal_binary_search_tree_problem.o\
                         order_statistic_funtions.o\
                         permutation_generator.o\
                         quick_sort.o\

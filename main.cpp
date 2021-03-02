@@ -25,6 +25,7 @@
 #include "maximum_subarray.h"
 #include "merge_sort.h"
 #include "nowcoder_com_first_part.h"
+#include "optimal_binary_search_tree_problem.h"
 #include "order_statistic_funtions.h"
 #include "permutation_generator.h"
 #include "quick_sort.h"
@@ -63,6 +64,7 @@ int main(int argc, char *argv[])
         maximum_subarray_test();
         merge_sort_test();
         nowcoder_com_test();
+        optimal_binary_search_tree_problem_solution_test();
         order_statistic_funtions_test();
         permutation_generator_test();
         quick_sort_test();
@@ -81,6 +83,7 @@ int main(int argc, char *argv[])
         fusion_tree_test();
         matrix_chain_multiplication_problem_solution_test();
         nowcoder_com_test();
+        optimal_binary_search_tree_problem_solution_test();
         string_hash_funtions_test();
     }
 
