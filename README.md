@@ -7,6 +7,8 @@
   * [Data Structure Visualization - Home](https://www.cs.usfca.edu/~galles/visualization/)
   * [Data Structure Visualization - Data Structures](https://www.cs.usfca.edu/~galles/visualization/Algorithms.html)
   * [Data Structure Visualization - Source Code](https://www.cs.usfca.edu/~galles/visualization/source.html)
+  * [Cornel University - arXiv](https://arxiv.org/)
+  * [Cornel University - arXiv - Algorithms](https://arxiv.org/list/cs.DS/recent)
 
 ## Alliance algorithm
   * [Application of the “Alliance Algorithm” to Energy Constrained Gait Optimization](https://link.springer.com/chapter/10.1007/978-3-642-32060-6_40)
