@@ -21,6 +21,8 @@
   * [Computational Geometry](http://www.cs.virginia.edu/~robins/cs6161/slides/Algorithms%20-%20slide%20set%204%20v116%20-%2004%20Computational_Geometry.pdf)
   * [COMPUTATIONAL GEOMETRY INTRODUCTION](https://cw.fel.cvut.cz/b181/_media/courses/cg/lectures/01-intro.pdf)
   * [CGAL](https://www.cgal.org/)
+  * [Find center of circle](https://math.stackexchange.com/questions/2308430/find-center-of-a-circle-using-2-points-and-arc)
+  * [calculate coodinate of point on circle](https://math.stackexchange.com/questions/332743/calculating-the-coordinates-of-a-point-on-a-circles-circumference-from-the-radiu)
   
 ## Discrete Search
   * [Discrete Search Problem](https://zhuanlan.zhihu.com/p/89626842)
