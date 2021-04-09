@@ -42,7 +42,7 @@
 
 int main(int argc, char *argv[])
 {
-    if ((argc >= 2) && ("-a" == string(argv[1]))){
+    if ((argc >= 2) && ("--All" == string(argv[1]))){
         avl_tree_test();
         basic_queue_test();
         basic_stack_test();
