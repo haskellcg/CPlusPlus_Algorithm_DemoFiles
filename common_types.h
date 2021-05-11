@@ -41,6 +41,14 @@ string to_string(const vector<uint32_t> &vecInt);
 string to_string(const vector<int32_t> &vecInt);
 
 /**
+ * @brief convert vector content to string like this "[x, x, x]"
+ * @param const vector<double> &vecDouble, double vector
+ * @return string
+ * @remarks
+ */
+string to_string(const vector<double> &vecDouble);
+
+/**
  * @brief covert matrixSrc to string like this:
  *      {
  *          [x, x, x, x],

@@ -15,6 +15,7 @@
  * @param const vector<double> %vecP, ratio of Ds, N + 1
  * @param vector<vector<double>> &matrixE, matrix of E(N + 1, N)
  * @param vector<vector<double>> &matrixW, matrix of W(N, N)
+ * @param vector<vector<uint32_t>> &matrixRoot, matrix of root index
  * @return void
  * @remarks
  *
@@ -29,7 +30,7 @@
  *          E[i, j] = E(i, r-1) + E(r+1, j) + W(i, j)
  *          W(i, j) = W(i, j-1) + Pj + Qj
  */
-void optimal_binay_search_tree_problem_solution(const vector<double> &vecQ, const vector<double> &vecP, vector<vector<double>> &matrixE, vector<vector<double>> &matrixW);
+void optimal_binay_search_tree_problem_solution(const vector<double> &vecQ, const vector<double> &vecP, vector<vector<double>> &matrixE, vector<vector<double>> &matrixW, vector<vector<uint32_t>> &matrixRoot);
 
 /**
  * @brief test optimal binary search problem solution

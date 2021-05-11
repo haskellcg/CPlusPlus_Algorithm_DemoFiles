@@ -31,6 +31,11 @@ string to_string(const vector<int32_t> &vecInt)
     return to_string<int32_t>(vecInt);
 }
 
+string to_string(const vector<double> &vecDouble)
+{
+    return to_string<double>(vecDouble);
+}
+
 bool copy_part_of_matrix(const vector<vector<int32_t>> &matrixSrc,
                          size_t nRowIndex, size_t nColumnIndex,
                          size_t nColumns, size_t nRows,
