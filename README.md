@@ -16,6 +16,9 @@
 ## Ant colony
   * [Multi-robot Task Allocation Based on Ant Colony Algorithm](http://www.jcomputers.us/vol7/jcp0709-10.pdf)
 
+## Coding Stuff
+  * [Gray Code](https://en.wikipedia.org/wiki/Gray_code)
+
 ## Computational Geometry
   * [Computational Geometry - From theory to practice, From linear objects to curved objects](https://tel.archives-ouvertes.fr/tel-00175997/file/english.pdf)
   * [Computational Geometry](http://www.cs.virginia.edu/~robins/cs6161/slides/Algorithms%20-%20slide%20set%204%20v116%20-%2004%20Computational_Geometry.pdf)
