@@ -26,6 +26,7 @@
   * [CGAL](https://www.cgal.org/)
   * [Find center of circle](https://math.stackexchange.com/questions/2308430/find-center-of-a-circle-using-2-points-and-arc)
   * [calculate coodinate of point on circle](https://math.stackexchange.com/questions/332743/calculating-the-coordinates-of-a-point-on-a-circles-circumference-from-the-radiu)
+  * [BresenHam栅格算法](https://www.cnblogs.com/zjiaxing/p/5543386.html)
   
 ## Discrete Search
   * [Discrete Search Problem](https://zhuanlan.zhihu.com/p/89626842)
