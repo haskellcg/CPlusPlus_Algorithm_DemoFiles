@@ -16,6 +16,7 @@
  *          hash function: http://www.azillionmonkeys.com/qed/hash.html)
  *          hash funtions and test: https://www.strchr.com/hash_functions)
  *          non-cryptographic hash functions: https://en.wikipedia.org/wiki/List_of_hash_functions#Non-cryptographic_hash_functions)
+ *          hash functions: http://burtleburtle.net/bob/hash/doobs.html
  *          SipHash: https://en.wikipedia.org/wiki/SipHash)
  */
 
