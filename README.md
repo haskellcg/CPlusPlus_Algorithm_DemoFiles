@@ -27,6 +27,9 @@
   * [Find center of circle](https://math.stackexchange.com/questions/2308430/find-center-of-a-circle-using-2-points-and-arc)
   * [calculate coodinate of point on circle](https://math.stackexchange.com/questions/332743/calculating-the-coordinates-of-a-point-on-a-circles-circumference-from-the-radiu)
   * [BresenHam栅格算法](https://www.cnblogs.com/zjiaxing/p/5543386.html)
+  * [点到线段的最短距离](https://www.cnblogs.com/flyinggod/p/9359534.html)
+  * [判断线段相交](https://zhuanlan.zhihu.com/p/37360022)
+  * [计算两线段距离](https://www.dazhuanlan.com/ofyang/topics/1090816)
   
 ## Discrete Search
   * [Discrete Search Problem](https://zhuanlan.zhihu.com/p/89626842)
